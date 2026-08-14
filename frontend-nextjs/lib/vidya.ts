@@ -62,17 +62,8 @@ export async function sendMessage(
     const client = await getGradioClient();
     const result = await (client as unknown as { predict: (endpoint: number | string, data: unknown[]) => Promise<{ data: Array<unknown> }> }).predict(0, [message, formattedHistory]);
     
-    let rawText = '';
-    if (typeof result?.data?.[0] === 'string') {
-      rawText = result.data[0];
-    } else if (Array.isArray(result?.data) && typeof result.data[0] === 'object' && result.data[0] !== null) {
-      const lastMsg = result.data[result.data.length - 1] as Record<string, unknown>;
-      rawText = typeof lastMsg?.content === 'string' ? lastMsg.content : typeof lastMsg?.text === 'string' ? lastMsg.text : JSON.stringify(result.data);
-    } else if (result?.data) {
-      rawText = String(result.data);
-    }
-
-    if (rawText) return cleanResponse(rawText);
+    const text = extractTextFromGradioData(result?.data);
+    if (text) return cleanResponse(text);
   } catch (error: unknown) {
     console.warn('Gradio Client predict failed, trying direct HF API call:', error);
   }
@@ -94,6 +85,20 @@ export async function sendMessage(
         if (match && match[1]) {
           return cleanResponse(JSON.parse(`"${match[1]}"`));
         }
+        
+        // Try parsing JSON Lines
+        try {
+          const lines = textData.split('\n');
+          for (const line of lines) {
+            if (line.startsWith('data:')) {
+              const dataContent = JSON.parse(line.substring(5).trim());
+              const text = extractTextFromGradioData(dataContent);
+              if (text) return cleanResponse(text);
+            }
+          }
+        } catch {
+          // ignore stream parse error
+        }
       }
     }
   } catch (fallbackErr) {
@@ -101,6 +106,71 @@ export async function sendMessage(
   }
 
   throw new Error('Vidya is waking up on Hugging Face ZeroGPU. Please wait a few seconds and try again!');
+}
+
+function extractTextFromGradioData(data: unknown): string {
+  if (!data) return '';
+
+  if (typeof data === 'string') {
+    return data;
+  }
+
+  if (Array.isArray(data)) {
+    // Gradio 5 returns array of component values: [chatbot_value, textbox_update_dict]
+    const chatbotVal = data[0];
+
+    let chatArray = chatbotVal;
+    if (chatbotVal && typeof chatbotVal === 'object' && chatbotVal !== null && 'value' in chatbotVal) {
+      chatArray = (chatbotVal as Record<string, unknown>).value;
+    }
+
+    if (Array.isArray(chatArray) && chatArray.length > 0) {
+      const lastItem = chatArray[chatArray.length - 1];
+
+      // Format 1: Gradio 5 messages dict [{role: "assistant", content: "..."}]
+      if (lastItem && typeof lastItem === 'object' && 'content' in lastItem && typeof lastItem.content === 'string') {
+        return lastItem.content;
+      }
+
+      // Format 2: Tuple [user_msg, assistant_msg]
+      if (Array.isArray(lastItem) && lastItem.length >= 2) {
+        return String(lastItem[1] || lastItem[0]);
+      }
+
+      // Format 3: Tuple in string
+      if (typeof lastItem === 'string') {
+        return lastItem;
+      }
+    }
+
+    // Failsafe scan backwards for any message content or tuple
+    for (let i = data.length - 1; i >= 0; i--) {
+      const item = data[i];
+      if (item && typeof item === 'object' && item !== null) {
+        if ('content' in item && typeof item.content === 'string') {
+          return item.content;
+        }
+        if ('value' in item && Array.isArray(item.value)) {
+          const innerArr = item.value;
+          const last = innerArr[innerArr.length - 1];
+          if (last && typeof last === 'object' && 'content' in last && typeof last.content === 'string') {
+            return last.content;
+          }
+          if (Array.isArray(last) && last.length >= 2) {
+            return String(last[1]);
+          }
+        }
+      }
+    }
+  }
+
+  if (typeof data === 'object' && data !== null) {
+    const obj = data as Record<string, unknown>;
+    if (typeof obj.content === 'string') return obj.content;
+    if (typeof obj.text === 'string') return obj.text;
+  }
+
+  return '';
 }
 
 function cleanResponse(response: string): string {
