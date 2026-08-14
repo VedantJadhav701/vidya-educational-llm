@@ -1,10 +1,6 @@
 # 🎓 Vidya Educational LLM (`vidya-educational-llm`)
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/pkrasam/resources/main/banner.png" alt="Vidya Banner" width="100%" style="border-radius: 12px;" onerror="this.style.display='none'" />
-</p>
-
-<p align="center">
   <strong>An Open-Source Multilingual NCERT-Focused Educational AI Companion for 11 Indian Languages</strong>
 </p>
 
