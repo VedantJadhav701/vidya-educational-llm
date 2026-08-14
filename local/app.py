@@ -88,14 +88,14 @@ def download_and_load_model():
     _model = AutoModelForCausalLM.from_pretrained(
         model_path,
         torch_dtype=dtype,
-        device_map="auto" if device == "cuda" else None,
         trust_remote_code=True,
     )
+    _model = _model.to(device)
     _model.eval()
 
     if device == "cuda":
         vram_used = torch.cuda.memory_allocated() / 1024**3
-        print(f"✓ Model loaded on GPU — VRAM used: {vram_used:.1f} GB")
+        print(f"✓ Model loaded 100% on GPU — VRAM used: {vram_used:.1f} GB")
     else:
         print("✓ Model loaded on CPU")
 
@@ -103,11 +103,14 @@ def download_and_load_model():
 
 
 # ──────────────────────────────────────────────
-# Generation
+# Generation (Streaming)
 # ──────────────────────────────────────────────
 
-def generate_response(message: str, history: list) -> str:
-    """Generate an educational response using the local model."""
+def generate_response(message: str, history: list):
+    """Generate an educational response using streaming for real-time UI updates."""
+    from transformers import TextIteratorStreamer
+    from threading import Thread
+
     tokenizer, model = download_and_load_model()
 
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
@@ -148,33 +151,39 @@ def generate_response(message: str, history: list) -> str:
         if attention_mask is not None:
             attention_mask = attention_mask.to(model.device)
 
-    prompt_len = input_ids.shape[-1]
+    # Set up streamer for real-time word-by-word updates
+    streamer = TextIteratorStreamer(
+        tokenizer, skip_prompt=True, skip_special_tokens=True
+    )
 
-    # Generate
-    with torch.inference_mode():
-        gen_kwargs = {
-            "input_ids": input_ids,
-            "max_new_tokens": MAX_NEW_TOKENS,
-            "temperature": TEMPERATURE,
-            "top_p": TOP_P,
-            "repetition_penalty": REPETITION_PENALTY,
-            "do_sample": True,
-        }
-        if attention_mask is not None:
-            gen_kwargs["attention_mask"] = attention_mask
+    gen_kwargs = {
+        "input_ids": input_ids,
+        "max_new_tokens": MAX_NEW_TOKENS,
+        "temperature": TEMPERATURE,
+        "top_p": TOP_P,
+        "repetition_penalty": REPETITION_PENALTY,
+        "do_sample": True,
+        "streamer": streamer,
+    }
+    if attention_mask is not None:
+        gen_kwargs["attention_mask"] = attention_mask
 
-        outputs = model.generate(**gen_kwargs)
+    # Run generation in a separate thread so streamer yields live tokens
+    thread = Thread(target=model.generate, kwargs=gen_kwargs)
+    thread.start()
 
-    generated_tokens = outputs[0][prompt_len:]
-    response = tokenizer.decode(generated_tokens, skip_special_tokens=True).strip()
+    partial_text = ""
+    for new_text in streamer:
+        partial_text += new_text
 
-    # Clean thinking tags
-    if "<think>" in response:
-        response = response.split("<think>", 1)[0].strip()
-    if "</think>" in response:
-        response = response.split("</think>", 1)[-1].strip()
+        # Live cleanup of thinking tags
+        clean_text = partial_text
+        if "<think>" in clean_text:
+            clean_text = clean_text.split("<think>", 1)[0].strip()
+        if "</think>" in clean_text:
+            clean_text = clean_text.split("</think>", 1)[-1].strip()
 
-    return response
+        yield clean_text
 
 
 # ──────────────────────────────────────────────
@@ -229,11 +238,12 @@ CUSTOM_CSS = """
 footer { display: none !important; }
 """
 
-def respond(message: str, history: list) -> str:
-    """ChatInterface handler function."""
+def respond(message: str, history: list):
+    """ChatInterface streaming handler function."""
     if not message or not message.strip():
-        return ""
-    return generate_response(message.strip(), history)
+        return
+    for chunk in generate_response(message.strip(), history):
+        yield chunk
 
 
 def create_app():
