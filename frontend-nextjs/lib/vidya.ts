@@ -136,7 +136,7 @@ export async function sendMessage(
     }
   }
 
-  throw new Error('Vidya is waking up on Hugging Face ZeroGPU. Please wait a few seconds and try again!');
+  throw new Error('Vidya is starting up. This may take a minute on the first request — please try again shortly!');
 }
 
 function extractTextFromGradioData(data: unknown): string {

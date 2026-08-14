@@ -1,6 +1,6 @@
 MODEL_ID = "vedantjadhav701/edu-qwen-1.7b-merged"
 
-MAX_NEW_TOKENS = 512
+MAX_NEW_TOKENS = 256
 TEMPERATURE = 0.3
 TOP_P = 0.9
 REPETITION_PENALTY = 1.05

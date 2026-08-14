@@ -1,12 +1,6 @@
 import torch
 
-try:
-    import spaces
-    gpu_decorator = spaces.GPU(duration=30)
-except ImportError:
-    def gpu_decorator(func):
-        return func
-
+# No GPU decorator needed — running on CPU for unlimited quota-free access
 from .config import (
     MAX_NEW_TOKENS,
     TEMPERATURE,
@@ -17,7 +11,6 @@ from .model import get_model
 from .prompts import SYSTEM_PROMPT
 
 
-@gpu_decorator
 def generate_response(message, history=None):
 
     tokenizer, model = get_model()
