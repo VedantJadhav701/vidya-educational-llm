@@ -1,22 +1,22 @@
 @echo off
-title Vidya 1.7B — Local AI Assistant
+title Vidya 1.7B - Local AI Assistant
 color 0A
 
 echo.
 echo  ============================================================
-echo   🎓  Vidya 1.7B — Local AI Learning Assistant
+echo   Vidya 1.7B - Local AI Learning Assistant
 echo  ============================================================
 echo.
 echo   Starting Vidya on your NVIDIA GPU...
 echo.
 
-:: Activate conda environment
-call conda activate thermo_agent 2>nul
+:: Initialize conda in this shell session
+call "C:\Users\HP\miniconda3\Scripts\activate.bat" "C:\Users\HP\miniconda3"
+
+:: Activate the thermo_agent environment
+call conda activate thermo_agent
 if errorlevel 1 (
     echo [ERROR] Could not activate conda environment 'thermo_agent'.
-    echo Please make sure Miniconda/Anaconda is installed and the
-    echo 'thermo_agent' environment exists.
-    echo.
     pause
     exit /b 1
 )
