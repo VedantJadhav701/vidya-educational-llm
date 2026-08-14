@@ -19,6 +19,9 @@ export default function Chat() {
   const [learningMode, setLearningMode] = useState<LearningMode>('learn');
   const [activeSubject, setActiveSubject] = useState<SubjectType | null>(null);
 
+  // Mobile View Tab: 'chat' | 'visuals'
+  const [mobileTab, setMobileTab] = useState<'chat' | 'visuals'>('chat');
+
   const [stats, setStats] = useState<SessionStats>({
     questionsAsked: 0,
     topicsExplored: 0,
@@ -52,6 +55,9 @@ export default function Chat() {
 
     setMessages((prev) => [...prev, userMsg]);
     setIsProcessing(true);
+    // On mobile, switch to chat tab when sending
+    setMobileTab('chat');
+
     setStats((prev) => ({
       ...prev,
       questionsAsked: prev.questionsAsked + 1,
@@ -94,7 +100,6 @@ export default function Chat() {
     }
 
     try {
-      // Prepend learning mode context if set
       let formattedPrompt = text;
       if (learningMode === 'practice') {
         formattedPrompt = `[PRACTICE MODE] ${text}`;
@@ -104,7 +109,6 @@ export default function Chat() {
 
       const responseText = await sendMessage(formattedPrompt, messages);
 
-      // Check if AI response contains an image or graph tag
       const aiImgQuery = detectImageQuery(text, responseText);
       if (aiImgQuery && aiImgQuery !== imgQuery) {
         fetchEducationalImage(aiImgQuery).then((imgRes) => {
@@ -188,27 +192,61 @@ export default function Chat() {
         stats={stats}
       />
 
-      {/* Main Workspace Layout */}
-      <div className="flex-1 w-full max-w-[1536px] mx-auto p-4 flex flex-col lg:flex-row gap-5 h-[calc(100vh-65px)]">
-        {/* Left / Center Chat & Hero Column */}
-        <div className="flex-[2] h-full bg-[#0b0f19]/80 backdrop-blur-md border border-white/10 rounded-3xl flex flex-col overflow-hidden shadow-2xl relative">
+      {/* Mobile Screen Composition Selector (< 1024px) */}
+      <div className="lg:hidden px-4 pt-3 flex gap-2">
+        <button
+          onClick={() => setMobileTab('chat')}
+          className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+            mobileTab === 'chat'
+              ? 'bg-gradient-to-r from-[#a855f7] to-[#ec4899] text-white shadow-lg'
+              : 'bg-white/5 text-[#94a3b8] hover:text-white border border-white/10'
+          }`}
+        >
+          💬 Learning Chat
+        </button>
+
+        <button
+          onClick={() => setMobileTab('visuals')}
+          className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+            mobileTab === 'visuals'
+              ? 'bg-gradient-to-r from-[#38bdf8] to-[#6366f1] text-white shadow-lg'
+              : 'bg-white/5 text-[#94a3b8] hover:text-white border border-white/10'
+          }`}
+        >
+          🔬 Visual Lab &amp; Formulas
+          {mediaItems.length > 0 && (
+            <span className="text-[10px] bg-white/20 text-white px-1.5 py-0.2 rounded-full font-mono">
+              {mediaItems.length}
+            </span>
+          )}
+        </button>
+      </div>
+
+      {/* Main Responsive Workspace Layout */}
+      <div className="flex-1 w-full max-w-[1536px] mx-auto p-3 sm:p-4 flex flex-col lg:flex-row gap-4 lg:gap-5 h-[calc(100vh-65px)] overflow-hidden">
+        {/* Left / Main Chat & Landing Column */}
+        <div
+          className={`flex-[2] h-full bg-[#0b0f19]/80 backdrop-blur-md border border-white/10 rounded-3xl flex flex-col overflow-hidden shadow-2xl relative ${
+            mobileTab === 'chat' ? 'flex' : 'hidden lg:flex'
+          }`}
+        >
           {/* Header Action Bar */}
           {hasStarted && (
-            <div className="px-5 py-3 border-b border-white/10 bg-[#1e293b]/40 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-[#94a3b8] font-medium">Active Mode:</span>
-                <span className="text-xs font-bold uppercase tracking-wider text-[#a855f7] bg-[#a855f7]/10 px-2 py-0.5 rounded border border-[#a855f7]/20">
+            <div className="px-4 py-2.5 border-b border-white/10 bg-[#1e293b]/40 flex items-center justify-between">
+              <div className="flex items-center gap-2 overflow-x-auto custom-scrollbar">
+                <span className="text-xs text-[#94a3b8] font-medium hidden sm:inline">Active Mode:</span>
+                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#a855f7] bg-[#a855f7]/10 px-2 py-0.5 rounded border border-[#a855f7]/20 flex-shrink-0">
                   {learningMode}
                 </span>
                 {activeSubject && (
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#38bdf8] bg-[#38bdf8]/10 px-2 py-0.5 rounded border border-[#38bdf8]/20">
+                  <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#38bdf8] bg-[#38bdf8]/10 px-2 py-0.5 rounded border border-[#38bdf8]/20 flex-shrink-0">
                     {activeSubject}
                   </span>
                 )}
               </div>
               <button
                 onClick={handleClearChat}
-                className="px-3 py-1 text-xs text-[#94a3b8] hover:text-white bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all cursor-pointer"
+                className="px-2.5 py-1 text-xs text-[#94a3b8] hover:text-white bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all cursor-pointer font-medium flex-shrink-0"
               >
                 Reset Lab 🔄
               </button>
@@ -217,19 +255,21 @@ export default function Chat() {
 
           {/* Hero Landing State OR Message List */}
           {!hasStarted ? (
-            <div className="flex-1 overflow-y-auto p-6 flex flex-col items-center justify-center text-center custom-scrollbar animate-fadeIn">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 flex flex-col items-center justify-center text-center custom-scrollbar animate-fadeIn">
               {/* Heading Banner */}
               <div className="mb-2">
-                <h1 className="text-4xl font-extrabold tracking-tight text-white mb-2">
+                <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-2">
                   VIDYA
                 </h1>
-                <p className="text-sm font-semibold bg-gradient-to-r from-[#38bdf8] via-[#a855f7] to-[#ec4899] bg-clip-text text-transparent">
+                <p className="text-xs sm:text-sm font-semibold bg-gradient-to-r from-[#38bdf8] via-[#a855f7] to-[#ec4899] bg-clip-text text-transparent px-2">
                   Your Intelligent Interactive Learning Companion
                 </p>
               </div>
 
               {/* Interactive Knowledge Orbit */}
-              <KnowledgeOrbit onSelectPrompt={handleSendMessage} />
+              <div className="w-full overflow-hidden scale-90 sm:scale-100">
+                <KnowledgeOrbit onSelectPrompt={handleSendMessage} />
+              </div>
 
               {/* Subject Selector Cards */}
               <SubjectCards onSelectSubject={handleSelectSubject} />
@@ -246,8 +286,14 @@ export default function Chat() {
           <ChatInput onSend={handleSendMessage} disabled={isProcessing} />
         </div>
 
-        {/* Right Visual Learning Side Panel */}
-        <MediaPanel items={mediaItems} onSelectFormula={handleSendMessage} />
+        {/* Right / Visual Learning Column */}
+        <div
+          className={`flex-1 h-full ${
+            mobileTab === 'visuals' ? 'flex' : 'hidden lg:flex'
+          }`}
+        >
+          <MediaPanel items={mediaItems} onSelectFormula={handleSendMessage} />
+        </div>
       </div>
     </div>
   );
