@@ -229,72 +229,40 @@ CUSTOM_CSS = """
 footer { display: none !important; }
 """
 
+def respond(message: str, history: list) -> str:
+    """ChatInterface handler function."""
+    if not message or not message.strip():
+        return ""
+    return generate_response(message.strip(), history)
+
+
 def create_app():
-    """Create the Gradio chat interface."""
-    with gr.Blocks(
-        title="Vidya 1.7B — Local",
-    ) as demo:
-
-        gr.HTML("""
-        <div class="header-banner">
-            <h1>🎓 Vidya — AI Learning Assistant</h1>
-            <p>Running locally on your GPU • No internet needed • Unlimited & private</p>
-            <div class="status-chip">⚡ NVIDIA RTX GPU — Fast Inference</div>
-        </div>
-        """)
-
-        chatbot = gr.Chatbot(
-            label="Vidya",
-            height=480,
-            placeholder="Ask Vidya any question about Math, Science, History, or any subject...",
+    """Create the Gradio chat interface using ChatInterface for maximum stability."""
+    demo = gr.ChatInterface(
+        fn=respond,
+        title="🎓 Vidya — AI Learning Assistant",
+        description="⚡ Running locally on your NVIDIA GPU • No internet needed • Unlimited & private",
+        textbox=gr.Textbox(
+            placeholder="Ask Vidya any question about Math, Science, Physics, Chemistry, Biology, History...",
+            container=False,
+            scale=7,
+        ),
+        chatbot=gr.Chatbot(
+            height=520,
             avatar_images=(None, None),
             latex_delimiters=[
                 {"left": "$$", "right": "$$", "display": True},
                 {"left": "$", "right": "$", "display": False},
             ],
-        )
-
-        with gr.Row():
-            msg = gr.Textbox(
-                placeholder="Ask anything... (Math, Physics, Chemistry, Biology, History, Hindi, English...)",
-                label="Your Question",
-                scale=9,
-                lines=1,
-                max_lines=4,
-            )
-            submit_btn = gr.Button("Ask ➜", variant="primary", scale=1, min_width=80)
-
-        with gr.Row():
-            clear_btn = gr.Button("🗑️ Clear Chat", size="sm")
-            gr.HTML(
-                '<p style="text-align:right; opacity:0.5; font-size:12px; margin:auto 0;">'
-                'Powered by vedantjadhav701/edu-qwen-1.7b-merged</p>'
-            )
-
-        # Chat logic
-        def user_submit(message, history):
-            if not message.strip():
-                return "", history
-            history = history + [{"role": "user", "content": message}]
-            return "", history
-
-        def bot_respond(history):
-            if not history or history[-1].get("role") != "user":
-                return history
-            user_message = history[-1]["content"]
-            response = generate_response(user_message, history[:-1])
-            history.append({"role": "assistant", "content": response})
-            return history
-
-        # Wire up events
-        msg.submit(user_submit, [msg, chatbot], [msg, chatbot]).then(
-            bot_respond, chatbot, chatbot
-        )
-        submit_btn.click(user_submit, [msg, chatbot], [msg, chatbot]).then(
-            bot_respond, chatbot, chatbot
-        )
-        clear_btn.click(lambda: [], None, chatbot)
-
+        ),
+        examples=[
+            "Explain Newton's Laws of Motion with real-world examples.",
+            "Solve the quadratic equation: x² - 5x + 6 = 0 step by step.",
+            "What is photosynthesis? Explain the light and dark reactions.",
+            "प्रकाश संश्लेषण क्या है? समझाइए।",
+        ],
+        cache_examples=False,
+    )
     return demo
 
 
