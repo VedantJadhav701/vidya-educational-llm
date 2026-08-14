@@ -57,7 +57,7 @@ def download_and_load_model():
     hf_token = os.environ.get("HF_TOKEN") or os.environ.get("HUGGING_FACE_HUB_TOKEN")
 
     # Check if model is already downloaded locally
-    if os.path.exists(os.path.join(MODEL_DIR, "config.json")):
+    if os.path.exists(os.path.join(MODEL_DIR, "model.safetensors")):
         print(f"✓ Loading model from local cache: {MODEL_DIR}")
         model_path = MODEL_DIR
     else:
@@ -113,11 +113,14 @@ def generate_response(message: str, history: list) -> str:
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
 
     # Add conversation history
-    for user_msg, assistant_msg in history:
-        if user_msg:
-            messages.append({"role": "user", "content": user_msg})
-        if assistant_msg:
-            messages.append({"role": "assistant", "content": assistant_msg})
+    for item in history:
+        if isinstance(item, dict):
+            messages.append({"role": item["role"], "content": item["content"]})
+        elif isinstance(item, (list, tuple)) and len(item) == 2:
+            if item[0]:
+                messages.append({"role": "user", "content": item[0]})
+            if item[1]:
+                messages.append({"role": "assistant", "content": item[1]})
 
     messages.append({"role": "user", "content": message})
 
@@ -230,11 +233,6 @@ def create_app():
     """Create the Gradio chat interface."""
     with gr.Blocks(
         title="Vidya 1.7B — Local",
-        css=CUSTOM_CSS,
-        theme=gr.themes.Soft(
-            primary_hue="blue",
-            neutral_hue="slate",
-        ),
     ) as demo:
 
         gr.HTML("""
@@ -248,7 +246,6 @@ def create_app():
         chatbot = gr.Chatbot(
             label="Vidya",
             height=480,
-            type="tuples",
             placeholder="Ask Vidya any question about Math, Science, History, or any subject...",
             show_copy_button=True,
             avatar_images=(None, None),
@@ -279,15 +276,15 @@ def create_app():
         def user_submit(message, history):
             if not message.strip():
                 return "", history
-            history = history + [[message, None]]
+            history = history + [{"role": "user", "content": message}]
             return "", history
 
         def bot_respond(history):
-            if not history or history[-1][1] is not None:
+            if not history or history[-1].get("role") != "user":
                 return history
-            user_message = history[-1][0]
+            user_message = history[-1]["content"]
             response = generate_response(user_message, history[:-1])
-            history[-1][1] = response
+            history.append({"role": "assistant", "content": response})
             return history
 
         # Wire up events
@@ -335,4 +332,6 @@ if __name__ == "__main__":
         server_port=7860,
         share=False,
         inbrowser=False,  # We handle browser opening ourselves
+        css=CUSTOM_CSS,
+        theme=gr.themes.Soft(primary_hue="blue", neutral_hue="slate"),
     )
