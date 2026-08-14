@@ -247,7 +247,6 @@ def create_app():
             label="Vidya",
             height=480,
             placeholder="Ask Vidya any question about Math, Science, History, or any subject...",
-            show_copy_button=True,
             avatar_images=(None, None),
             latex_delimiters=[
                 {"left": "$$", "right": "$$", "display": True},
