@@ -1,3 +1,4 @@
+import os
 import torch
 
 from transformers import (
@@ -22,11 +23,13 @@ def get_model():
     print("=" * 70)
     print("Loading Vidya 1.7B")
     print("=" * 70)
-
     print(f"Model: {MODEL_ID}")
+
+    hf_token = os.environ.get("HF_TOKEN") or os.environ.get("HUGGING_FACE_HUB_TOKEN")
 
     _tokenizer = AutoTokenizer.from_pretrained(
         MODEL_ID,
+        token=hf_token,
         trust_remote_code=True,
     )
 
@@ -37,7 +40,8 @@ def get_model():
 
     _model = AutoModelForCausalLM.from_pretrained(
         MODEL_ID,
-        dtype=dtype,
+        token=hf_token,
+        torch_dtype=dtype,
         device_map="auto",
         trust_remote_code=True,
     )
