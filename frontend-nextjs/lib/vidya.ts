@@ -47,26 +47,32 @@ export async function sendMessage(
   message: string,
   history: ChatMessage[] = []
 ): Promise<string> {
-  const formattedHistory: [string, string][] = [];
-  
-  for (let i = 0; i < history.length; i += 2) {
-    const userMsg = history[i]?.role === 'user' ? history[i].content : '';
-    const assistantMsg = history[i + 1]?.role === 'assistant' ? history[i + 1].content : '';
-    if (userMsg || assistantMsg) {
-      formattedHistory.push([userMsg, assistantMsg]);
+  // Include recent conversation context in the message prompt for context continuity
+  let enrichedPrompt = message;
+  if (history && history.length > 0) {
+    const recentHistory = history.slice(-4);
+    const contextLines = recentHistory
+      .filter((m) => m.content && (m.role === 'user' || m.role === 'assistant'))
+      .map((m) => `${m.role === 'user' ? 'Student' : 'Vidya'}: ${m.content}`);
+    if (contextLines.length > 0) {
+      enrichedPrompt = `[Conversation Context]\n${contextLines.join('\n')}\n\nStudent: ${message}`;
     }
   }
 
-  // 1. Primary: Use Gradio Client to call named endpoint "/chat"
+  // 1. Primary: Use Gradio Client to predict
   try {
     const client = await getGradioClient();
     const gradioObj = client as unknown as { predict: (endpoint: number | string, data: unknown[]) => Promise<{ data: Array<unknown> }> };
     
     let result;
     try {
-      result = await gradioObj.predict('/chat', [message, formattedHistory]);
+      result = await gradioObj.predict('/predict', [enrichedPrompt]);
     } catch {
-      result = await gradioObj.predict(0, [message, formattedHistory]);
+      try {
+        result = await gradioObj.predict(0, [enrichedPrompt]);
+      } catch {
+        result = await gradioObj.predict('/chat', [enrichedPrompt]);
+      }
     }
 
     const text = extractTextFromGradioData(result?.data);
@@ -77,10 +83,10 @@ export async function sendMessage(
 
   // 2. Direct HF Space HTTP endpoints fallback with /gradio_api prefix
   const endpoints = [
+    `${HF_DIRECT_URL}/gradio_api/call/predict`,
+    `${HF_DIRECT_URL}/gradio_api/run/predict`,
     `${HF_DIRECT_URL}/gradio_api/call/chat`,
     `${HF_DIRECT_URL}/gradio_api/run/chat`,
-    `${HF_DIRECT_URL}/gradio_api/call/respond`,
-    `${HF_DIRECT_URL}/gradio_api/run/predict`,
   ];
 
   for (const endpoint of endpoints) {
@@ -88,7 +94,7 @@ export async function sendMessage(
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ data: [message, formattedHistory] }),
+        body: JSON.stringify({ data: [enrichedPrompt] }),
       });
 
       if (response.ok) {
@@ -155,30 +161,16 @@ function extractTextFromGradioData(data: unknown): string {
       return data[0];
     }
 
-    const chatbotVal = data[0];
-
-    if (typeof chatbotVal === 'string') {
-      return chatbotVal;
+    const firstItem = data[0];
+    if (typeof firstItem === 'string') {
+      return firstItem;
     }
 
-    let chatArray = chatbotVal;
-    if (chatbotVal && typeof chatbotVal === 'object' && chatbotVal !== null && 'value' in chatbotVal) {
-      chatArray = (chatbotVal as Record<string, unknown>).value;
-    }
-
-    if (Array.isArray(chatArray) && chatArray.length > 0) {
-      const lastItem = chatArray[chatArray.length - 1];
-
-      if (typeof lastItem === 'string') {
-        return lastItem;
-      }
-
-      if (lastItem && typeof lastItem === 'object' && 'content' in lastItem && typeof lastItem.content === 'string') {
-        return lastItem.content;
-      }
-
-      if (Array.isArray(lastItem) && lastItem.length >= 2) {
-        return String(lastItem[1] || lastItem[0]);
+    if (Array.isArray(firstItem) && firstItem.length > 0) {
+      const last = firstItem[firstItem.length - 1];
+      if (typeof last === 'string') return last;
+      if (last && typeof last === 'object' && 'content' in last && typeof last.content === 'string') {
+        return last.content;
       }
     }
 
@@ -188,17 +180,6 @@ function extractTextFromGradioData(data: unknown): string {
       if (item && typeof item === 'object' && item !== null) {
         if ('content' in item && typeof item.content === 'string') {
           return item.content;
-        }
-        if ('value' in item && Array.isArray(item.value)) {
-          const innerArr = item.value;
-          const last = innerArr[innerArr.length - 1];
-          if (typeof last === 'string') return last;
-          if (last && typeof last === 'object' && 'content' in last && typeof last.content === 'string') {
-            return last.content;
-          }
-          if (Array.isArray(last) && last.length >= 2) {
-            return String(last[1]);
-          }
         }
       }
     }
