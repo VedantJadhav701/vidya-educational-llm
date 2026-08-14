@@ -78,6 +78,16 @@ export async function sendMessage(
     const text = extractTextFromGradioData(result?.data);
     if (text) return cleanResponse(text);
   } catch (error: unknown) {
+    const errMsg = (error as Error)?.message || '';
+    // If quota exceeded, surface the real error immediately — don't fall through to HTTP fallbacks
+    if (errMsg.includes('exceeded your ZeroGPU quota') || errMsg.includes('quota')) {
+      const waitMatch = errMsg.match(/Try again in (\S+)/);
+      const waitTime = waitMatch ? waitMatch[1] : 'some time';
+      throw new Error(
+        `Vidya's free GPU quota has been reached. Please try again in ${waitTime}. ` +
+        `Tip: Sign in on Hugging Face for more quota.`
+      );
+    }
     console.warn('Gradio Client predict failed, trying direct HF API endpoints:', error);
   }
 

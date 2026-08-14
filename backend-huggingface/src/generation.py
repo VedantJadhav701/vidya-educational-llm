@@ -2,7 +2,7 @@ import torch
 
 try:
     import spaces
-    gpu_decorator = spaces.GPU(duration=120)
+    gpu_decorator = spaces.GPU(duration=30)
 except ImportError:
     def gpu_decorator(func):
         return func
