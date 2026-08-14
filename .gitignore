@@ -1,0 +1,26 @@
+# Large model files
+*.gguf
+*.bin
+*.pth
+*.pt
+*.safetensors
+
+# Environment variables
+.env
+.env.local
+.env.*
+
+# Node dependencies and build
+node_modules/
+.next/
+dist/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# System / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
