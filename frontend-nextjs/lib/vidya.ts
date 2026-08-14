@@ -57,19 +57,23 @@ export async function sendMessage(
     }
   }
 
-  // 1. Try Gradio Client predict (endpoint "/respond", "/chat", 0)
+  // 1. Try Gradio Client predict on "/chat" (Gradio 5 ChatInterface standard endpoint)
   try {
     const client = await getGradioClient();
-    const gradioObj = client as unknown as { predict: (endpoint: number | string, data: unknown[]) => Promise<{ data: Array<unknown> }> };
+    const gradioObj = client as unknown as { predict: (endpoint: number | string, data: unknown[] | Record<string, unknown>) => Promise<{ data: Array<unknown> }> };
     
     let result;
     try {
-      result = await gradioObj.predict('/respond', [message, formattedHistory]);
+      result = await gradioObj.predict('/chat', [message, formattedHistory]);
     } catch {
       try {
-        result = await gradioObj.predict('/chat', [message, formattedHistory]);
+        result = await gradioObj.predict('/chat', { message: message });
       } catch {
-        result = await gradioObj.predict(0, [message, formattedHistory]);
+        try {
+          result = await gradioObj.predict('/_submit_fn', [message, formattedHistory]);
+        } catch {
+          result = await gradioObj.predict(0, [message, formattedHistory]);
+        }
       }
     }
 
@@ -79,12 +83,12 @@ export async function sendMessage(
     console.warn('Gradio Client predict failed, trying direct HF API endpoints:', error);
   }
 
-  // 2. Try direct HF Space endpoints with /gradio_api prefix (Gradio 5 HF Space standard)
+  // 2. Direct HF Space endpoints fallback with /gradio_api prefix
   const endpoints = [
+    `${HF_DIRECT_URL}/gradio_api/call/chat`,
+    `${HF_DIRECT_URL}/gradio_api/run/chat`,
     `${HF_DIRECT_URL}/gradio_api/call/respond`,
     `${HF_DIRECT_URL}/gradio_api/run/predict`,
-    `${HF_DIRECT_URL}/call/respond`,
-    `${HF_DIRECT_URL}/run/predict`,
   ];
 
   for (const endpoint of endpoints) {
@@ -98,11 +102,11 @@ export async function sendMessage(
       if (response.ok) {
         const json = await response.json();
 
-        // Handle /call/respond SSE event stream
+        // Handle /call/chat SSE event stream
         if (json?.event_id) {
           const streamUrl = endpoint.includes('/gradio_api/')
-            ? `${HF_DIRECT_URL}/gradio_api/call/respond/${json.event_id}`
-            : `${HF_DIRECT_URL}/call/respond/${json.event_id}`;
+            ? `${HF_DIRECT_URL}/gradio_api/call/chat/${json.event_id}`
+            : `${HF_DIRECT_URL}/call/chat/${json.event_id}`;
 
           const eventRes = await fetch(streamUrl);
           const textData = await eventRes.text();
@@ -116,7 +120,7 @@ export async function sendMessage(
           }
         }
 
-        // Handle /run/predict synchronous payload
+        // Handle synchronous data payload
         if (json?.data) {
           const extractedText = extractTextFromGradioData(json.data);
           if (extractedText) return cleanResponse(extractedText);
@@ -134,7 +138,6 @@ function extractTextFromGradioData(data: unknown): string {
   if (!data) return '';
 
   if (typeof data === 'string') {
-    // If SSE text contains JSON lines
     if (data.includes('data:')) {
       const lines = data.split('\n');
       for (const line of lines) {
