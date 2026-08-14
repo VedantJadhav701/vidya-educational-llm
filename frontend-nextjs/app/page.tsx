@@ -5,7 +5,7 @@ import Chat from '@/components/Chat/Chat';
 
 export default function Home() {
   return (
-    <main className="w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0f172a] to-[#1e1b4b]">
+    <main className="w-full min-h-screen bg-[#070a14] flex flex-col relative overflow-hidden">
       <SplashScreen />
       <Chat />
     </main>

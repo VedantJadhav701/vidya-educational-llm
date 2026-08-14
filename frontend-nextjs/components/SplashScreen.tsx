@@ -1,97 +1,76 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface SplashScreenProps {
   onComplete?: () => void;
 }
 
 export default function SplashScreen({ onComplete }: SplashScreenProps) {
-  const [progress, setProgress] = useState(0);
-  const [loadingText, setLoadingText] = useState('Initializing Neural Pathways...');
   const [isVisible, setIsVisible] = useState(true);
-  const [isFading, setIsFading] = useState(false);
 
   useEffect(() => {
-    const loadingMessages = [
-      'Initializing Neural Pathways...',
-      'Loading Educational Modules...',
-      'Calibrating Knowledge Base...',
-      'Ready to Learn!',
-    ];
+    // Respect prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const duration = prefersReducedMotion ? 400 : 1800;
 
-    let currentProgress = 0;
-    let messageIndex = 0;
+    const timer = setTimeout(() => {
+      setIsVisible(false);
+      onComplete?.();
+    }, duration);
 
-    const interval = setInterval(() => {
-      currentProgress += Math.random() * 18 + 5;
-      if (currentProgress > 100) currentProgress = 100;
-
-      setProgress(currentProgress);
-
-      if (currentProgress > 25 && messageIndex === 0) {
-        messageIndex++;
-        setLoadingText(loadingMessages[messageIndex]);
-      } else if (currentProgress > 60 && messageIndex === 1) {
-        messageIndex++;
-        setLoadingText(loadingMessages[messageIndex]);
-      } else if (currentProgress >= 100 && messageIndex === 2) {
-        messageIndex++;
-        setLoadingText(loadingMessages[messageIndex]);
-        clearInterval(interval);
-
-        setTimeout(() => {
-          setIsFading(true);
-          setTimeout(() => {
-            setIsVisible(false);
-            onComplete?.();
-          }, 800);
-        }, 500);
-      }
-    }, 250);
-
-    return () => clearInterval(interval);
+    return () => clearTimeout(timer);
   }, [onComplete]);
 
-  if (!isVisible) return null;
-
   return (
-    <div
-      id="splash-screen"
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-gradient-to-br from-[#0f172a] to-[#1e1b4b] transition-opacity duration-800 ease-in-out ${
-        isFading ? 'opacity-0 pointer-events-none' : 'opacity-100'
-      }`}
-    >
-      <div className="splash-content text-center flex flex-col items-center animate-splashIn">
-        <div className="edu-icon text-[#a855f7] mb-5 animate-float">
-          <svg
-            viewBox="0 0 24 24"
-            width="64"
-            height="64"
-            stroke="currentColor"
-            strokeWidth="2"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-          </svg>
-        </div>
-        <h1 className="splash-title text-5xl font-semibold mb-2.5 bg-gradient-to-r from-[#a855f7] to-[#ec4899] bg-clip-text text-transparent">
-          Vidya
-        </h1>
-        <p className="splash-subtitle text-[#94a3b8] text-lg mb-10">
-          Your Interactive Educational Companion
-        </p>
-        <div className="progress-container w-[300px] h-[6px] bg-white/10 rounded-full overflow-hidden mb-4">
-          <div
-            className="progress-bar h-full bg-gradient-to-r from-[#a855f7] to-[#ec4899] rounded-full transition-all duration-100 ease-linear"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-        <p className="loading-text text-[#cbd5e1] text-sm font-medium">{loadingText}</p>
-      </div>
-    </div>
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0, transition: { duration: 0.6 } }}
+          className="fixed inset-0 z-[99999] flex items-center justify-center bg-[#070a14] overflow-hidden"
+        >
+          {/* Ambient Glow */}
+          <div className="absolute w-[500px] h-[500px] bg-gradient-to-tr from-[#38bdf8]/15 via-[#a855f7]/20 to-[#ec4899]/10 rounded-full blur-[100px] pointer-events-none animate-pulse" />
+
+          <div className="relative flex flex-col items-center text-center z-10 p-6">
+            {/* Knowledge Nucleus Animation */}
+            <motion.div
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+              className="relative w-24 h-24 mb-6 flex items-center justify-center"
+            >
+              <div className="absolute inset-0 rounded-full border-2 border-[#38bdf8]/30 animate-[spin_8s_linear_infinite]" />
+              <div className="absolute inset-2 rounded-full border border-[#a855f7]/40 animate-[spin_6s_linear_infinite_reverse]" />
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#a855f7] to-[#ec4899] flex items-center justify-center shadow-[0_0_30px_rgba(168,85,247,0.5)]">
+                <span className="text-2xl">🎓</span>
+              </div>
+            </motion.div>
+
+            {/* Title */}
+            <motion.h1
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              className="text-4xl font-extrabold tracking-tight text-white mb-2"
+            >
+              VIDYA
+            </motion.h1>
+
+            {/* Tagline */}
+            <motion.p
+              initial={{ y: 15, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+              className="text-sm font-medium bg-gradient-to-r from-[#38bdf8] via-[#a855f7] to-[#ec4899] bg-clip-text text-transparent"
+            >
+              AI Learning Laboratory • Learn. Explore. Understand.
+            </motion.p>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

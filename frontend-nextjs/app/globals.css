@@ -8,61 +8,39 @@
   }
 
   body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-    color: #e2e8f0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #070a14;
+    color: #f1f5f9;
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+    overflow-x: hidden;
   }
 }
 
-/* Custom scrollbar */
+/* Custom Scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 10px;
 }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 85, 247, 0.4);
+}
 
-/* Keyframe animations */
+/* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes splashIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0px);
   }
 }
 
@@ -76,15 +54,7 @@
 }
 
 .animate-fadeIn {
-  animation: fadeIn 0.3s ease-out forwards;
-}
-
-.animate-splashIn {
-  animation: splashIn 1s ease-out forwards;
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
+  animation: fadeIn 0.4s ease-out forwards;
 }
 
 .animate-typingDot1 {
@@ -99,16 +69,10 @@
   animation: typing 1.4s infinite ease-in-out 0s both;
 }
 
-/* Responsive layout adjustments */
-@media (max-width: 1024px) {
-  .app-container {
-    flex-direction: column;
-    height: 100vh;
-    padding: 10px;
-  }
-
-  .media-panel {
-    min-width: 100%;
-    max-height: 250px;
-  }
+/* Glassmorphic utilities */
+.glass-panel {
+  background: rgba(11, 15, 25, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }

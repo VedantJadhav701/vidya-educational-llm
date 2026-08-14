@@ -1,8 +1,14 @@
+export type LearningMode = 'explore' | 'learn' | 'practice' | 'revise';
+
+export type SubjectType = 'math' | 'physics' | 'chemistry' | 'biology' | 'cs' | 'general';
+
 export interface ChatMessage {
   id: string;
   role: 'user' | 'assistant' | 'system';
   content: string;
   timestamp: number;
+  mode?: LearningMode;
+  subject?: SubjectType;
 }
 
 export interface MediaCardItem {
@@ -19,4 +25,10 @@ export interface BackendStatus {
   isAvailable: boolean;
   isWakingUp: boolean;
   message: string;
+}
+
+export interface SessionStats {
+  questionsAsked: number;
+  topicsExplored: number;
+  activeMode: LearningMode;
 }
