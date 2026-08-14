@@ -57,24 +57,16 @@ export async function sendMessage(
     }
   }
 
-  // 1. Try Gradio Client predict on "/chat" (Gradio 5 ChatInterface standard endpoint)
+  // 1. Primary: Use Gradio Client to call named endpoint "/chat"
   try {
     const client = await getGradioClient();
-    const gradioObj = client as unknown as { predict: (endpoint: number | string, data: unknown[] | Record<string, unknown>) => Promise<{ data: Array<unknown> }> };
+    const gradioObj = client as unknown as { predict: (endpoint: number | string, data: unknown[]) => Promise<{ data: Array<unknown> }> };
     
     let result;
     try {
       result = await gradioObj.predict('/chat', [message, formattedHistory]);
     } catch {
-      try {
-        result = await gradioObj.predict('/chat', { message: message });
-      } catch {
-        try {
-          result = await gradioObj.predict('/_submit_fn', [message, formattedHistory]);
-        } catch {
-          result = await gradioObj.predict(0, [message, formattedHistory]);
-        }
-      }
+      result = await gradioObj.predict(0, [message, formattedHistory]);
     }
 
     const text = extractTextFromGradioData(result?.data);
@@ -83,7 +75,7 @@ export async function sendMessage(
     console.warn('Gradio Client predict failed, trying direct HF API endpoints:', error);
   }
 
-  // 2. Direct HF Space endpoints fallback with /gradio_api prefix
+  // 2. Direct HF Space HTTP endpoints fallback with /gradio_api prefix
   const endpoints = [
     `${HF_DIRECT_URL}/gradio_api/call/chat`,
     `${HF_DIRECT_URL}/gradio_api/run/chat`,
@@ -102,12 +94,9 @@ export async function sendMessage(
       if (response.ok) {
         const json = await response.json();
 
-        // Handle /call/chat SSE event stream
+        // Handle SSE event stream
         if (json?.event_id) {
-          const streamUrl = endpoint.includes('/gradio_api/')
-            ? `${HF_DIRECT_URL}/gradio_api/call/chat/${json.event_id}`
-            : `${HF_DIRECT_URL}/call/chat/${json.event_id}`;
-
+          const streamUrl = `${endpoint}/${json.event_id}`;
           const eventRes = await fetch(streamUrl);
           const textData = await eventRes.text();
 
@@ -143,20 +132,34 @@ function extractTextFromGradioData(data: unknown): string {
       for (const line of lines) {
         if (line.startsWith('data:')) {
           try {
-            const parsed = JSON.parse(line.substring(5).trim());
-            const text = extractTextFromGradioData(parsed);
-            if (text) return text;
+            const raw = line.substring(5).trim();
+            if (raw && raw !== 'null') {
+              const parsed = JSON.parse(raw);
+              const text = extractTextFromGradioData(parsed);
+              if (text) return text;
+            }
           } catch {
             // ignore JSON parse error on partial lines
           }
         }
       }
     }
+    if (data.startsWith('event:') || data.startsWith('data: null')) {
+      return '';
+    }
     return data;
   }
 
   if (Array.isArray(data)) {
+    if (data.length === 1 && typeof data[0] === 'string') {
+      return data[0];
+    }
+
     const chatbotVal = data[0];
+
+    if (typeof chatbotVal === 'string') {
+      return chatbotVal;
+    }
 
     let chatArray = chatbotVal;
     if (chatbotVal && typeof chatbotVal === 'object' && chatbotVal !== null && 'value' in chatbotVal) {
@@ -166,6 +169,10 @@ function extractTextFromGradioData(data: unknown): string {
     if (Array.isArray(chatArray) && chatArray.length > 0) {
       const lastItem = chatArray[chatArray.length - 1];
 
+      if (typeof lastItem === 'string') {
+        return lastItem;
+      }
+
       if (lastItem && typeof lastItem === 'object' && 'content' in lastItem && typeof lastItem.content === 'string') {
         return lastItem.content;
       }
@@ -173,14 +180,11 @@ function extractTextFromGradioData(data: unknown): string {
       if (Array.isArray(lastItem) && lastItem.length >= 2) {
         return String(lastItem[1] || lastItem[0]);
       }
-
-      if (typeof lastItem === 'string') {
-        return lastItem;
-      }
     }
 
     for (let i = data.length - 1; i >= 0; i--) {
       const item = data[i];
+      if (typeof item === 'string') return item;
       if (item && typeof item === 'object' && item !== null) {
         if ('content' in item && typeof item.content === 'string') {
           return item.content;
@@ -188,6 +192,7 @@ function extractTextFromGradioData(data: unknown): string {
         if ('value' in item && Array.isArray(item.value)) {
           const innerArr = item.value;
           const last = innerArr[innerArr.length - 1];
+          if (typeof last === 'string') return last;
           if (last && typeof last === 'object' && 'content' in last && typeof last.content === 'string') {
             return last.content;
           }
