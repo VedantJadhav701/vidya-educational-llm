@@ -3,6 +3,7 @@ from src.generation import generate_response
 
 
 def respond(message: str) -> str:
+    """Handle a single educational question and return the response."""
     if not message or not str(message).strip():
         return "Please ask a question."
 
@@ -11,36 +12,24 @@ def respond(message: str) -> str:
     )
 
 
-with gr.Blocks(title="Vidya 1.7B Educational LLM", theme=gr.themes.Soft()) as demo:
-    gr.Markdown("# 🎓 Vidya 1.7B Educational LLM")
-    gr.Markdown(
+# Use gr.Interface for maximum Gradio API compatibility.
+# This automatically registers fn_index=0 with api_name="/predict".
+demo = gr.Interface(
+    fn=respond,
+    inputs=gr.Textbox(
+        lines=2,
+        placeholder="Ask Vidya anything in English, Hindi, Marathi, Tamil...",
+        label="Your Educational Question",
+    ),
+    outputs=gr.Textbox(label="Vidya Answer"),
+    title="🎓 Vidya 1.7B Educational LLM",
+    description=(
         "Multilingual NCERT-focused educational assistant supporting 11 Indian languages. "
-        "Powered by `vedantjadhav701/edu-qwen-1.7b-merged` on ZeroGPU."
-    )
-
-    with gr.Row():
-        question_input = gr.Textbox(
-            lines=2,
-            placeholder="Ask Vidya anything in English, Hindi, Marathi, Tamil...",
-            label="Your Educational Question",
-        )
-        answer_output = gr.Textbox(label="Vidya Answer")
-
-    submit_btn = gr.Button("Ask Vidya", variant="primary")
-
-    # Register both 'predict' and 'chat' API names for complete client compatibility
-    submit_btn.click(
-        fn=respond,
-        inputs=question_input,
-        outputs=answer_output,
-        api_name="predict",
-    )
-    submit_btn.click(
-        fn=respond,
-        inputs=question_input,
-        outputs=answer_output,
-        api_name="chat",
-    )
+        "Powered by vedantjadhav701/edu-qwen-1.7b-merged on CPU."
+    ),
+    flagging_mode="never",
+    api_name="predict",
+)
 
 
 if __name__ == "__main__":

@@ -1,9 +1,10 @@
 import { Client } from '@gradio/client';
 import { ChatMessage, BackendStatus } from './types';
 
-const HF_SPACE_ID = process.env.NEXT_PUBLIC_HF_SPACE_ID || 'vedantjadhav701/vidya-1.7b';
+const HF_SPACE_ID =
+  process.env.NEXT_PUBLIC_HF_SPACE_ID || 'vedantjadhav701/vidya-1.7b';
 
-// Convert HF_SPACE_ID (e.g. "vedantjadhav701/vidya-1.7b") to valid HF subdomain ("vedantjadhav701-vidya-1-7b")
+// Convert HF_SPACE_ID (e.g. "vedantjadhav701/vidya-1.7b") to valid HF subdomain
 const hfSubdomain = HF_SPACE_ID.toLowerCase().replace(/[^a-z0-9]/g, '-');
 const HF_DIRECT_URL = `https://${hfSubdomain}.hf.space`;
 
@@ -28,18 +29,24 @@ export async function checkBackendHealth(): Promise<BackendStatus> {
     }
   } catch (err: unknown) {
     const errMsg = (err as Error)?.message || '';
-    if (errMsg.includes('BUILDING') || errMsg.includes('SLEEPING') || errMsg.includes('PAUSED') || errMsg.includes('503')) {
+    if (
+      errMsg.includes('BUILDING') ||
+      errMsg.includes('SLEEPING') ||
+      errMsg.includes('PAUSED') ||
+      errMsg.includes('503')
+    ) {
       return {
         isAvailable: false,
         isWakingUp: true,
-        message: 'Vidya is waking up on ZeroGPU. Please try again in a moment.',
+        message:
+          'Vidya is waking up. Please try again in a moment.',
       };
     }
   }
   return {
     isAvailable: false,
     isWakingUp: false,
-    message: 'Vidya ZeroGPU backend is initializing.',
+    message: 'Vidya backend is initializing.',
   };
 }
 
@@ -47,143 +54,173 @@ export async function sendMessage(
   message: string,
   history: ChatMessage[] = []
 ): Promise<string> {
-  // Include recent conversation context in the message prompt for context continuity
+  // Include recent conversation context in the message prompt
   let enrichedPrompt = message;
   if (history && history.length > 0) {
     const recentHistory = history.slice(-4);
     const contextLines = recentHistory
-      .filter((m) => m.content && (m.role === 'user' || m.role === 'assistant'))
-      .map((m) => `${m.role === 'user' ? 'Student' : 'Vidya'}: ${m.content}`);
+      .filter(
+        (m) => m.content && (m.role === 'user' || m.role === 'assistant')
+      )
+      .map(
+        (m) =>
+          `${m.role === 'user' ? 'Student' : 'Vidya'}: ${m.content}`
+      );
     if (contextLines.length > 0) {
       enrichedPrompt = `[Conversation Context]\n${contextLines.join('\n')}\n\nStudent: ${message}`;
     }
   }
 
-  // 1. Primary: Use Gradio Client to predict
+  // ── Strategy 1: Gradio Client (most reliable) ──
   try {
     const client = await getGradioClient();
-    const gradioObj = client as unknown as { predict: (endpoint: number | string, data: unknown[]) => Promise<{ data: Array<unknown> }> };
-    
+    const gradioObj = client as unknown as {
+      predict: (
+        endpoint: number | string,
+        data: unknown[]
+      ) => Promise<{ data: Array<unknown> }>;
+    };
+
+    // Try fn_index 0 first (always works with gr.Interface), then named endpoint
     let result;
     try {
-      result = await gradioObj.predict('/predict', [enrichedPrompt]);
+      result = await gradioObj.predict(0, [enrichedPrompt]);
     } catch {
-      try {
-        result = await gradioObj.predict(0, [enrichedPrompt]);
-      } catch {
-        result = await gradioObj.predict('/chat', [enrichedPrompt]);
-      }
+      result = await gradioObj.predict('/predict', [enrichedPrompt]);
     }
 
     const text = extractTextFromGradioData(result?.data);
     if (text) return cleanResponse(text);
   } catch (error: unknown) {
     const errMsg = (error as Error)?.message || '';
-    // If quota exceeded, surface the real error immediately — don't fall through to HTTP fallbacks
-    if (errMsg.includes('exceeded your ZeroGPU quota') || errMsg.includes('quota')) {
+
+    // Quota exceeded — surface immediately, don't fall through
+    if (
+      errMsg.includes('exceeded') ||
+      errMsg.includes('quota') ||
+      errMsg.includes('429')
+    ) {
       const waitMatch = errMsg.match(/Try again in (\S+)/);
       const waitTime = waitMatch ? waitMatch[1] : 'some time';
       throw new Error(
-        `Vidya's free GPU quota has been reached. Please try again in ${waitTime}. ` +
-        `Tip: Sign in on Hugging Face for more quota.`
+        `Vidya's free GPU quota has been reached. Please try again in ${waitTime}. Tip: Sign in on Hugging Face for more quota.`
       );
     }
-    console.warn('Gradio Client predict failed, trying direct HF API endpoints:', error);
+
+    console.warn('Gradio Client failed, trying direct HTTP:', error);
+    // Reset client so next call reconnects
+    gradioClient = null;
   }
 
-  // 2. Direct HF Space HTTP endpoints fallback with /gradio_api prefix
-  const endpoints = [
-    `${HF_DIRECT_URL}/gradio_api/call/predict`,
-    `${HF_DIRECT_URL}/gradio_api/run/predict`,
-    `${HF_DIRECT_URL}/gradio_api/call/chat`,
-    `${HF_DIRECT_URL}/gradio_api/run/chat`,
-  ];
-
-  for (const endpoint of endpoints) {
-    try {
-      const response = await fetch(endpoint, {
+  // ── Strategy 2: Gradio 5 SSE endpoint /gradio_api/call/predict ──
+  try {
+    const callRes = await fetch(
+      `${HF_DIRECT_URL}/gradio_api/call/predict`,
+      {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ data: [enrichedPrompt] }),
-      });
+      }
+    );
 
-      if (response.ok) {
-        const json = await response.json();
+    if (callRes.ok) {
+      const callJson = await callRes.json();
 
-        // Handle SSE event stream
-        if (json?.event_id) {
-          const streamUrl = `${endpoint}/${json.event_id}`;
-          const eventRes = await fetch(streamUrl);
-          const textData = await eventRes.text();
+      if (callJson?.event_id) {
+        // Poll the SSE stream for the result
+        const sseUrl = `${HF_DIRECT_URL}/gradio_api/call/predict/${callJson.event_id}`;
+        const sseRes = await fetch(sseUrl);
+        const sseText = await sseRes.text();
 
-          const extractedText = extractTextFromGradioData(textData);
-          if (extractedText) return cleanResponse(extractedText);
-
-          const match = textData.match(/data:\s*\["(.*)"\]/);
-          if (match && match[1]) {
-            return cleanResponse(JSON.parse(`"${match[1]}"`));
+        // Parse SSE: look for "data:" lines with JSON arrays
+        const lines = sseText.split('\n');
+        for (const line of lines) {
+          if (line.startsWith('data:')) {
+            const raw = line.substring(5).trim();
+            if (raw && raw !== 'null') {
+              try {
+                const parsed = JSON.parse(raw);
+                const text = extractTextFromGradioData(parsed);
+                if (text) return cleanResponse(text);
+              } catch {
+                // Not valid JSON, try as plain text
+                if (raw.length > 5) return cleanResponse(raw);
+              }
+            }
           }
         }
-
-        // Handle synchronous data payload
-        if (json?.data) {
-          const extractedText = extractTextFromGradioData(json.data);
-          if (extractedText) return cleanResponse(extractedText);
-        }
       }
-    } catch (err) {
-      console.warn(`Endpoint ${endpoint} failed:`, err);
+
+      // Direct data response (some Gradio versions)
+      if (callJson?.data) {
+        const text = extractTextFromGradioData(callJson.data);
+        if (text) return cleanResponse(text);
+      }
     }
+  } catch (err) {
+    console.warn('Direct SSE endpoint failed:', err);
   }
 
-  throw new Error('Vidya is starting up. This may take a minute on the first request — please try again shortly!');
+  // ── Strategy 3: Legacy /api/predict (older Gradio compat) ──
+  try {
+    const legacyRes = await fetch(`${HF_DIRECT_URL}/api/predict`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ data: [enrichedPrompt] }),
+    });
+
+    if (legacyRes.ok) {
+      const json = await legacyRes.json();
+      if (json?.data) {
+        const text = extractTextFromGradioData(json.data);
+        if (text) return cleanResponse(text);
+      }
+    }
+  } catch (err) {
+    console.warn('Legacy /api/predict failed:', err);
+  }
+
+  throw new Error(
+    'Vidya is starting up. This may take a minute on the first request — please try again shortly!'
+  );
 }
 
 function extractTextFromGradioData(data: unknown): string {
   if (!data) return '';
 
   if (typeof data === 'string') {
-    if (data.includes('data:')) {
-      const lines = data.split('\n');
-      for (const line of lines) {
-        if (line.startsWith('data:')) {
-          try {
-            const raw = line.substring(5).trim();
-            if (raw && raw !== 'null') {
-              const parsed = JSON.parse(raw);
-              const text = extractTextFromGradioData(parsed);
-              if (text) return text;
-            }
-          } catch {
-            // ignore JSON parse error on partial lines
-          }
-        }
-      }
-    }
-    if (data.startsWith('event:') || data.startsWith('data: null')) {
+    if (
+      data.startsWith('event:') ||
+      data.startsWith('data: null') ||
+      data === 'null'
+    ) {
       return '';
     }
     return data;
   }
 
   if (Array.isArray(data)) {
-    if (data.length === 1 && typeof data[0] === 'string') {
+    // Most common: ["response text"]
+    if (data.length >= 1 && typeof data[0] === 'string') {
       return data[0];
     }
 
+    // Nested array: [["response text"]]
     const firstItem = data[0];
-    if (typeof firstItem === 'string') {
-      return firstItem;
-    }
-
     if (Array.isArray(firstItem) && firstItem.length > 0) {
       const last = firstItem[firstItem.length - 1];
       if (typeof last === 'string') return last;
-      if (last && typeof last === 'object' && 'content' in last && typeof last.content === 'string') {
+      if (
+        last &&
+        typeof last === 'object' &&
+        'content' in last &&
+        typeof last.content === 'string'
+      ) {
         return last.content;
       }
     }
 
+    // Object with content field
     for (let i = data.length - 1; i >= 0; i--) {
       const item = data[i];
       if (typeof item === 'string') return item;
