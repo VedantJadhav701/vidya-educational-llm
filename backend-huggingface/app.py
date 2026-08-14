@@ -26,14 +26,6 @@ demo = gr.ChatInterface(
         lines=3,
         max_lines=8,
     ),
-    examples=[
-        "What is photosynthesis?",
-        "Explain Newton's three laws of motion.",
-        "What is the area of a rectangle of length 20 m and width 10 m?",
-        "प्रकाश संश्लेषण क्या है?",
-        "प्रकाश संश्लेषण म्हणजे काय?",
-        "தமிழில் ஒளிச்சேர்க்கை என்றால் என்ன?",
-    ],
     theme=gr.themes.Soft(),
 )
 
