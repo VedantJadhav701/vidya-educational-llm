@@ -1,0 +1,4 @@
+# Downloaded model files (large)
+models/
+__pycache__/
+*.pyc
