@@ -9,6 +9,14 @@ import sys
 import webbrowser
 import threading
 
+# Fix encoding on Windows stdout/stderr to prevent UnicodeEncodeError
+if sys.stdout and hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
 # Fix OpenMP duplicate library issue on Windows
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
@@ -58,10 +66,10 @@ def download_and_load_model():
 
     # Check if model is already downloaded locally
     if os.path.exists(os.path.join(MODEL_DIR, "model.safetensors")):
-        print(f"✓ Loading model from local cache: {MODEL_DIR}")
+        print(f"[OK] Loading model from local cache: {MODEL_DIR}")
         model_path = MODEL_DIR
     else:
-        print(f"⬇ Downloading model: {MODEL_ID}")
+        print(f"[+] Downloading model: {MODEL_ID}")
         print(f"  This is a one-time download (~3.5 GB)...")
         print(f"  Saving to: {MODEL_DIR}")
         os.makedirs(MODEL_DIR, exist_ok=True)
@@ -72,7 +80,7 @@ def download_and_load_model():
             local_dir=MODEL_DIR,
             token=hf_token,
         )
-        print(f"✓ Model downloaded to: {model_path}")
+        print(f"[OK] Model downloaded to: {model_path}")
 
     print("Loading tokenizer...")
     _tokenizer = AutoTokenizer.from_pretrained(
@@ -95,9 +103,9 @@ def download_and_load_model():
 
     if device == "cuda":
         vram_used = torch.cuda.memory_allocated() / 1024**3
-        print(f"✓ Model loaded 100% on GPU — VRAM used: {vram_used:.1f} GB")
+        print(f"[OK] Model loaded 100% on GPU - VRAM used: {vram_used:.1f} GB")
     else:
-        print("✓ Model loaded on CPU")
+        print("[OK] Model loaded on CPU")
 
     return _tokenizer, _model
 
