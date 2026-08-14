@@ -16,7 +16,7 @@ export default function Chat() {
       id: 'welcome-msg',
       role: 'assistant',
       content:
-        "Hello! I am Vidya, your multilingual NCERT educational AI assistant. How can I help you today?",
+        "Namaste! I am Vidya 1.7B, your multilingual NCERT educational AI companion.\n\nAsk me anything in Science, Mathematics, or school concepts across 11 Indian languages!",
       timestamp: 0,
     },
   ]);
@@ -162,7 +162,7 @@ export default function Chat() {
         id: 'welcome-msg',
         role: 'assistant',
         content:
-          "Hello! I am Vidya, your multilingual NCERT educational AI assistant. How can I help you today?",
+          "Namaste! I am Vidya 1.7B, your multilingual NCERT educational AI companion.\n\nAsk me anything in Science, Mathematics, or school concepts across 11 Indian languages!",
         timestamp: 0,
       },
     ]);
@@ -170,7 +170,7 @@ export default function Chat() {
   };
 
   return (
-    <div className="app-container w-full max-w-[1400px] h-[95vh] flex gap-5 m-auto p-5">
+    <div className="app-container w-full max-w-[1440px] h-[95vh] flex gap-5 m-auto p-4">
       <div className="chat-container flex-[2] h-full bg-[#1e293b]/70 backdrop-blur-md border border-white/10 rounded-3xl flex flex-col overflow-hidden shadow-2xl">
         <div className="flex items-center justify-between">
           <div className="flex-1">
@@ -179,16 +179,24 @@ export default function Chat() {
           {messages.length > 1 && (
             <button
               onClick={handleClearChat}
-              className="mr-5 px-3 py-1.5 text-xs text-[#94a3b8] hover:text-white bg-white/5 hover:bg-white/10 rounded-lg border border-white/10 transition-colors cursor-pointer"
+              className="mr-5 px-3 py-1.5 text-xs text-[#94a3b8] hover:text-white bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all cursor-pointer font-medium"
             >
               Clear Chat
             </button>
           )}
         </div>
-        <MessageList messages={messages} isTyping={isProcessing} typingText={typingText} />
+
+        <MessageList
+          messages={messages}
+          isTyping={isProcessing}
+          typingText={typingText}
+          onQuickPrompt={handleSendMessage}
+        />
+
         <ChatInput onSend={handleSendMessage} disabled={isProcessing} />
       </div>
-      <MediaPanel items={mediaItems} />
+
+      <MediaPanel items={mediaItems} onSelectFormula={handleSendMessage} />
     </div>
   );
 }

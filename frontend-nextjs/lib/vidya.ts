@@ -3,6 +3,10 @@ import { ChatMessage, BackendStatus } from './types';
 
 const HF_SPACE_ID = process.env.NEXT_PUBLIC_HF_SPACE_ID || 'vedantjadhav701/vidya-1.7b';
 
+// Convert HF_SPACE_ID (e.g. "vedantjadhav701/vidya-1.7b") to valid HF subdomain ("vedantjadhav701-vidya-1-7b")
+const hfSubdomain = HF_SPACE_ID.toLowerCase().replace(/[^a-z0-9]/g, '-');
+const HF_DIRECT_URL = `https://${hfSubdomain}.hf.space`;
+
 let gradioClient: unknown = null;
 
 async function getGradioClient() {
@@ -24,18 +28,18 @@ export async function checkBackendHealth(): Promise<BackendStatus> {
     }
   } catch (err: unknown) {
     const errMsg = (err as Error)?.message || '';
-    if (errMsg.includes('BUILDING') || errMsg.includes('SLEEPING') || errMsg.includes('PAUSED')) {
+    if (errMsg.includes('BUILDING') || errMsg.includes('SLEEPING') || errMsg.includes('PAUSED') || errMsg.includes('503')) {
       return {
         isAvailable: false,
         isWakingUp: true,
-        message: 'Vidya is waking up. Please try again in a moment.',
+        message: 'Vidya is waking up on ZeroGPU. Please try again in a moment.',
       };
     }
   }
   return {
     isAvailable: false,
     isWakingUp: false,
-    message: 'Backend is currently offline or unreachable.',
+    message: 'Vidya ZeroGPU backend is initializing.',
   };
 }
 
@@ -53,10 +57,9 @@ export async function sendMessage(
     }
   }
 
+  // Try Gradio Client first
   try {
     const client = await getGradioClient();
-    
-    // Call Gradio ChatInterface endpoint
     const result = await (client as unknown as { predict: (endpoint: number | string, data: unknown[]) => Promise<{ data: Array<unknown> }> }).predict(0, [message, formattedHistory]);
     
     let rawText = '';
@@ -69,40 +72,35 @@ export async function sendMessage(
       rawText = String(result.data);
     }
 
-    return cleanResponse(rawText);
+    if (rawText) return cleanResponse(rawText);
   } catch (error: unknown) {
-    const errObj = error as Error;
-    console.error('Gradio Client Error:', errObj);
-    
-    // Fallback to direct HTTP fetch to HF Space if client.predict fails
-    try {
-      const response = await fetch(`https://${HF_SPACE_ID.replace('/', '-')}.hf.space/call/respond`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ data: [message, formattedHistory] }),
-      });
+    console.warn('Gradio Client predict failed, trying direct HF API call:', error);
+  }
 
-      if (response.ok) {
-        const json = await response.json();
-        if (json?.event_id) {
-          const eventRes = await fetch(`https://${HF_SPACE_ID.replace('/', '-')}.hf.space/call/respond/${json.event_id}`);
-          const textData = await eventRes.text();
-          const match = textData.match(/data:\s*\["(.*)"\]/);
-          if (match && match[1]) {
-            return cleanResponse(JSON.parse(`"${match[1]}"`));
-          }
+  // Fallback direct HF Space call API
+  try {
+    const response = await fetch(`${HF_DIRECT_URL}/call/respond`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ data: [message, formattedHistory] }),
+    });
+
+    if (response.ok) {
+      const json = await response.json();
+      if (json?.event_id) {
+        const eventRes = await fetch(`${HF_DIRECT_URL}/call/respond/${json.event_id}`);
+        const textData = await eventRes.text();
+        const match = textData.match(/data:\s*\["(.*)"\]/);
+        if (match && match[1]) {
+          return cleanResponse(JSON.parse(`"${match[1]}"`));
         }
       }
-    } catch (fallbackErr) {
-      console.error('Fallback HF Fetch Error:', fallbackErr);
     }
-
-    if (errObj?.message?.includes('503') || errObj?.message?.includes('building')) {
-      throw new Error('Vidya is waking up on Hugging Face. Please try again in 1-2 minutes.');
-    }
-    
-    throw new Error('Could not connect to Vidya backend. Please check network connection.');
+  } catch (fallbackErr) {
+    console.error('Fallback HF Fetch Error:', fallbackErr);
   }
+
+  throw new Error('Vidya is waking up on Hugging Face ZeroGPU. Please wait a few seconds and try again!');
 }
 
 function cleanResponse(response: string): string {
