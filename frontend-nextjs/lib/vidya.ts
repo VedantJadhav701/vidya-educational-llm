@@ -57,52 +57,74 @@ export async function sendMessage(
     }
   }
 
-  // Try Gradio Client first
+  // 1. Try Gradio Client predict (endpoint "/respond", "/chat", 0)
   try {
     const client = await getGradioClient();
-    const result = await (client as unknown as { predict: (endpoint: number | string, data: unknown[]) => Promise<{ data: Array<unknown> }> }).predict(0, [message, formattedHistory]);
+    const gradioObj = client as unknown as { predict: (endpoint: number | string, data: unknown[]) => Promise<{ data: Array<unknown> }> };
     
+    let result;
+    try {
+      result = await gradioObj.predict('/respond', [message, formattedHistory]);
+    } catch {
+      try {
+        result = await gradioObj.predict('/chat', [message, formattedHistory]);
+      } catch {
+        result = await gradioObj.predict(0, [message, formattedHistory]);
+      }
+    }
+
     const text = extractTextFromGradioData(result?.data);
     if (text) return cleanResponse(text);
   } catch (error: unknown) {
-    console.warn('Gradio Client predict failed, trying direct HF API call:', error);
+    console.warn('Gradio Client predict failed, trying direct HF API endpoints:', error);
   }
 
-  // Fallback direct HF Space call API
-  try {
-    const response = await fetch(`${HF_DIRECT_URL}/call/respond`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ data: [message, formattedHistory] }),
-    });
+  // 2. Try direct HF Space endpoints with /gradio_api prefix (Gradio 5 HF Space standard)
+  const endpoints = [
+    `${HF_DIRECT_URL}/gradio_api/call/respond`,
+    `${HF_DIRECT_URL}/gradio_api/run/predict`,
+    `${HF_DIRECT_URL}/call/respond`,
+    `${HF_DIRECT_URL}/run/predict`,
+  ];
 
-    if (response.ok) {
-      const json = await response.json();
-      if (json?.event_id) {
-        const eventRes = await fetch(`${HF_DIRECT_URL}/call/respond/${json.event_id}`);
-        const textData = await eventRes.text();
-        const match = textData.match(/data:\s*\["(.*)"\]/);
-        if (match && match[1]) {
-          return cleanResponse(JSON.parse(`"${match[1]}"`));
-        }
-        
-        // Try parsing JSON Lines
-        try {
-          const lines = textData.split('\n');
-          for (const line of lines) {
-            if (line.startsWith('data:')) {
-              const dataContent = JSON.parse(line.substring(5).trim());
-              const text = extractTextFromGradioData(dataContent);
-              if (text) return cleanResponse(text);
-            }
+  for (const endpoint of endpoints) {
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data: [message, formattedHistory] }),
+      });
+
+      if (response.ok) {
+        const json = await response.json();
+
+        // Handle /call/respond SSE event stream
+        if (json?.event_id) {
+          const streamUrl = endpoint.includes('/gradio_api/')
+            ? `${HF_DIRECT_URL}/gradio_api/call/respond/${json.event_id}`
+            : `${HF_DIRECT_URL}/call/respond/${json.event_id}`;
+
+          const eventRes = await fetch(streamUrl);
+          const textData = await eventRes.text();
+
+          const extractedText = extractTextFromGradioData(textData);
+          if (extractedText) return cleanResponse(extractedText);
+
+          const match = textData.match(/data:\s*\["(.*)"\]/);
+          if (match && match[1]) {
+            return cleanResponse(JSON.parse(`"${match[1]}"`));
           }
-        } catch {
-          // ignore stream parse error
+        }
+
+        // Handle /run/predict synchronous payload
+        if (json?.data) {
+          const extractedText = extractTextFromGradioData(json.data);
+          if (extractedText) return cleanResponse(extractedText);
         }
       }
+    } catch (err) {
+      console.warn(`Endpoint ${endpoint} failed:`, err);
     }
-  } catch (fallbackErr) {
-    console.error('Fallback HF Fetch Error:', fallbackErr);
   }
 
   throw new Error('Vidya is waking up on Hugging Face ZeroGPU. Please wait a few seconds and try again!');
@@ -112,11 +134,25 @@ function extractTextFromGradioData(data: unknown): string {
   if (!data) return '';
 
   if (typeof data === 'string') {
+    // If SSE text contains JSON lines
+    if (data.includes('data:')) {
+      const lines = data.split('\n');
+      for (const line of lines) {
+        if (line.startsWith('data:')) {
+          try {
+            const parsed = JSON.parse(line.substring(5).trim());
+            const text = extractTextFromGradioData(parsed);
+            if (text) return text;
+          } catch {
+            // ignore JSON parse error on partial lines
+          }
+        }
+      }
+    }
     return data;
   }
 
   if (Array.isArray(data)) {
-    // Gradio 5 returns array of component values: [chatbot_value, textbox_update_dict]
     const chatbotVal = data[0];
 
     let chatArray = chatbotVal;
@@ -127,23 +163,19 @@ function extractTextFromGradioData(data: unknown): string {
     if (Array.isArray(chatArray) && chatArray.length > 0) {
       const lastItem = chatArray[chatArray.length - 1];
 
-      // Format 1: Gradio 5 messages dict [{role: "assistant", content: "..."}]
       if (lastItem && typeof lastItem === 'object' && 'content' in lastItem && typeof lastItem.content === 'string') {
         return lastItem.content;
       }
 
-      // Format 2: Tuple [user_msg, assistant_msg]
       if (Array.isArray(lastItem) && lastItem.length >= 2) {
         return String(lastItem[1] || lastItem[0]);
       }
 
-      // Format 3: Tuple in string
       if (typeof lastItem === 'string') {
         return lastItem;
       }
     }
 
-    // Failsafe scan backwards for any message content or tuple
     for (let i = data.length - 1; i >= 0; i--) {
       const item = data[i];
       if (item && typeof item === 'object' && item !== null) {
