@@ -40,12 +40,12 @@ Powered by a fine-tuned 1.7B parameter model (`vedantjadhav701/edu-qwen-1.7b-mer
 
 ```mermaid
 graph TD
-    A[Student / User] -->|Next.js App Router UI| B[Vercel / Frontend]
-    B -->|Wikipedia REST API| C[Visuals & Reference Panel]
-    B -->|HTML5 Canvas Engine| D[Client-Side Math Plotter]
-    B -->|@gradio/client API| E[Hugging Face Space]
-    E -->|ZeroGPU Acceleration| F[Vidya 1.7B Model]
-    F -->|Inference Output| B
+    A["Student / User"] -->|"Next.js App Router UI"| B["Vercel / Frontend"]
+    B -->|"Wikipedia REST API"| C["Visuals & Reference Panel"]
+    B -->|"HTML5 Canvas Engine"| D["Client-Side Math Plotter"]
+    B -->|"Gradio Client API"| E["Hugging Face Space"]
+    E -->|"ZeroGPU Acceleration"| F["Vidya 1.7B Model"]
+    F -->|"Inference Output"| B
 ```
 
 ---
@@ -89,7 +89,7 @@ vidya-educational-llm/
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/VedantJadhav701/Vidya-1.7B.git vidya-educational-llm
+git clone https://github.com/VedantJadhav701/vidya-educational-llm.git
 cd vidya-educational-llm/frontend-nextjs
 ```
 
