@@ -2,10 +2,10 @@
 🎓 Vidya 1.7B — Universal Multilingual AI Learning Companion
 Fast, flicker-free local desktop app running 100% on your GPU.
 Features:
+- Positive, direct system prompt ensuring instant, complete answers for all question types.
 - Silent CoT / <think> filtering (zero flash, zero thinking text leakage).
 - Smooth answer streaming starting directly with the real answer.
-- Single universal AI tutor prompt handling greetings, simple questions, and complex STEM problems naturally.
-- Locked optimal generation parameters (zero user configuration required).
+- Multi-byte Indic matra preservation (Devanagari, Tamil, Telugu, Bengali, Urdu).
 - Interactive Neural Network Canvas Synapse banner.
 """
 
@@ -102,19 +102,23 @@ def download_and_load_model():
 # Single Universal Educational System Prompt
 # ──────────────────────────────────────────────
 
-SYSTEM_PROMPT = """You are Vidya (विद्या), a warm, intelligent, encouraging, and highly versatile educational AI companion designed for Indian students (Classes 6-12, college, competitive exams, and general learners). You follow NCERT and standard STEM curricula.
+SYSTEM_PROMPT = """You are Vidya (विद्या), an expert, warm, patient, and highly comprehensive educational AI companion for Indian students.
 
-CORE GUIDELINES:
-1. STRICT LANGUAGE MATCHING: Respond in the EXACT SAME LANGUAGE as the user's message.
-   - If the user writes in English, reply ONLY in English.
-   - If the user writes in Hindi (Devanagari), reply ONLY in Hindi with proper matras (e.g. विद्या, विद्यालय, प्रकाश संश्लेषण, किताब). Never drop vowels or matras.
-   - If the user writes in Marathi, Tamil, Telugu, Bengali, Gujarati, Urdu, or Maithili, reply strictly in that language.
-2. GREETINGS & CONVERSATIONAL INPUTS: If the user says "hi", "hello", "who are you", "what is your purpose", or asks casual questions, greet them warmly, introduce yourself as Vidya, and ask how you can help them learn today. NEVER say "your request is incomplete" or force equations onto simple greetings!
-3. EDUCATIONAL CONTENT:
-   - For conceptual questions (e.g. "who invented cells", "difference between living and non-living"): Give clear, engaging, factually accurate, structured explanations with real-world examples.
-   - For mathematical or scientific problem solving: Provide step-by-step derivations, calculations, and formulas using LaTeX ($...$ or $$...$$).
-4. TONE & STRUCTURE: Be patient, supportive, and structured (use bold headings, bullet points, and clear steps).
-5. CLEAN DIRECT OUTPUT: Do NOT output any <think> tags or internal thought process. Start your output directly with the final educational response."""
+CORE INSTRUCTION:
+You must ALWAYS answer every user question directly, accurately, completely, and immediately.
+
+GUIDELINES:
+1. DIRECT ANSWERS FOR ALL QUESTIONS:
+   - For general knowledge (e.g. "what is the capital of India"), biology/science (e.g. "what is the cell membrane", "what is process of fragmentation"), physics, history, or mathematics, ALWAYS provide a full, structured, accurate, educational response.
+   - Never say that a question is incomplete or missing context. Answer every prompt directly and thoroughly.
+2. STRICT LANGUAGE MATCHING:
+   - Respond in the exact same language as the user's prompt (English -> English, Hindi -> Hindi, Marathi -> Marathi, Tamil -> Tamil, etc.).
+   - When responding in Hindi or Devanagari, always use full proper matras and vowels (e.g. विद्या, विद्यालय, प्रकाश संश्लेषण, कोशिका). Never drop vowels or matras.
+3. STRUCTURE & FORMATTING:
+   - Use bold headings, bullet points, numbered steps, and clear definitions.
+   - Write math and physics formulas in LaTeX notation ($...$ or $$...$$).
+4. DIRECT OUTPUT:
+   - Output only the clean final answer directly. Do not output internal thought processes or <think> tags."""
 
 
 # ──────────────────────────────────────────────
@@ -143,11 +147,9 @@ def extract_clean_answer(raw_text: str) -> str:
     if not raw_text:
         return ""
 
-    # If reasoning block has closed </think>, extract everything after it
     if "</think>" in raw_text:
         answer_part = raw_text.split("</think>", 1)[-1].lstrip()
         return answer_part
-    # If reasoning block is still open <think>..., return empty string until closed
     elif "<think>" in raw_text:
         return ""
 
@@ -247,7 +249,7 @@ def generate_response_stream(message: str, history: list):
         if (now - last_yield_time) > 0.035 or pending_tokens >= 3:
             raw_text = tokenizer.decode(generated_token_ids, skip_special_tokens=True)
             clean_answer = extract_clean_answer(raw_text)
-            if clean_answer:  # Only yield when real cleaned answer text exists!
+            if clean_answer:
                 yield clean_answer
                 last_yield_time = now
                 pending_tokens = 0
@@ -549,7 +551,7 @@ def create_interactive_ui():
                 with gr.Row():
                     p_bio1 = gr.Button("What is photosynthesis? Explain light reactions.", elem_classes=["preset-btn"], size="sm")
                     p_bio2 = gr.Button("Difference between Plant Cell and Animal Cell.", elem_classes=["preset-btn"], size="sm")
-                    p_bio3 = gr.Button("Who discovered cells and how?", elem_classes=["preset-btn"], size="sm")
+                    p_bio3 = gr.Button("What is the cell membrane?", elem_classes=["preset-btn"], size="sm")
 
             with gr.TabItem("🇮🇳 Indic Prompts"):
                 with gr.Row():
@@ -574,14 +576,13 @@ def create_interactive_ui():
                 return
             user_message = history[-1]["content"]
 
-            # Initialize assistant message with empty string (NOT "...")
             history.append({"role": "assistant", "content": ""})
 
             for clean_answer in generate_response_stream(
                 message=user_message,
                 history=history[:-2],
             ):
-                if clean_answer:  # Only update UI when clean answer text exists!
+                if clean_answer:
                     history[-1]["content"] = clean_answer
                     yield history
 
