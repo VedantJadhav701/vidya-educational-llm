@@ -1,11 +1,12 @@
 """
-🎓 Vidya 1.7B — Single Universal Educational AI Companion
+🎓 Vidya 1.7B — Universal Multilingual AI Learning Companion
 Fast, flicker-free local desktop app running 100% on your GPU.
 Features:
+- Silent CoT / <think> filtering (zero flash, zero thinking text leakage).
+- Smooth answer streaming starting directly with the real answer.
 - Single universal AI tutor prompt handling greetings, simple questions, and complex STEM problems naturally.
 - Locked optimal generation parameters (zero user configuration required).
 - Interactive Neural Network Canvas Synapse banner.
-- Anti-flicker ~35ms batched streaming with multi-byte Indic matra preservation.
 """
 
 import os
@@ -113,7 +114,7 @@ CORE GUIDELINES:
    - For conceptual questions (e.g. "who invented cells", "difference between living and non-living"): Give clear, engaging, factually accurate, structured explanations with real-world examples.
    - For mathematical or scientific problem solving: Provide step-by-step derivations, calculations, and formulas using LaTeX ($...$ or $$...$$).
 4. TONE & STRUCTURE: Be patient, supportive, and structured (use bold headings, bullet points, and clear steps).
-5. CLEAN OUTPUT: Never output reasoning or thinking tags."""
+5. CLEAN DIRECT OUTPUT: Do NOT output any <think> tags or internal thought process. Start your output directly with the final educational response."""
 
 
 # ──────────────────────────────────────────────
@@ -137,8 +138,24 @@ class IndicTokenStreamer:
         self.queue.put(None)
 
 
+def extract_clean_answer(raw_text: str) -> str:
+    """Extract clean answer text while completely hiding <think>...</think> reasoning blocks."""
+    if not raw_text:
+        return ""
+
+    # If reasoning block has closed </think>, extract everything after it
+    if "</think>" in raw_text:
+        answer_part = raw_text.split("</think>", 1)[-1].lstrip()
+        return answer_part
+    # If reasoning block is still open <think>..., return empty string until closed
+    elif "<think>" in raw_text:
+        return ""
+
+    return raw_text.strip()
+
+
 def generate_response_stream(message: str, history: list):
-    """Generate educational response with smooth, flicker-free batched streaming (~35ms updates)."""
+    """Generate educational response with silent pre-filling and smooth, flicker-free answer streaming."""
     tokenizer, model = download_and_load_model()
 
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
@@ -217,30 +234,23 @@ def generate_response_stream(message: str, history: list):
         token_id = streamer.queue.get()
         if token_id is None:
             if pending_tokens > 0:
-                text = tokenizer.decode(generated_token_ids, skip_special_tokens=True)
-                clean_text = text
-                if "</think>" in clean_text:
-                    clean_text = clean_text.split("</think>", 1)[-1].strip()
-                elif "<think>" in clean_text:
-                    clean_text = ""
-                yield clean_text
+                raw_text = tokenizer.decode(generated_token_ids, skip_special_tokens=True)
+                clean_answer = extract_clean_answer(raw_text)
+                if clean_answer:
+                    yield clean_answer
             break
 
         generated_token_ids.append(token_id)
         pending_tokens += 1
 
-        # Smooth Token Batching: Yield every ~35ms or 3 tokens to eliminate screen flickering
         now = time.time()
         if (now - last_yield_time) > 0.035 or pending_tokens >= 3:
-            text = tokenizer.decode(generated_token_ids, skip_special_tokens=True)
-            clean_text = text
-            if "</think>" in clean_text:
-                clean_text = clean_text.split("</think>", 1)[-1].strip()
-            elif "<think>" in clean_text:
-                clean_text = ""
-            yield clean_text
-            last_yield_time = now
-            pending_tokens = 0
+            raw_text = tokenizer.decode(generated_token_ids, skip_special_tokens=True)
+            clean_answer = extract_clean_answer(raw_text)
+            if clean_answer:  # Only yield when real cleaned answer text exists!
+                yield clean_answer
+                last_yield_time = now
+                pending_tokens = 0
 
 
 # ──────────────────────────────────────────────
@@ -564,14 +574,16 @@ def create_interactive_ui():
                 return
             user_message = history[-1]["content"]
 
-            history.append({"role": "assistant", "content": "..."})
+            # Initialize assistant message with empty string (NOT "...")
+            history.append({"role": "assistant", "content": ""})
 
-            for chunk in generate_response_stream(
+            for clean_answer in generate_response_stream(
                 message=user_message,
                 history=history[:-2],
             ):
-                history[-1]["content"] = chunk
-                yield history
+                if clean_answer:  # Only update UI when clean answer text exists!
+                    history[-1]["content"] = clean_answer
+                    yield history
 
         submit_event = msg_input.submit(
             user_submit, [msg_input, chatbot], [msg_input, chatbot], queue=False
@@ -600,14 +612,15 @@ def create_interactive_ui():
         def load_preset_and_trigger(preset_text, history):
             history = history or []
             history.append({"role": "user", "content": preset_text})
-            history.append({"role": "assistant", "content": "..."})
+            history.append({"role": "assistant", "content": ""})
 
-            for chunk in generate_response_stream(
+            for clean_answer in generate_response_stream(
                 message=preset_text,
                 history=history[:-2],
             ):
-                history[-1]["content"] = chunk
-                yield history
+                if clean_answer:
+                    history[-1]["content"] = clean_answer
+                    yield history
 
         preset_buttons = [
             p_math1, p_math2, p_math3,
