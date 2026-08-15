@@ -1,7 +1,10 @@
 """
-🎓 Vidya 1.7B — Upgraded Interactive Local Desktop App
-Runs 100% locally on your NVIDIA GPU with real-time streaming, KaTeX math,
-interactive pedagogical modes, subject/language preset chips, and parameter controls.
+🎓 Vidya 1.7B — Futuristic Neural Network Desktop Interface
+Featuring:
+- Interactive Neural Network Canvas Synapse Particles (3D Cyber Intro)
+- Flicker-Free Smooth Token Streaming (~35ms batched DOM rendering)
+- Multi-byte Indic UTF-8 preservation (Devanagari, Tamil, Telugu, Bengali, Urdu)
+- 4 Pedagogical Modes (NCERT, JEE/NEET, Elementary, Interactive Quiz)
 """
 
 import os
@@ -89,7 +92,7 @@ def download_and_load_model():
 
 
 # ──────────────────────────────────────────────
-# System Prompt Modes
+# Pedagogical System Prompts
 # ──────────────────────────────────────────────
 
 SYSTEM_PROMPTS = {
@@ -145,7 +148,7 @@ class IndicTokenStreamer:
 
 
 def generate_response_stream(message: str, history: list, mode_name: str, temperature: float, top_p: float, max_tokens: int):
-    """Generate educational streaming response with full history context and dynamic parameter support."""
+    """Generate educational response with smooth, flicker-free batched streaming (~35ms updates)."""
     tokenizer, model = download_and_load_model()
 
     system_prompt = SYSTEM_PROMPTS.get(mode_name, SYSTEM_PROMPTS["👨‍🏫 NCERT School Tutor (Class 6-12)"])
@@ -218,85 +221,131 @@ def generate_response_stream(message: str, history: list, mode_name: str, temper
     thread.start()
 
     generated_token_ids = []
+    last_yield_time = time.time()
+    pending_tokens = 0
+
     while True:
         token_id = streamer.queue.get()
         if token_id is None:
+            # Yield final text on complete token stream
+            if pending_tokens > 0:
+                text = tokenizer.decode(generated_token_ids, skip_special_tokens=True)
+                clean_text = text
+                if "</think>" in clean_text:
+                    clean_text = clean_text.split("</think>", 1)[-1].strip()
+                elif "<think>" in clean_text:
+                    clean_text = ""
+                yield clean_text
             break
+
         generated_token_ids.append(token_id)
+        pending_tokens += 1
 
-        # Full accumulated array decoding preserves multi-byte Indic matras
-        text = tokenizer.decode(generated_token_ids, skip_special_tokens=True)
-
-        clean_text = text
-        if "</think>" in clean_text:
-            clean_text = clean_text.split("</think>", 1)[-1].strip()
-        elif "<think>" in clean_text:
-            clean_text = ""
-
-        yield clean_text
+        # Smooth Token Batching: Yield every ~35ms or every 3 tokens to prevent DOM flickering
+        now = time.time()
+        if (now - last_yield_time) > 0.035 or pending_tokens >= 3:
+            text = tokenizer.decode(generated_token_ids, skip_special_tokens=True)
+            clean_text = text
+            if "</think>" in clean_text:
+                clean_text = clean_text.split("</think>", 1)[-1].strip()
+            elif "<think>" in clean_text:
+                clean_text = ""
+            yield clean_text
+            last_yield_time = now
+            pending_tokens = 0
 
 
 # ──────────────────────────────────────────────
-# Custom Modern UI Styling
+# Neural Network Canvas & Flicker-Free CSS
 # ──────────────────────────────────────────────
 
 CUSTOM_CSS = """
 :root {
     --primary-color: #3b82f6;
-    --bg-dark: #0f172a;
-    --card-bg: #1e293b;
+    --bg-dark: #070a13;
+    --card-bg: #0f172a;
 }
 
 body, .gradio-container {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
-    background-color: #0b0f19 !important;
+    background-color: #030712 !important;
+    color: #f3f4f6 !important;
 }
 
-.main-header {
-    background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 50%, #172554 100%);
+/* 🧠 Neural Network Hero Banner */
+.neural-banner {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(135deg, #090d16 0%, #0f172a 50%, #1e1b4b 100%);
     border-radius: 20px;
-    padding: 24px 32px;
+    overflow: hidden;
     margin-bottom: 20px;
-    border: 1px solid rgba(99, 102, 241, 0.2);
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    color: white;
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.7), 0 0 20px rgba(99, 102, 241, 0.15);
 }
 
-.main-header h1 {
-    font-size: 32px;
+#neuralCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.85;
+}
+
+.neural-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at center, rgba(3, 7, 18, 0.2) 0%, rgba(3, 7, 18, 0.7) 100%);
+    pointer-events: none;
+    text-align: center;
+    padding: 10px 20px;
+}
+
+.neural-title {
+    font-size: 30px;
     font-weight: 800;
-    margin: 0 0 8px 0;
-    background: linear-gradient(90deg, #60a5fa, #a78bfa, #f472b6);
+    margin: 0 0 6px 0;
+    background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -0.5px;
+    text-shadow: 0 0 30px rgba(96, 165, 250, 0.3);
 }
 
-.main-header p {
-    font-size: 15px;
+.neural-subtitle {
+    font-size: 14px;
     color: #94a3b8;
-    margin: 0 0 16px 0;
+    margin: 0 0 12px 0;
+    font-weight: 500;
 }
 
 .badge-container {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: wrap;
 }
 
 .badge-pill {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 6px 14px;
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 5px 12px;
     border-radius: 20px;
-    font-size: 12.5px;
+    font-size: 12px;
     font-weight: 600;
     color: #e2e8f0;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
 }
 
 .badge-green {
@@ -317,46 +366,145 @@ body, .gradio-container {
     color: #60a5fa;
 }
 
+/* ⚡ Anti-Flicker & UI Stabilization */
+.chatbot .message {
+    contain: content;
+    will-change: transform, opacity;
+}
+
+.message-wrap {
+    transition: none !important;
+}
+
 .preset-btn {
     border-radius: 12px !important;
     font-size: 13px !important;
     font-weight: 500 !important;
+    background: rgba(30, 41, 59, 0.7) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
     transition: all 0.2s ease !important;
 }
 
 .preset-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+    background: rgba(59, 130, 246, 0.2) !important;
+    border-color: rgba(59, 130, 246, 0.4) !important;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25) !important;
 }
 
 footer { display: none !important; }
 """
 
+# HTML5 Neural Network Particle Synapse Canvas Script
+NEURAL_CANVAS_HTML = """
+<div class="neural-banner">
+    <canvas id="neuralCanvas"></canvas>
+    <div class="neural-overlay">
+        <div class="neural-title">🧠 VIDYA 1.7B — NEURAL MATRIX INTERFACE</div>
+        <div class="neural-subtitle">QUANTUM EDUCATIONAL INTELLIGENCE • RTX 3050 ACCELERATED</div>
+        <div class="badge-container">
+            <span class="badge-pill badge-green">⚡ GPU Accelerator (RTX 3050 FP16)</span>
+            <span class="badge-pill badge-purple">🏆 Benchmark Score: 93.3% Accuracy</span>
+            <span class="badge-pill badge-blue">🧪 Chem 99.4% • ⚛️ Phys 95.6% • 🧬 Bio 95.6%</span>
+            <span class="badge-pill">🔒 100% Private Offline Engine</span>
+        </div>
+    </div>
+</div>
+
+<script>
+(function initNeuralCanvas() {
+    function setup() {
+        const canvas = document.getElementById('neuralCanvas');
+        if (!canvas) {
+            setTimeout(setup, 100);
+            return;
+        }
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = canvas.parentElement.clientWidth || 800;
+        let height = canvas.height = canvas.parentElement.clientHeight || 180;
+
+        window.addEventListener('resize', () => {
+            if (canvas && canvas.parentElement) {
+                width = canvas.width = canvas.parentElement.clientWidth;
+                height = canvas.height = canvas.parentElement.clientHeight;
+            }
+        });
+
+        const particles = [];
+        const numParticles = 48;
+
+        for (let i = 0; i < numParticles; i++) {
+            particles.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 0.9,
+                vy: (Math.random() - 0.5) * 0.9,
+                radius: Math.random() * 2.2 + 1.2,
+                color: Math.random() > 0.4 ? '#38bdf8' : (Math.random() > 0.5 ? '#a855f7' : '#ec4899')
+            });
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, width, height);
+
+            // Draw connecting Synapse lines between close neural nodes
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 110) {
+                        const alpha = (1 - dist / 110) * 0.65;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(129, 140, 248, ${alpha})`;
+                        ctx.lineWidth = 0.95;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Update particle positions and render glowing nodes
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > width) p.vx *= -1;
+                if (p.y < 0 || p.y > height) p.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.shadowBlur = 12;
+                ctx.shadowColor = p.color;
+                ctx.fill();
+            });
+
+            requestAnimationFrame(draw);
+        }
+        draw();
+    }
+    setup();
+})();
+</script>
+"""
+
 
 # ──────────────────────────────────────────────
-# Build Gradio UI with Blocks
+# Build Gradio UI
 # ──────────────────────────────────────────────
 
 def create_interactive_ui():
-    """Build a rich, tabbed, highly interactive Gradio UI."""
-    with gr.Blocks(title="Vidya 1.7B — Multilingual AI Learning Companion", css=CUSTOM_CSS) as demo:
+    """Build a rich, tabbed, highly interactive Gradio UI with Neural Synapse Canvas."""
+    with gr.Blocks(title="Vidya 1.7B — Neural AI Learning Companion", css=CUSTOM_CSS) as demo:
 
-        # Header Banner
-        gr.HTML("""
-        <div class="main-header">
-            <h1>🎓 Vidya 1.7B — Educational AI Companion</h1>
-            <p>An Open-Source Multilingual NCERT-Focused AI Tutor for 11 Indian Languages</p>
-            <div class="badge-container">
-                <span class="badge-pill badge-green">⚡ Local GPU (NVIDIA RTX 3050)</span>
-                <span class="badge-pill badge-purple">🏆 Benchmark Score: 93.3% Accuracy</span>
-                <span class="badge-pill badge-blue">🧪 Chem 99.4% • ⚛️ Phys 95.6% • 🧬 Bio 95.6%</span>
-                <span class="badge-pill">🔒 100% Private & Offline</span>
-            </div>
-        </div>
-        """)
+        # Neural Network Synapse Banner
+        gr.HTML(NEURAL_CANVAS_HTML)
 
         with gr.Row():
-            # Left Column: Chat Interface & Preset Explorer
+            # Left Column: Chatbot & Prompt Explorer
             with gr.Column(scale=3):
                 chatbot = gr.Chatbot(
                     height=540,
@@ -382,7 +530,7 @@ def create_interactive_ui():
                     clear_btn = gr.Button("🗑️ Clear Chat", variant="secondary", size="sm")
                     stop_btn = gr.Button("🛑 Stop", variant="stop", size="sm")
 
-                # Interactive Preset Prompt Explorer Chips
+                # Interactive Prompt Explorer Chips
                 gr.Markdown("### 💡 Quick Prompt Explorer (Click to Ask)")
                 with gr.Tabs():
                     with gr.TabItem("📐 Mathematics"):
@@ -416,7 +564,7 @@ def create_interactive_ui():
                             p_ind3 = gr.Button("ஒளிச்சேர்க்கை என்றால் என்ன?", elem_classes=["preset-btn"], size="sm")
                             p_ind4 = gr.Button("కిరణజన్య సంయోగ క్రియ అంటే ఏమిటి?", elem_classes=["preset-btn"], size="sm")
 
-            # Right Column: Pedagogical Modes & Advanced Settings
+            # Right Column: Pedagogical Modes & Advanced Controls
             with gr.Column(scale=1):
                 gr.Markdown("### 👨‍🏫 Pedagogical Tutor Mode")
                 mode_dropdown = gr.Dropdown(
@@ -456,6 +604,7 @@ def create_interactive_ui():
                     - **Precision**: `FP16 (Half Precision)`
                     - **Local Model Path**: `local/models/edu-qwen-1.7b-merged`
                     - **Benchmark Accuracy**: **93.3%**
+                    - **Streaming Polish**: **Flicker-Free ~35ms Batched Rendering**
                     """)
 
         # ──────────────────────────────────────────────
@@ -474,12 +623,11 @@ def create_interactive_ui():
                 return
             user_message = history[-1]["content"]
 
-            # Initialize assistant turn
             history.append({"role": "assistant", "content": "..."})
 
             for chunk in generate_response_stream(
                 message=user_message,
-                history=history[:-2],  # Exclude current uncompleted turn
+                history=history[:-2],
                 mode_name=mode_name,
                 temperature=temperature,
                 top_p=top_p,
@@ -488,7 +636,6 @@ def create_interactive_ui():
                 history[-1]["content"] = chunk
                 yield history
 
-        # Connect Send Button & Enter Key
         submit_event = msg_input.submit(
             user_submit, [msg_input, chatbot], [msg_input, chatbot], queue=False
         ).then(
@@ -553,22 +700,21 @@ def create_interactive_ui():
 
 if __name__ == "__main__":
     print()
-    print("=" * 65)
-    print("  🎓 Vidya 1.7B — Upgraded Interactive Educational AI Companion")
-    print("=" * 65)
+    print("=" * 70)
+    print("  🧠 Vidya 1.7B — Futuristic Neural Network Desktop Interface")
+    print("=" * 70)
     print()
 
     # Pre-load model before starting server
     download_and_load_model()
 
     print()
-    print("Starting Vidya interactive desktop web application...")
+    print("Starting Vidya Neural Web Interface...")
     print("Local URL: http://localhost:7860")
     print()
 
     demo_app = create_interactive_ui()
 
-    # Open browser automatically after server starts
     def auto_open_browser():
         time.sleep(2)
         webbrowser.open("http://localhost:7860")
