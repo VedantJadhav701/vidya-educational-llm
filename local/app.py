@@ -199,9 +199,7 @@ def generate_response(message: str, history: list):
 # ──────────────────────────────────────────────
 
 CUSTOM_CSS = """
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
-* { font-family: 'Inter', sans-serif !important; }
+* { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important; }
 
 .gradio-container {
     max-width: 900px !important;
