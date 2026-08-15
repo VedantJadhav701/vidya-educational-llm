@@ -111,14 +111,28 @@ def download_and_load_model():
 
 
 # ──────────────────────────────────────────────
-# Generation (Streaming)
+# Generation (Streaming with Indic Matra Preservation)
 # ──────────────────────────────────────────────
+
+class IndicTokenStreamer:
+    """Queue-based streamer that yields accumulated token IDs to preserve multi-byte Indic UTF-8 matras."""
+    def __init__(self, tokenizer):
+        self.tokenizer = tokenizer
+        from queue import Queue
+        self.queue = Queue()
+
+    def put(self, value):
+        if len(value.shape) > 1:
+            value = value[0]
+        for t in value.tolist():
+            self.queue.put(t)
+
+    def end(self):
+        self.queue.put(None)
+
 
 def generate_response(message: str, history: list):
     """Generate an educational response using live streaming for real-time UI updates."""
-    from transformers import TextIteratorStreamer
-    from threading import Thread
-
     tokenizer, model = download_and_load_model()
 
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
@@ -167,7 +181,7 @@ def generate_response(message: str, history: list):
         if attention_mask is not None:
             attention_mask = attention_mask.to(model.device)
 
-    streamer = TextIteratorStreamer(tokenizer, skip_prompt=True, skip_special_tokens=True)
+    streamer = IndicTokenStreamer(tokenizer)
 
     gen_kwargs = {
         "input_ids": input_ids,
@@ -185,18 +199,25 @@ def generate_response(message: str, history: list):
         with torch.inference_mode():
             model.generate(**gen_kwargs)
 
+    from threading import Thread
     thread = Thread(target=generate_worker)
     thread.start()
 
-    partial_text = ""
-    for new_text in streamer:
-        partial_text += new_text
+    generated_token_ids = []
+    while True:
+        token_id = streamer.queue.get()
+        if token_id is None:
+            break
+        generated_token_ids.append(token_id)
 
-        clean_text = partial_text
+        # Full accumulated decoding preserves multi-byte Indic characters (Devanagari, Tamil, Telugu, etc.)
+        text = tokenizer.decode(generated_token_ids, skip_special_tokens=True)
+
+        clean_text = text
         if "</think>" in clean_text:
             clean_text = clean_text.split("</think>", 1)[-1].strip()
         elif "<think>" in clean_text:
-            clean_text = clean_text.replace("<think>", "").strip()
+            clean_text = ""
 
         yield clean_text
 
