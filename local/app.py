@@ -1,10 +1,11 @@
 """
-🎓 Vidya 1.7B — Futuristic Neural Network Desktop Interface
-Featuring:
-- Interactive Neural Network Canvas Synapse Particles (3D Cyber Intro)
-- Flicker-Free Smooth Token Streaming (~35ms batched DOM rendering)
-- Multi-byte Indic UTF-8 preservation (Devanagari, Tamil, Telugu, Bengali, Urdu)
-- 4 Pedagogical Modes (NCERT, JEE/NEET, Elementary, Interactive Quiz)
+🎓 Vidya 1.7B — Single Universal Educational AI Companion
+Fast, flicker-free local desktop app running 100% on your GPU.
+Features:
+- Single universal AI tutor prompt handling greetings, simple questions, and complex STEM problems naturally.
+- Locked optimal generation parameters (zero user configuration required).
+- Interactive Neural Network Canvas Synapse banner.
+- Anti-flicker ~35ms batched streaming with multi-byte Indic matra preservation.
 """
 
 import os
@@ -29,11 +30,16 @@ import gradio as gr
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
 # ──────────────────────────────────────────────
-# Model Configuration & Path Setup
+# Configuration & Locked Optimal Parameters
 # ──────────────────────────────────────────────
 
 MODEL_ID = "vedantjadhav701/edu-qwen-1.7b-merged"
 MODEL_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "models", "edu-qwen-1.7b-merged")
+
+MAX_NEW_TOKENS = 1024
+TEMPERATURE = 0.3
+TOP_P = 0.9
+REPETITION_PENALTY = 1.0
 
 _tokenizer = None
 _model = None
@@ -92,38 +98,22 @@ def download_and_load_model():
 
 
 # ──────────────────────────────────────────────
-# Pedagogical System Prompts
+# Single Universal Educational System Prompt
 # ──────────────────────────────────────────────
 
-SYSTEM_PROMPTS = {
-    "👨‍🏫 NCERT School Tutor (Class 6-12)": """You are Vidya (विद्या), a multilingual educational AI assistant designed for Indian students (Classes 6-12). You follow NCERT and standard Indian curricula.
-CORE RULES:
-1. STRICT LANGUAGE MATCHING: Always reply in the EXACT SAME LANGUAGE as the user's prompt. If the user asks in English, reply ONLY in English. If the user asks in Hindi/Devanagari, reply ONLY in Hindi. If the user asks in Marathi/Tamil/Telugu/Gujarati/Bengali/Urdu/Maithili, reply strictly in that language.
-2. STRUCTURE: Use clear headings, bullet points, numbered steps, and formulas.
-3. FORMULAS: Write math formulas in LaTeX notation wrapped in $ or $$ delimiters.
-4. ACCURACY: Only provide factually correct, curriculum-aligned information.
-5. TONE: Be encouraging, patient, and supportive like a favorite teacher.
-6. DEPTH: Give complete, detailed explanations with examples and real-world connections. Do not stop midway.""",
+SYSTEM_PROMPT = """You are Vidya (विद्या), a warm, intelligent, encouraging, and highly versatile educational AI companion designed for Indian students (Classes 6-12, college, competitive exams, and general learners). You follow NCERT and standard STEM curricula.
 
-    "🚀 JEE / NEET Exam Prep Mode": """You are Vidya (विद्या) in JEE/NEET Competitive Exam Mode. You provide rigorous, high-level problem-solving guidance for Indian entrance exams (JEE Main, JEE Advanced, NEET, KVPY).
-CORE RULES:
-1. STRICT LANGUAGE MATCHING: Reply strictly in the user's prompt language.
-2. RIGOR: Provide complete step-by-step mathematical proofs, physical derivations, chemical balancing, shortcuts, and key conceptual pitfalls.
-3. FORMULAS: Use precise LaTeX math notation ($/$$).
-4. TIPS: Include "JEE/NEET Exam Strategy Tip" at the end of your response.""",
-
-    "👶 Simple Tutor Mode (Class 1-5)": """You are Vidya (विद्या) in Simple Tutor Mode for younger elementary students (Classes 1-5).
-CORE RULES:
-1. STRICT LANGUAGE MATCHING: Reply strictly in the user's prompt language.
-2. SIMPLICITY: Use short sentences, simple words, friendly emojis, and easy real-world analogies (like toys, fruits, playground physics).
-3. ENCOURAGEMENT: Praise the student for asking great questions!""",
-
-    "🧪 Interactive Quiz Tutor": """You are Vidya (विद्या) in Interactive Quiz Master Mode.
-CORE RULES:
-1. STRICT LANGUAGE MATCHING: Reply strictly in the user's prompt language.
-2. EXPLANATION: Briefly explain the core educational topic requested by the student (2-3 paragraphs).
-3. QUIZ: End your response with 2 interactive multiple-choice practice questions (A, B, C, D) to test the student's understanding and ask them to choose the correct answer!"""
-}
+CORE GUIDELINES:
+1. STRICT LANGUAGE MATCHING: Respond in the EXACT SAME LANGUAGE as the user's message.
+   - If the user writes in English, reply ONLY in English.
+   - If the user writes in Hindi (Devanagari), reply ONLY in Hindi with proper matras (e.g. विद्या, विद्यालय, प्रकाश संश्लेषण, किताब). Never drop vowels or matras.
+   - If the user writes in Marathi, Tamil, Telugu, Bengali, Gujarati, Urdu, or Maithili, reply strictly in that language.
+2. GREETINGS & CONVERSATIONAL INPUTS: If the user says "hi", "hello", "who are you", "what is your purpose", or asks casual questions, greet them warmly, introduce yourself as Vidya, and ask how you can help them learn today. NEVER say "your request is incomplete" or force equations onto simple greetings!
+3. EDUCATIONAL CONTENT:
+   - For conceptual questions (e.g. "who invented cells", "difference between living and non-living"): Give clear, engaging, factually accurate, structured explanations with real-world examples.
+   - For mathematical or scientific problem solving: Provide step-by-step derivations, calculations, and formulas using LaTeX ($...$ or $$...$$).
+4. TONE & STRUCTURE: Be patient, supportive, and structured (use bold headings, bullet points, and clear steps).
+5. CLEAN OUTPUT: Never output reasoning or thinking tags."""
 
 
 # ──────────────────────────────────────────────
@@ -131,7 +121,7 @@ CORE RULES:
 # ──────────────────────────────────────────────
 
 class IndicTokenStreamer:
-    """Queue-based streamer that yields accumulated generated token IDs to preserve multi-byte Indic UTF-8 characters."""
+    """Queue-based streamer yielding accumulated generated token IDs to preserve multi-byte Indic UTF-8 matras."""
     def __init__(self, tokenizer):
         self.tokenizer = tokenizer
         from queue import Queue
@@ -147,12 +137,11 @@ class IndicTokenStreamer:
         self.queue.put(None)
 
 
-def generate_response_stream(message: str, history: list, mode_name: str, temperature: float, top_p: float, max_tokens: int):
+def generate_response_stream(message: str, history: list):
     """Generate educational response with smooth, flicker-free batched streaming (~35ms updates)."""
     tokenizer, model = download_and_load_model()
 
-    system_prompt = SYSTEM_PROMPTS.get(mode_name, SYSTEM_PROMPTS["👨‍🏫 NCERT School Tutor (Class 6-12)"])
-    messages = [{"role": "system", "content": system_prompt}]
+    messages = [{"role": "system", "content": SYSTEM_PROMPT}]
 
     # Reconstruct chat history
     for item in history:
@@ -188,7 +177,7 @@ def generate_response_stream(message: str, history: list, mode_name: str, temper
             raw_mask = getattr(encoded, "attention_mask", None)
             attention_mask = raw_mask.to(model.device) if raw_mask is not None else None
     except Exception:
-        prompt_str = f"<|im_start|>system\n{system_prompt}<|im_end|>\n"
+        prompt_str = f"<|im_start|>system\n{SYSTEM_PROMPT}<|im_end|>\n"
         for m in messages[1:]:
             prompt_str += f"<|im_start|>{m['role']}\n{m['content']}<|im_end|>\n"
         prompt_str += "<|im_start|>assistant\n"
@@ -202,11 +191,11 @@ def generate_response_stream(message: str, history: list, mode_name: str, temper
 
     gen_kwargs = {
         "input_ids": input_ids,
-        "max_new_tokens": int(max_tokens),
-        "temperature": float(temperature),
-        "top_p": float(top_p),
-        "repetition_penalty": 1.0,
-        "do_sample": True if temperature > 0.05 else False,
+        "max_new_tokens": MAX_NEW_TOKENS,
+        "temperature": TEMPERATURE,
+        "top_p": TOP_P,
+        "repetition_penalty": REPETITION_PENALTY,
+        "do_sample": True,
         "streamer": streamer,
     }
     if attention_mask is not None:
@@ -227,7 +216,6 @@ def generate_response_stream(message: str, history: list, mode_name: str, temper
     while True:
         token_id = streamer.queue.get()
         if token_id is None:
-            # Yield final text on complete token stream
             if pending_tokens > 0:
                 text = tokenizer.decode(generated_token_ids, skip_special_tokens=True)
                 clean_text = text
@@ -241,7 +229,7 @@ def generate_response_stream(message: str, history: list, mode_name: str, temper
         generated_token_ids.append(token_id)
         pending_tokens += 1
 
-        # Smooth Token Batching: Yield every ~35ms or every 3 tokens to prevent DOM flickering
+        # Smooth Token Batching: Yield every ~35ms or 3 tokens to eliminate screen flickering
         now = time.time()
         if (now - last_yield_time) > 0.035 or pending_tokens >= 3:
             text = tokenizer.decode(generated_token_ids, skip_special_tokens=True)
@@ -256,7 +244,7 @@ def generate_response_stream(message: str, history: list, mode_name: str, temper
 
 
 # ──────────────────────────────────────────────
-# Neural Network Canvas & Flicker-Free CSS
+# Neural Network Canvas & Clean CSS
 # ──────────────────────────────────────────────
 
 CUSTOM_CSS = """
@@ -276,7 +264,7 @@ body, .gradio-container {
 .neural-banner {
     position: relative;
     width: 100%;
-    height: 180px;
+    height: 170px;
     background: linear-gradient(135deg, #090d16 0%, #0f172a 50%, #1e1b4b 100%);
     border-radius: 20px;
     overflow: hidden;
@@ -395,15 +383,15 @@ body, .gradio-container {
 footer { display: none !important; }
 """
 
-# HTML5 Neural Network Particle Synapse Canvas Script
+# HTML5 Neural Network Synapse Particle Canvas
 NEURAL_CANVAS_HTML = """
 <div class="neural-banner">
     <canvas id="neuralCanvas"></canvas>
     <div class="neural-overlay">
-        <div class="neural-title">🧠 VIDYA 1.7B — NEURAL MATRIX INTERFACE</div>
-        <div class="neural-subtitle">QUANTUM EDUCATIONAL INTELLIGENCE • RTX 3050 ACCELERATED</div>
+        <div class="neural-title">🧠 VIDYA 1.7B — NEURAL AI COMPANION</div>
+        <div class="neural-subtitle">QUANTUM EDUCATIONAL INTELLIGENCE • GPU ACCELERATED</div>
         <div class="badge-container">
-            <span class="badge-pill badge-green">⚡ GPU Accelerator (RTX 3050 FP16)</span>
+            <span class="badge-pill badge-green">⚡ Local GPU Engine (NVIDIA RTX 3050)</span>
             <span class="badge-pill badge-purple">🏆 Benchmark Score: 93.3% Accuracy</span>
             <span class="badge-pill badge-blue">🧪 Chem 99.4% • ⚛️ Phys 95.6% • 🧬 Bio 95.6%</span>
             <span class="badge-pill">🔒 100% Private Offline Engine</span>
@@ -421,7 +409,7 @@ NEURAL_CANVAS_HTML = """
         }
         const ctx = canvas.getContext('2d');
         let width = canvas.width = canvas.parentElement.clientWidth || 800;
-        let height = canvas.height = canvas.parentElement.clientHeight || 180;
+        let height = canvas.height = canvas.parentElement.clientHeight || 170;
 
         window.addEventListener('resize', () => {
             if (canvas && canvas.parentElement) {
@@ -447,7 +435,6 @@ NEURAL_CANVAS_HTML = """
         function draw() {
             ctx.clearRect(0, 0, width, height);
 
-            // Draw connecting Synapse lines between close neural nodes
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
@@ -466,7 +453,6 @@ NEURAL_CANVAS_HTML = """
                 }
             }
 
-            // Update particle positions and render glowing nodes
             particles.forEach(p => {
                 p.x += p.vx;
                 p.y += p.vy;
@@ -493,119 +479,74 @@ NEURAL_CANVAS_HTML = """
 
 
 # ──────────────────────────────────────────────
-# Build Gradio UI
+# Build Clean Gradio UI
 # ──────────────────────────────────────────────
 
 def create_interactive_ui():
-    """Build a rich, tabbed, highly interactive Gradio UI with Neural Synapse Canvas."""
-    with gr.Blocks(title="Vidya 1.7B — Neural AI Learning Companion", css=CUSTOM_CSS) as demo:
+    """Build a clean, unified Gradio UI without confusing settings or parameter sliders."""
+    with gr.Blocks(title="Vidya 1.7B — Multilingual AI Learning Companion", css=CUSTOM_CSS) as demo:
 
         # Neural Network Synapse Banner
         gr.HTML(NEURAL_CANVAS_HTML)
 
+        # Main Chat Area
+        chatbot = gr.Chatbot(
+            height=520,
+            avatar_images=(None, "https://api.iconify.design/heroicons:academic-cap-20-solid.svg?color=%2360a5fa"),
+            latex_delimiters=[
+                {"left": "$$", "right": "$$", "display": True},
+                {"left": "$", "right": "$", "display": False},
+            ],
+            show_label=False,
+        )
+
         with gr.Row():
-            # Left Column: Chatbot & Prompt Explorer
-            with gr.Column(scale=3):
-                chatbot = gr.Chatbot(
-                    height=540,
-                    avatar_images=(None, "https://api.iconify.design/heroicons:academic-cap-20-solid.svg?color=%2360a5fa"),
-                    latex_delimiters=[
-                        {"left": "$$", "right": "$$", "display": True},
-                        {"left": "$", "right": "$", "display": False},
-                    ],
-                    show_label=False,
-                )
+            msg_input = gr.Textbox(
+                placeholder="Ask Vidya anything about Maths, Physics, Chemistry, Biology, NCERT...",
+                show_label=False,
+                container=False,
+                scale=5,
+                autofocus=True,
+            )
+            send_btn = gr.Button("Send 🚀", variant="primary", scale=1)
 
+        with gr.Row():
+            clear_btn = gr.Button("🗑️ Clear Chat", variant="secondary", size="sm")
+            stop_btn = gr.Button("🛑 Stop", variant="stop", size="sm")
+
+        # Interactive Prompt Explorer Chips
+        gr.Markdown("### 💡 Quick Educational Explorer (Click to Ask)")
+        with gr.Tabs():
+            with gr.TabItem("📐 Mathematics"):
                 with gr.Row():
-                    msg_input = gr.Textbox(
-                        placeholder="Ask Vidya anything about Maths, Physics, Chemistry, Biology, NCERT...",
-                        show_label=False,
-                        container=False,
-                        scale=5,
-                        autofocus=True,
-                    )
-                    send_btn = gr.Button("Send 🚀", variant="primary", scale=1)
+                    p_math1 = gr.Button("Solve x² - 5x + 6 = 0 step by step.", elem_classes=["preset-btn"], size="sm")
+                    p_math2 = gr.Button("Explain Pythagoras theorem with proof.", elem_classes=["preset-btn"], size="sm")
+                    p_math3 = gr.Button("What is differentiation? Give real examples.", elem_classes=["preset-btn"], size="sm")
 
+            with gr.TabItem("⚛️ Physics"):
                 with gr.Row():
-                    clear_btn = gr.Button("🗑️ Clear Chat", variant="secondary", size="sm")
-                    stop_btn = gr.Button("🛑 Stop", variant="stop", size="sm")
+                    p_phys1 = gr.Button("Explain Newton's Laws of Motion with real examples.", elem_classes=["preset-btn"], size="sm")
+                    p_phys2 = gr.Button("What is Ohm's Law? Write formula and units.", elem_classes=["preset-btn"], size="sm")
+                    p_phys3 = gr.Button("Explain Work-Energy Theorem.", elem_classes=["preset-btn"], size="sm")
 
-                # Interactive Prompt Explorer Chips
-                gr.Markdown("### 💡 Quick Prompt Explorer (Click to Ask)")
-                with gr.Tabs():
-                    with gr.TabItem("📐 Mathematics"):
-                        with gr.Row():
-                            p_math1 = gr.Button("Solve x² - 5x + 6 = 0 step by step.", elem_classes=["preset-btn"], size="sm")
-                            p_math2 = gr.Button("Explain Pythagoras theorem with proof.", elem_classes=["preset-btn"], size="sm")
-                            p_math3 = gr.Button("What is differentiation? Give real examples.", elem_classes=["preset-btn"], size="sm")
+            with gr.TabItem("🧪 Chemistry"):
+                with gr.Row():
+                    p_chem1 = gr.Button("Explain periodic table trends in electronegativity.", elem_classes=["preset-btn"], size="sm")
+                    p_chem2 = gr.Button("How to balance chemical equations?", elem_classes=["preset-btn"], size="sm")
+                    p_chem3 = gr.Button("What is Avogadro's number and mole concept?", elem_classes=["preset-btn"], size="sm")
 
-                    with gr.TabItem("⚛️ Physics"):
-                        with gr.Row():
-                            p_phys1 = gr.Button("Explain Newton's Laws of Motion with real examples.", elem_classes=["preset-btn"], size="sm")
-                            p_phys2 = gr.Button("What is Ohm's Law? Write formula and units.", elem_classes=["preset-btn"], size="sm")
-                            p_phys3 = gr.Button("Explain Work-Energy Theorem.", elem_classes=["preset-btn"], size="sm")
+            with gr.TabItem("🧬 Biology"):
+                with gr.Row():
+                    p_bio1 = gr.Button("What is photosynthesis? Explain light reactions.", elem_classes=["preset-btn"], size="sm")
+                    p_bio2 = gr.Button("Difference between Plant Cell and Animal Cell.", elem_classes=["preset-btn"], size="sm")
+                    p_bio3 = gr.Button("Who discovered cells and how?", elem_classes=["preset-btn"], size="sm")
 
-                    with gr.TabItem("🧪 Chemistry"):
-                        with gr.Row():
-                            p_chem1 = gr.Button("Explain periodic table trends in electronegativity.", elem_classes=["preset-btn"], size="sm")
-                            p_chem2 = gr.Button("How to balance chemical equations?", elem_classes=["preset-btn"], size="sm")
-                            p_chem3 = gr.Button("What is Avogadro's number and mole concept?", elem_classes=["preset-btn"], size="sm")
-
-                    with gr.TabItem("🧬 Biology"):
-                        with gr.Row():
-                            p_bio1 = gr.Button("What is photosynthesis? Explain light reactions.", elem_classes=["preset-btn"], size="sm")
-                            p_bio2 = gr.Button("Difference between Plant Cell and Animal Cell.", elem_classes=["preset-btn"], size="sm")
-                            p_bio3 = gr.Button("Explain structure and function of DNA.", elem_classes=["preset-btn"], size="sm")
-
-                    with gr.TabItem("🇮🇳 Indic Prompts"):
-                        with gr.Row():
-                            p_ind1 = gr.Button("प्रकाश संश्लेषण क्या है? विस्तार से समझाइए।", elem_classes=["preset-btn"], size="sm")
-                            p_ind2 = gr.Button("पायथागोरसचे प्रमेय सांगा आणि सिद्ध करा.", elem_classes=["preset-btn"], size="sm")
-                            p_ind3 = gr.Button("ஒளிச்சேர்க்கை என்றால் என்ன?", elem_classes=["preset-btn"], size="sm")
-                            p_ind4 = gr.Button("కిరణజన్య సంయోగ క్రియ అంటే ఏమిటి?", elem_classes=["preset-btn"], size="sm")
-
-            # Right Column: Pedagogical Modes & Advanced Controls
-            with gr.Column(scale=1):
-                gr.Markdown("### 👨‍🏫 Pedagogical Tutor Mode")
-                mode_dropdown = gr.Dropdown(
-                    choices=list(SYSTEM_PROMPTS.keys()),
-                    value="👨‍🏫 NCERT School Tutor (Class 6-12)",
-                    label="Select Learning Mode",
-                    interactive=True,
-                )
-
-                with gr.Accordion("⚙️ Generation Parameters", open=True):
-                    temp_slider = gr.Slider(
-                        minimum=0.0,
-                        maximum=1.0,
-                        value=0.3,
-                        step=0.05,
-                        label="Temperature (Creativity vs Determinism)",
-                    )
-                    top_p_slider = gr.Slider(
-                        minimum=0.1,
-                        maximum=1.0,
-                        value=0.9,
-                        step=0.05,
-                        label="Top-P (Nucleus Sampling)",
-                    )
-                    max_tokens_slider = gr.Slider(
-                        minimum=256,
-                        maximum=2048,
-                        value=1024,
-                        step=128,
-                        label="Max New Tokens",
-                    )
-
-                with gr.Accordion("📊 Local System Hardware Stats", open=False):
-                    device_name = torch.cuda.get_device_name(0) if torch.cuda.is_available() else "CPU"
-                    gr.Markdown(f"""
-                    - **Execution Device**: `{device_name}`
-                    - **Precision**: `FP16 (Half Precision)`
-                    - **Local Model Path**: `local/models/edu-qwen-1.7b-merged`
-                    - **Benchmark Accuracy**: **93.3%**
-                    - **Streaming Polish**: **Flicker-Free ~35ms Batched Rendering**
-                    """)
+            with gr.TabItem("🇮🇳 Indic Prompts"):
+                with gr.Row():
+                    p_ind1 = gr.Button("प्रकाश संश्लेषण क्या है? विस्तार से समझाइए।", elem_classes=["preset-btn"], size="sm")
+                    p_ind2 = gr.Button("पायथागोरसचे प्रमेय सांगा आणि सिद्ध करा.", elem_classes=["preset-btn"], size="sm")
+                    p_ind3 = gr.Button("ஒளிச்சேர்க்கை என்றால் என்ன?", elem_classes=["preset-btn"], size="sm")
+                    p_ind4 = gr.Button("కిరణజన్య సంయోగ క్రియ అంటే ఏమిటి?", elem_classes=["preset-btn"], size="sm")
 
         # ──────────────────────────────────────────────
         # Event Logic
@@ -618,7 +559,7 @@ def create_interactive_ui():
             history.append({"role": "user", "content": user_message})
             return "", history
 
-        def bot_stream(history, mode_name, temperature, top_p, max_tokens):
+        def bot_stream(history):
             if not history or history[-1]["role"] != "user":
                 return
             user_message = history[-1]["content"]
@@ -628,10 +569,6 @@ def create_interactive_ui():
             for chunk in generate_response_stream(
                 message=user_message,
                 history=history[:-2],
-                mode_name=mode_name,
-                temperature=temperature,
-                top_p=top_p,
-                max_tokens=max_tokens,
             ):
                 history[-1]["content"] = chunk
                 yield history
@@ -640,7 +577,7 @@ def create_interactive_ui():
             user_submit, [msg_input, chatbot], [msg_input, chatbot], queue=False
         ).then(
             bot_stream,
-            [chatbot, mode_dropdown, temp_slider, top_p_slider, max_tokens_slider],
+            [chatbot],
             [chatbot],
         )
 
@@ -648,7 +585,7 @@ def create_interactive_ui():
             user_submit, [msg_input, chatbot], [msg_input, chatbot], queue=False
         ).then(
             bot_stream,
-            [chatbot, mode_dropdown, temp_slider, top_p_slider, max_tokens_slider],
+            [chatbot],
             [chatbot],
         )
 
@@ -660,7 +597,7 @@ def create_interactive_ui():
         clear_btn.click(clear_chat, None, chatbot, queue=False)
 
         # Preset Chips Handler
-        def load_preset_and_trigger(preset_text, history, mode_name, temp, top_p, max_t):
+        def load_preset_and_trigger(preset_text, history):
             history = history or []
             history.append({"role": "user", "content": preset_text})
             history.append({"role": "assistant", "content": "..."})
@@ -668,10 +605,6 @@ def create_interactive_ui():
             for chunk in generate_response_stream(
                 message=preset_text,
                 history=history[:-2],
-                mode_name=mode_name,
-                temperature=temp,
-                top_p=top_p,
-                max_tokens=max_t,
             ):
                 history[-1]["content"] = chunk
                 yield history
@@ -687,7 +620,7 @@ def create_interactive_ui():
         for btn in preset_buttons:
             btn.click(
                 fn=load_preset_and_trigger,
-                inputs=[btn, chatbot, mode_dropdown, temp_slider, top_p_slider, max_tokens_slider],
+                inputs=[btn, chatbot],
                 outputs=[chatbot],
             )
 
@@ -701,7 +634,7 @@ def create_interactive_ui():
 if __name__ == "__main__":
     print()
     print("=" * 70)
-    print("  🧠 Vidya 1.7B — Futuristic Neural Network Desktop Interface")
+    print("  🧠 Vidya 1.7B — Universal Multilingual AI Learning Companion")
     print("=" * 70)
     print()
 
