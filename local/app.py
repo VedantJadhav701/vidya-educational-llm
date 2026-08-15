@@ -96,9 +96,9 @@ def download_and_load_model():
     _model = AutoModelForCausalLM.from_pretrained(
         model_path,
         torch_dtype=dtype,
+        device_map="cuda:0" if device == "cuda" else None,
         trust_remote_code=True,
     )
-    _model = _model.to(device)
     _model.eval()
 
     if device == "cuda":
@@ -111,14 +111,11 @@ def download_and_load_model():
 
 
 # ──────────────────────────────────────────────
-# Generation (Streaming)
+# Generation
 # ──────────────────────────────────────────────
 
-def generate_response(message: str, history: list):
-    """Generate an educational response using streaming for real-time UI updates."""
-    from transformers import TextIteratorStreamer
-    from threading import Thread
-
+def generate_response(message: str, history: list) -> str:
+    """Generate an educational response using the local model synchronously."""
     tokenizer, model = download_and_load_model()
 
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
@@ -137,61 +134,63 @@ def generate_response(message: str, history: list):
 
     # Tokenize
     try:
-        inputs = tokenizer.apply_chat_template(
+        encoded = tokenizer.apply_chat_template(
             messages,
             tokenize=True,
             add_generation_prompt=True,
+            return_dict=True,
             return_tensors="pt",
         )
+        if isinstance(encoded, torch.Tensor):
+            input_ids = encoded.to(model.device)
+            attention_mask = None
+        elif isinstance(encoded, dict):
+            raw_ids = encoded["input_ids"]
+            input_ids = raw_ids.to(model.device) if isinstance(raw_ids, torch.Tensor) else torch.tensor([raw_ids], device=model.device)
+            raw_mask = encoded.get("attention_mask")
+            attention_mask = raw_mask.to(model.device) if isinstance(raw_mask, torch.Tensor) else (torch.tensor([raw_mask], device=model.device) if raw_mask is not None else None)
+        elif hasattr(encoded, "input_ids"):
+            input_ids = encoded.input_ids.to(model.device)
+            raw_mask = getattr(encoded, "attention_mask", None)
+            attention_mask = raw_mask.to(model.device) if raw_mask is not None else None
     except Exception:
         prompt_str = f"<|im_start|>system\n{SYSTEM_PROMPT}<|im_end|>\n"
         for m in messages[1:]:
             prompt_str += f"<|im_start|>{m['role']}\n{m['content']}<|im_end|>\n"
         prompt_str += "<|im_start|>assistant\n"
         inputs = tokenizer(prompt_str, return_tensors="pt")
-
-    if isinstance(inputs, torch.Tensor):
-        input_ids = inputs.to(model.device)
-        attention_mask = None
-    else:
         input_ids = inputs["input_ids"].to(model.device)
         attention_mask = inputs.get("attention_mask")
         if attention_mask is not None:
             attention_mask = attention_mask.to(model.device)
 
-    # Set up streamer for real-time word-by-word updates
-    streamer = TextIteratorStreamer(
-        tokenizer, skip_prompt=True, skip_special_tokens=True
-    )
+    prompt_len = input_ids.shape[-1]
 
-    gen_kwargs = {
-        "input_ids": input_ids,
-        "max_new_tokens": MAX_NEW_TOKENS,
-        "temperature": TEMPERATURE,
-        "top_p": TOP_P,
-        "repetition_penalty": REPETITION_PENALTY,
-        "do_sample": True,
-        "streamer": streamer,
-    }
-    if attention_mask is not None:
-        gen_kwargs["attention_mask"] = attention_mask
+    # Synchronous generation on main CUDA stream
+    with torch.inference_mode():
+        gen_kwargs = {
+            "input_ids": input_ids,
+            "max_new_tokens": MAX_NEW_TOKENS,
+            "temperature": TEMPERATURE,
+            "top_p": TOP_P,
+            "repetition_penalty": REPETITION_PENALTY,
+            "do_sample": True,
+        }
+        if attention_mask is not None:
+            gen_kwargs["attention_mask"] = attention_mask
 
-    # Run generation in a separate thread so streamer yields live tokens
-    thread = Thread(target=model.generate, kwargs=gen_kwargs)
-    thread.start()
+        outputs = model.generate(**gen_kwargs)
 
-    partial_text = ""
-    for new_text in streamer:
-        partial_text += new_text
+    generated_tokens = outputs[0][prompt_len:]
+    response = tokenizer.decode(generated_tokens, skip_special_tokens=True).strip()
 
-        # Live cleanup of thinking tags
-        clean_text = partial_text
-        if "<think>" in clean_text:
-            clean_text = clean_text.split("<think>", 1)[0].strip()
-        if "</think>" in clean_text:
-            clean_text = clean_text.split("</think>", 1)[-1].strip()
+    # Clean thinking tags properly
+    if "</think>" in response:
+        response = response.split("</think>", 1)[-1].strip()
+    elif "<think>" in response:
+        response = response.replace("<think>", "").strip()
 
-        yield clean_text
+    return response
 
 
 # ──────────────────────────────────────────────
@@ -244,12 +243,11 @@ CUSTOM_CSS = """
 footer { display: none !important; }
 """
 
-def respond(message: str, history: list):
-    """ChatInterface streaming handler function."""
+def respond(message: str, history: list) -> str:
+    """ChatInterface handler function."""
     if not message or not message.strip():
-        return
-    for chunk in generate_response(message.strip(), history):
-        yield chunk
+        return ""
+    return generate_response(message.strip(), history)
 
 
 def create_app():
