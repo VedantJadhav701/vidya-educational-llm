@@ -1,0 +1,1726 @@
+{
+  "benchmark_name": "Vidya Multilingual Educational LLM Benchmark",
+  "version": "1.0",
+  "model": "Vidya 1.7B",
+  "languages": [
+    "English",
+    "Hindi",
+    "Marathi",
+    "Maithili",
+    "Tamil",
+    "Telugu",
+    "Bengali",
+    "Urdu"
+  ],
+  "subjects": [
+    "mathematics",
+    "physics",
+    "biology",
+    "chemistry"
+  ],
+  "questions_per_subject_per_language": 2,
+  "total_questions_per_language": 8,
+  "total_evaluations": 64,
+  "judge_rubric": {
+    "factual_correctness": 2,
+    "mathematical_scientific_correctness": 2,
+    "completeness": 1,
+    "reasoning": 1,
+    "educational_quality": 1,
+    "language_quality": 2,
+    "instruction_following": 1
+  },
+  "results_schema": {
+    "answer": "",
+    "judge_scores": {},
+    "total_score": 0,
+    "judge_explanation": "",
+    "latency_seconds": null
+  },
+  "questions": [
+    {
+      "id": "VIDYA-001",
+      "language": "English",
+      "script": "Latin",
+      "subject": "mathematics",
+      "question_number": 1,
+      "question": "Solve 3x + 7 = 25. Show the steps and verify your answer.",
+      "result": {
+        "answer": "**Step-by-Step Analysis**\n\n**Formula**\nTo solve a linear equation of the form $ax + b = c$, we use the following steps:\n1. Isolate the variable term by subtracting $b$ from both sides.\n2. Solve for the variable by dividing by $a$.\n\n**Step-by-Step Solution**\n\n**Step 1:** Start with the given equation:\n$3x + 7 = 25$\n\n**Step 2:** Subtract 7 from both sides of the equation to move the constant term to the right side:\n$3x = 25 - 7$\n$3x = 18$\n\n**Step 3:** Divide both sides by 3 to solve for $x$:\n$x = \\frac{18}{3}$\n$x = 6$\n\n**Verification**\nTo ensure the solution is correct, substitute the value of $x$ back into the original equation:\nLeft Hand Side (LHS) = $3(6) + 7$\nLHS = $18 + 7",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for English mathematics. Total score: 10.0/10.",
+        "latency_seconds": 18.77
+      }
+    },
+    {
+      "id": "VIDYA-002",
+      "language": "English",
+      "script": "Latin",
+      "subject": "mathematics",
+      "question_number": 2,
+      "question": "A rectangular field is 80 m long and 50 m wide. A pathway 2 m wide is constructed inside along all four sides. Find the original area, inner field area, area for each of 4 equal crops, and pathway percentage.",
+      "result": {
+        "answer": "**Given Data:**\n- Length of the rectangular field ($L$) = 80 m\n- Width of the rectangular field ($W$) = 50 m\n- Width of the pathway ($w$) = 2 m\n\n**Step-by-Step Analysis:**\n\n**1. Calculating the Original Area**\nThe original area of the rectangular field is the total space it occupies.\n**Formula:** $\\text{Area} = \\text{Length} \\times \\text{Width}$\n**Calculation:** $80 \\times 50 = 4000$ $\\text{m}^2$\n\n**2. Calculating the Inner Field Area**\nSince the pathway is constructed inside along all four sides, the inner field is a smaller rectangle. The length and width of the inner field are reduced by the width of the pathway on both sides.\n- New Length = $80 - 2 - 2 = 76$ m\n- New Width = $50 - 2 - 2 = 4",
+        "judge_scores": {
+          "factual_correctness": 1.0,
+          "mathematical_scientific_correctness": 1.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 8.0,
+        "max_score": 10.0,
+        "percentage": 80.0,
+        "judge_explanation": "Evaluated response for English mathematics. Total score: 8.0/10. Notes: Missing key numerical calculation values.",
+        "latency_seconds": 18.77
+      }
+    },
+    {
+      "id": "VIDYA-003",
+      "language": "English",
+      "script": "Latin",
+      "subject": "physics",
+      "question_number": 1,
+      "question": "Explain Newton's three laws of motion and give one real-life example for each.",
+      "result": {
+        "answer": "**Newton's Laws of Motion**\n\nSir Isaac Newton, the father of modern physics, formulated three fundamental laws that describe the relationship between a body and the forces acting upon it. These laws are the cornerstone of classical mechanics.\n\n**1. Newton's First Law of Motion (Law of Inertia)**\n**Definition:** This law states that an object will remain at rest if it is not subjected to any net external force, and an object in uniform motion will continue to move at a constant velocity in a straight line if it is not acted upon by any external net force.\n**Key Concept:** The tendency of an object to resist any change in its state of rest or uniform motion is called inertia. Inertia depends on the mass of the object; the greater the mass, the greater the inertia.\n\n**Real-Life Example:**\nWhen a car suddenly stops, passengers are pushed forward because their body tends to maintain its state of motion. This is why seatbelts are essential in vehicles.\n\n**2. Newton's Second Law of Motion (Law of Force and Acceleration)**\n**",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for English physics. Total score: 10.0/10.",
+        "latency_seconds": 18.77
+      }
+    },
+    {
+      "id": "VIDYA-004",
+      "language": "English",
+      "script": "Latin",
+      "subject": "physics",
+      "question_number": 2,
+      "question": "A 5 kg object is acted upon by a net force of 20 N. Calculate its acceleration and explain what happens if the force is doubled.",
+      "result": {
+        "answer": "**Formula**\nAccording to Newton's Second Law of Motion, the force acting on an object is equal to the mass of the object multiplied by its acceleration:\n$$F = ma$$\nWhere:\n- $F$ = Net Force\n- $m$ = Mass of the object\n- $a$ = Acceleration\n\n**Step-by-Step Analysis**\n\n**Step 1: Calculate the acceleration**\nGiven:\n- Mass ($m$) = 5 kg\n- Net Force ($F$) = 20 N\n\nSubstitute the values into the formula:\n$$20 = 5 \times a$$\n\nTo find $a$, divide both sides by 5:\n$$a = \frac{20}{5}$$\n$$a = 4\text{ m/s}^2$$\n\n**Step 2: Analyze the effect of doubling the force**\nIf the net force is doubled, the new force becomes:\n$$\text{New Force} = 2 \times 20 = 40\text{ N}",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for English physics. Total score: 10.0/10.",
+        "latency_seconds": 18.77
+      }
+    },
+    {
+      "id": "VIDYA-005",
+      "language": "English",
+      "script": "Latin",
+      "subject": "biology",
+      "question_number": 1,
+      "question": "Explain photosynthesis, including the raw materials, the cell organelle where it occurs, and its balanced chemical equation. Why is it important for life on Earth?",
+      "result": {
+        "answer": "**Photosynthesis: A Detailed Analysis**\n\n**Definition**\nPhotosynthesis is the fundamental biological process by which green plants, algae, and some bacteria convert light energy from the sun into chemical energy stored in glucose (sugar). This process is essential for life on Earth as it forms the primary energy source for nearly all food chains.\n\n**Raw Materials Required**\nFor photosynthesis to occur, the following substances are necessary:\n*   **Light Energy:** Energy from the sun.\n*   **Carbon Dioxide ($CO_2$):** Absorbed from the atmosphere through tiny pores in the leaves called stomata.\n*   **Water ($H_2O$):** Absorbed by the roots from the soil and transported through the xylem to the leaves.\n*   **Chlorophyll:** A green pigment located in the chloroplasts that captures light energy.\n\n**Cell Organelle and Process**\nPhotosynthesis takes place within the **chloroplasts**, which are specialized organelles found in the cells of green plants. Inside the chloroplast, the process",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for English biology. Total score: 10.0/10.",
+        "latency_seconds": 18.8
+      }
+    },
+    {
+      "id": "VIDYA-006",
+      "language": "English",
+      "script": "Latin",
+      "subject": "biology",
+      "question_number": 2,
+      "question": "What is a cell? Explain the functions of the nucleus, cell membrane, cytoplasm, and mitochondria.",
+      "result": {
+        "answer": "**Definition of a Cell**\n\nA cell is the fundamental unit of life. It is the smallest structural and functional unit of all living organisms. Every living organism, from a single-celled bacterium to a complex human being, is composed of one or more cells. Cells are the building blocks of life and the basic functional units that allow an organism to grow, reproduce, and respond to its environment.\n\n**The Cell's Internal Organelles**\n\nInside a cell, various specialized structures work together to maintain life. These are categorized as follows:\n\n*   **Nucleus**\n    *   **Function:** The nucleus is the control center of the cell. It contains the cell's DNA (deoxyribonucleic acid), which carries the genetic instructions necessary for the cell to function and divide.\n    *   **Structure:** It is enclosed by a double membrane called the nuclear envelope, which contains a fluid called the nucleolus, where ribosomes are synthesized.\n    *   **Importance:** Without the nucleus, the cell cannot replicate its genetic information or produce proteins.",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for English biology. Total score: 10.0/10.",
+        "latency_seconds": 18.8
+      }
+    },
+    {
+      "id": "VIDYA-007",
+      "language": "English",
+      "script": "Latin",
+      "subject": "chemistry",
+      "question_number": 1,
+      "question": "Balance H2 + O2 -> H2O and explain the steps.",
+      "result": {
+        "answer": "**Balanced Chemical Equation**\n\n$2H_2 + O_2 \\rightarrow 2H_2O$\n\n**Step-by-Step Analysis**\n\nTo balance a chemical equation, we must ensure that the number of atoms of each element is the same on both the reactant side (left) and the product side (right).\n\n**Step 1: Count the atoms on the Reactant Side**\n- Hydrogen (H): 2 atoms\n- Oxygen (O): 2 atoms\n\n**Step 2: Count the atoms on the Product Side**\n- Hydrogen (H): 2 atoms\n- Oxygen (O): 2 atoms\n\n**Step 3: Identify the deficiency**\nIn this case, the equation is already balanced. However, to demonstrate the balancing process, we can look at the coefficient of $O_2$:\n- If we multiply $O_2$ by 2, the oxygen count becomes 4, which is double the required 2.\n\n**Step 4: Apply Coefficients**\nTo balance the oxygen atoms,",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for English chemistry. Total score: 10.0/10.",
+        "latency_seconds": 18.8
+      }
+    },
+    {
+      "id": "VIDYA-008",
+      "language": "English",
+      "script": "Latin",
+      "subject": "chemistry",
+      "question_number": 2,
+      "question": "What are acids and bases? Give two examples of each and explain what happens when an acid reacts with a base.",
+      "result": {
+        "answer": "**Introduction to Acids and Bases**\n\nAcids and bases are two fundamental classes of chemical substances that differ in how they interact with other substances and how they taste (though taste is not a reliable indicator of all acids and bases).\n\n**Acids**\nAcids are chemical substances that typically taste sour and can often be dissolved in water to form acidic solutions. They are characterized by their ability to donate protons ($H^+$ ions) in a chemical reaction.\n\n**Examples of Acids:**\n*   **Hydrochloric Acid:** Found in the stomach to aid in digestion.\n*   **Sulfuric Acid:** Used in the production of fertilizers and as a component in car batteries.\n\n**Bases**\nBases are chemical substances that typically taste bitter and feel slippery to the touch. They are characterized by their ability to accept protons ($H^+$ ions) or donate hydroxide ions ($OH^-$) in a chemical reaction.\n\n**Examples of Bases:**\n*   **Sodium Hydroxide (Slaked Lime):** Used",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for English chemistry. Total score: 10.0/10.",
+        "latency_seconds": 18.8
+      }
+    },
+    {
+      "id": "VIDYA-009",
+      "language": "Hindi",
+      "script": "Devanagari",
+      "subject": "mathematics",
+      "question_number": 1,
+      "question": "समीकरण 3x + 7 = 25 को हल कीजिए। सभी चरण दिखाइए और अपने उत्तर की जाँच कीजिए।",
+      "result": {
+        "answer": "**समीकरण का हल**\n\n**दिया गया समीकरण:**\n$3x + 7 = 25$\n\n**चरण-दर-चरण विश्लेषण:**\n\n**चरण 1: चर पदों को अलग करना**\nसमीकरण के बाईं ओर स्थित $7$ को दाईं ओर ले जाने पर, इसका चिह्न बदल जाएगा।\n$3x = 25 - 7$\n$3x = 18$\n\n**चरण 2: चर $x$ का मान ज्ञात करना**\nअब, $x$ का मान न",
+        "judge_scores": {
+          "factual_correctness": 1.0,
+          "mathematical_scientific_correctness": 1.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 8.0,
+        "max_score": 10.0,
+        "percentage": 80.0,
+        "judge_explanation": "Evaluated response for Hindi mathematics. Total score: 8.0/10. Notes: Missing x = 6.",
+        "latency_seconds": 23.84
+      }
+    },
+    {
+      "id": "VIDYA-010",
+      "language": "Hindi",
+      "script": "Devanagari",
+      "subject": "mathematics",
+      "question_number": 2,
+      "question": "एक आयताकार खेत 80 मीटर लंबा और 50 मीटर चौड़ा है। चारों ओर अंदर की तरफ 2 मीटर चौड़ी पगडंडी बनाई गई है। मूल खेत का क्षेत्रफल, अंदर के खेत का क्षेत्रफल, 4 समान फसलों के लिए क्षेत्रफल और पगडंडी का प्रतिशत ज्ञात कीजिए।",
+      "result": {
+        "answer": "**दिया गया विवरण:**\n- मूल आयताकार खेत की लंबाई = 80 मीटर\n- मूल आयताकार खेत की चौड़ाई = 50 मीटर\n- पगडंडी की चौड़ाई = 2 मीटर\n\n**चरण-दर-चरण गणना:**\n\n**1. मूल खेत का क्षेत्रफल:**\nमूल खेत का क्षेत्रफल = लंबाई $\\times$ चौड़ाई\nक्षेत्रफल = $80 \\times 50 = 4000",
+        "judge_scores": {
+          "factual_correctness": 1.0,
+          "mathematical_scientific_correctness": 1.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 8.0,
+        "max_score": 10.0,
+        "percentage": 80.0,
+        "judge_explanation": "Evaluated response for Hindi mathematics. Total score: 8.0/10. Notes: Missing key numerical calculation values.",
+        "latency_seconds": 23.84
+      }
+    },
+    {
+      "id": "VIDYA-011",
+      "language": "Hindi",
+      "script": "Devanagari",
+      "subject": "physics",
+      "question_number": 1,
+      "question": "न्यूटन के गति के तीनों नियम समझाइए और प्रत्येक नियम का एक वास्तविक जीवन का उदाहरण दीजिए।",
+      "result": {
+        "answer": "**न्यूटन के गति के तीन नियम**\n\nज्यूल न्यूटन द्वारा दिए गए गति के नियम भौतिक विज्ञान के आधार हैं, जो हमें यह समझने में मदद करते हैं कि कोई वस्तु किस प्रकार गति करती है और उस पर कोई बाहरी बल लगाने पर क्या प्रभाव पड़ता है।\n\n**1. न्यूटन का प्रथम",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for Hindi physics. Total score: 10.0/10.",
+        "latency_seconds": 23.84
+      }
+    },
+    {
+      "id": "VIDYA-012",
+      "language": "Hindi",
+      "script": "Devanagari",
+      "subject": "physics",
+      "question_number": 2,
+      "question": "5 किलोग्राम के पिंड पर 20 न्यूटन का परिणामी बल लगाया जाता है। त्वरण ज्ञात कीजिए और समझाइए कि बल दोगुना करने पर त्वरण पर क्या प्रभाव पड़ेगा।",
+      "result": {
+        "answer": "**दिया गया विवरण:**\n* पिंड का द्रव्यमान ($m$) = 5 किलोग्राम\n* परिणामी बल ($F$) = 20 न्यूटन\n\n**सूत्र:**\nत्वरण ($a$) ज्ञात करने का सूत्र निम्नलिखित है:\n$a = \\frac{F}{m}$\n\n**चरण-दर-चरण गणना:**\n1. सबसे पहले, दिए गए मानों को सूत्र में रखते हैं:\n   $a = \\frac{20}{5}$\n\n2. अब,",
+        "judge_scores": {
+          "factual_correctness": 1.5,
+          "mathematical_scientific_correctness": 1.5,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 9.0,
+        "max_score": 10.0,
+        "percentage": 90.0,
+        "judge_explanation": "Evaluated response for Hindi physics. Total score: 9.0/10. Notes: Missing acceleration a = 4 m/s².",
+        "latency_seconds": 23.84
+      }
+    },
+    {
+      "id": "VIDYA-013",
+      "language": "Hindi",
+      "script": "Devanagari",
+      "subject": "biology",
+      "question_number": 1,
+      "question": "प्रकाश संश्लेषण समझाइए। आवश्यक कच्चे पदार्थ, वह कोशिकांग जहाँ यह होता है, और इसका संतुलित रासायनिक समीकरण लिखिए। यह जीवन के लिए क्यों महत्वपूर्ण है?",
+      "result": {
+        "answer": "**प्रकाश संश्लेषण: विस्तृत व्याख्या**\n\n**परिभाषा**\nप्रकाश संश्लेषण वह जैव-रासायनिक प्रक्रिया है जिसके द्वारा हरे पौधे, क्लैमाइड और कुछ विशेष बैक्टीरिया सूर्य के प्रकाश, जल और कार्बन डाइऑक्साइड का उपयोग करके अपना भोजन (ग्लूकोज) तैयार कर",
+        "judge_scores": {
+          "factual_correctness": 1.5,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 9.5,
+        "max_score": 10.0,
+        "percentage": 95.0,
+        "judge_explanation": "Evaluated response for Hindi biology. Total score: 9.5/10. Notes: Missing chloroplast organelle.",
+        "latency_seconds": 21.9
+      }
+    },
+    {
+      "id": "VIDYA-014",
+      "language": "Hindi",
+      "script": "Devanagari",
+      "subject": "biology",
+      "question_number": 2,
+      "question": "कोशिका क्या है? केंद्रक, कोशिका झिल्ली, कोशिकाद्रव्य और माइटोकॉन्ड्रिया के कार्य समझाइए।",
+      "result": {
+        "answer": "**कोशिका की परिभाषा**\n\nकोशिका जीवन की सबसे छोटी संरचनात्मक और कार्यात्मक इकाई है। सरल शब्दों में, जिसे हम जीवित देखते हैं, उसका सबसे छोटा घटक या इकाई कोशिका कहा जाता है। जीवन के अधिकांश जीव एक या एक से अधिक कोशिकाओं से बने होते हैं।\n\n**कोश",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 0.5,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 9.5,
+        "max_score": 10.0,
+        "percentage": 95.0,
+        "judge_explanation": "Evaluated response for Hindi biology. Total score: 9.5/10.",
+        "latency_seconds": 21.9
+      }
+    },
+    {
+      "id": "VIDYA-015",
+      "language": "Hindi",
+      "script": "Devanagari",
+      "subject": "chemistry",
+      "question_number": 1,
+      "question": "H2 + O2 -> H2O को संतुलित कीजिए और सभी चरण समझाइए।",
+      "result": {
+        "answer": "**रासायनिक समीकरण:**\n$2H_2 + O_2 \\rightarrow 2H_2O$\n\n**संतुलन की प्रक्रिया:**\n\n**चरण 1: अज्ञात गुणांक निर्धारित करना**\nमान लीजिए कि $H_2O$ का गुणांक $x$ है।\nअब समीकरण इस प्रकार होगा:\n$2H_2 + O_2 \\rightarrow xH_2O$\n\n**चरण 2: परमाणुओं की गणना**\nसंतुलन के लिए हम प्रत्येक तत्व के परमा�",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for Hindi chemistry. Total score: 10.0/10.",
+        "latency_seconds": 21.9
+      }
+    },
+    {
+      "id": "VIDYA-016",
+      "language": "Hindi",
+      "script": "Devanagari",
+      "subject": "chemistry",
+      "question_number": 2,
+      "question": "अम्ल और क्षार क्या होते हैं? प्रत्येक के दो उदाहरण दीजिए और अम्ल-क्षार अभिक्रिया में क्या होता है समझाइए।",
+      "result": {
+        "answer": "**अम्ल और क्षार की परिभाषा**\n\n**अम्ल (Acid):**\nअम्ल वे रासायनिक पदार्थ होते हैं जो जल में वियोजित होने पर हाइड्रोजन आयन ($H^+$) उत्सर्जित करते हैं। इन पदार्थों का स्वाद सामान्यतः अमीर होता है और ये लाल पत्थर की उपजाऊ लिटमस पत्र को नीला कर देते हैं।\n*",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for Hindi chemistry. Total score: 10.0/10.",
+        "latency_seconds": 21.9
+      }
+    },
+    {
+      "id": "VIDYA-017",
+      "language": "Marathi",
+      "script": "Devanagari",
+      "subject": "mathematics",
+      "question_number": 1,
+      "question": "3x + 7 = 25 हे समीकरण सोडवा. सर्व पायऱ्या दाखवा आणि उत्तराची पडताळणी करा.",
+      "result": {
+        "answer": "**समीकरण:**\n$3x + 7 = 25$\n\n**पायरी-दर-पायरी विश्लेषण:**\n\n**पायरी 1: चल (variable) वजा करणे**\nसमीकरणाच्या दोन्ही बाजूंमधून 7 वजा करूया:\n$3x + 7 - 7 = 25 - 7$\n$3x = 18$\n\n**पायरी 2: चलाचे मूल्य काढणे**\nआता, दोन्ही बाजूंना 3 ने भागूया:\n$x = \\frac{18}{3}$\n$x = 6$\n\n**",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for Marathi mathematics. Total score: 10.0/10.",
+        "latency_seconds": 26.61
+      }
+    },
+    {
+      "id": "VIDYA-018",
+      "language": "Marathi",
+      "script": "Devanagari",
+      "subject": "mathematics",
+      "question_number": 2,
+      "question": "एका आयताकृती शेताची लांबी 80 मीटर आणि रुंदी 50 मीटर आहे. चारही बाजूंनी आतल्या बाजूस 2 मीटर रुंदीची वाट तयार केली आहे. मूळ शेताचे क्षेत्रफळ, आतील क्षेत्रफळ, 4 समान पिकांसाठी क्षेत्रफळ आणि वाटेने व्यापलेल्या क्षेत्राची टक्केवारी शोधा.",
+      "result": {
+        "answer": "**दिलेली माहिती:**\n- आयताकृती शेताची मूळ लांबी = 80 मीटर\n- आयताकृती शेताची मूळ रुंदी = 50 मीटर\n- आतल्या बाजूस वाटेची रुंदी = 2 मीटर\n\n**पायरी-दर-पायरी विश्लेषण:**\n\n**१. मूळ शेताचे क्षेत्रफळ काढणे:**\nमूळ शेताचे क्षेत्रफळ = लांबी $\\times$",
+        "judge_scores": {
+          "factual_correctness": 1.0,
+          "mathematical_scientific_correctness": 1.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 8.0,
+        "max_score": 10.0,
+        "percentage": 80.0,
+        "judge_explanation": "Evaluated response for Marathi mathematics. Total score: 8.0/10. Notes: Missing key numerical calculation values.",
+        "latency_seconds": 26.61
+      }
+    },
+    {
+      "id": "VIDYA-019",
+      "language": "Marathi",
+      "script": "Devanagari",
+      "subject": "physics",
+      "question_number": 1,
+      "question": "न्यूटनचे गतीचे तीन नियम समजावून सांगा आणि प्रत्येक नियमाचे एक दैनंदिन जीवनातील उदाहरण द्या.",
+      "result": {
+        "answer": "**न्यूटनचे गतीचे तीन नियम**\n\nन्यूटनचे गतीचे तीन नियम हे भौतिकशास्त्राचे आधारभूत सिद्धांत आहेत, जे वस्तूंच्या गतीचे नियम स्पष्ट करतात. या नियमांचे सविस्तर विवरण खालीलप्रमाणे आहे:\n\n**१. न्यूटनचा पहिला नियम (स्थिर अवस्थेचा नियम)",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for Marathi physics. Total score: 10.0/10.",
+        "latency_seconds": 26.61
+      }
+    },
+    {
+      "id": "VIDYA-020",
+      "language": "Marathi",
+      "script": "Devanagari",
+      "subject": "physics",
+      "question_number": 2,
+      "question": "5 किलोग्रॅमच्या वस्तूवर 20 न्यूटनचा परिणामी बल कार्य करतो. तिचे त्वरण काढा आणि बल दुप्पट केल्यास त्वरणावर काय परिणाम होईल ते स्पष्ट करा.",
+      "result": {
+        "answer": "**दिलेली माहिती:**\n* वस्तूचे वस्तुमान ($m$) = 5 किलोग्रॅम = 5000 ग्रॅम\n* परिणामी बल ($F$) = 20 न्यूटन\n* त्वरण ($a$) = ?\n\n**सूत्र:**\nन्यूटनच्या दुसऱ्या नियमानुसार, बल, वस्तुमान आणि त्वरण यांच्यातील संबंध खालीलप्रमाणे असतो:\n**बल = वस्तुमान $\\times",
+        "judge_scores": {
+          "factual_correctness": 1.5,
+          "mathematical_scientific_correctness": 1.5,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 9.0,
+        "max_score": 10.0,
+        "percentage": 90.0,
+        "judge_explanation": "Evaluated response for Marathi physics. Total score: 9.0/10. Notes: Missing acceleration a = 4 m/s².",
+        "latency_seconds": 26.61
+      }
+    },
+    {
+      "id": "VIDYA-021",
+      "language": "Marathi",
+      "script": "Devanagari",
+      "subject": "biology",
+      "question_number": 1,
+      "question": "प्रकाशसंश्लेषण समजावून सांगा. आवश्यक कच्चे पदार्थ, ही प्रक्रिया कोणत्या पेशीअंगात घडते आणि तिचे संतुलित रासायनिक समीकरण लिहा. पृथ्वीवरील जीवनासाठी ती महत्त्वाची का आहे?",
+      "result": {
+        "answer": "**प्रकाशसंश्लेषण: सविस्तर स्पष्टीकरण**\n\n**व्याख्या:**\nप्रकाशसंश्लेषण ही एक अत्यंत महत्त्वाची जैव-रासायनिक प्रक्रिया आहे, ज्यामध्ये सूर्यप्रकाशाचा वापर करून हवेतील कार्बन डायऑक्साइड आणि पाण्याचे रूपांतर अन्नाच्या स्वरूपात (ग्लुकोज) केले �",
+        "judge_scores": {
+          "factual_correctness": 1.5,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 9.5,
+        "max_score": 10.0,
+        "percentage": 95.0,
+        "judge_explanation": "Evaluated response for Marathi biology. Total score: 9.5/10. Notes: Missing chloroplast organelle.",
+        "latency_seconds": 22.54
+      }
+    },
+    {
+      "id": "VIDYA-022",
+      "language": "Marathi",
+      "script": "Devanagari",
+      "subject": "biology",
+      "question_number": 2,
+      "question": "पेशी म्हणजे काय? केंद्रक, पेशीपटल, पेशीद्रव्य आणि माइटोकॉन्ड्रिया यांची कार्ये समजावून सांगा.",
+      "result": {
+        "answer": "**पेशीची व्याख्या**\n\nपेशी हा जीवनाचा सर्वात लहान आणि स्वतंत्र रूपांतरित भाग आहे. जेव्हा एखाद्या जीवाच्या शरीरातील विविध अवयवे एकत्र येऊन एक अर्धसूत्री विभाजन (Mitosis) करून एका नवीन पेशीची निर्मिती करतात, तेव्हा त्या नवीन पेशीला 'पेशी",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 0.5,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 9.5,
+        "max_score": 10.0,
+        "percentage": 95.0,
+        "judge_explanation": "Evaluated response for Marathi biology. Total score: 9.5/10.",
+        "latency_seconds": 22.54
+      }
+    },
+    {
+      "id": "VIDYA-023",
+      "language": "Marathi",
+      "script": "Devanagari",
+      "subject": "chemistry",
+      "question_number": 1,
+      "question": "H2 + O2 -> H2O हे रासायनिक समीकरण संतुलित करा आणि सर्व पायऱ्या समजावून सांगा.",
+      "result": {
+        "answer": "**रासायनिक समीकरण:**\n$2H_2 + O_2 \\rightarrow 2H_2O$\n\n**संतुलित करण्याची पद्धत: अवयव-विभाजन पद्धत**\n\n**पायरी-दर-पायरी विश्लेषण:**\n\n1. **अभिकारकांचे गुणांक निश्चित करणे:**\n   - हायड्रोजन (H): 2 अभिकारक $\\rightarrow$ 4 उत्पादन\n   - ऑक्सिजन (O): 1 अभिकारक $\\rightarrow$ 2 उत्पादन\n\n2. **अभि�",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for Marathi chemistry. Total score: 10.0/10.",
+        "latency_seconds": 22.54
+      }
+    },
+    {
+      "id": "VIDYA-024",
+      "language": "Marathi",
+      "script": "Devanagari",
+      "subject": "chemistry",
+      "question_number": 2,
+      "question": "आम्ल आणि आम्लारी म्हणजे काय? प्रत्येकाची दोन उदाहरणे द्या आणि त्यांची अभिक्रिया झाल्यावर काय होते ते समजावून सांगा.",
+      "result": {
+        "answer": "**आम्ल आणि आम्लारीची व्याख्या**\n\n**आम्ल (Acid):**\nआम्ल हा असा रासायनिक पदार्थ आहे जो जेव्हा शरीरातील विशिष्ट अन्नसेवनाच्या प्रक्रियेत वापरला जातो. याचे मुख्य वैशिष्ट्य म्हणजे ते शरीरातील अम्लीयता वाढवते, ज्यामुळे शरीराची रासायनिक अभ",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for Marathi chemistry. Total score: 10.0/10.",
+        "latency_seconds": 22.54
+      }
+    },
+    {
+      "id": "VIDYA-025",
+      "language": "Maithili",
+      "script": "Devanagari",
+      "subject": "mathematics",
+      "question_number": 1,
+      "question": "3x + 7 = 25 समीकरणकेँ हल करू। सभ चरण देखाउ आ उत्तरक जाँच करू।",
+      "result": {
+        "answer": "**समीकरण:**\n$3x + 7 = 25$\n\n**हल करण्याची पद्धत:**\n\n**पायरी 1: चर (Variable) कोसोणे**\nदिलेल्या समीकरणातील स्थिर संख्या 7 ला दुसऱ्या बाजूला नेल्यास, ती ऋण (-) होईल.\n$3x = 25 - 7$\n$3x = 18$\n\n**पायरी 2: x कोसोणे**\nआता, दोन्ही बाजूंना 3 ने भागून $x$ ची किंमत काढ�",
+        "judge_scores": {
+          "factual_correctness": 1.0,
+          "mathematical_scientific_correctness": 1.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 8.0,
+        "max_score": 10.0,
+        "percentage": 80.0,
+        "judge_explanation": "Evaluated response for Maithili mathematics. Total score: 8.0/10. Notes: Missing x = 6.",
+        "latency_seconds": 23.8
+      }
+    },
+    {
+      "id": "VIDYA-026",
+      "language": "Maithili",
+      "script": "Devanagari",
+      "subject": "mathematics",
+      "question_number": 2,
+      "question": "एक आयताकार खेत 80 मीटर लम्ब आ 50 मीटर चौड़ा अछि। चारू कात भीतर 2 मीटर चौड़ी बाट अछि। मूल खेतक क्षेत्रफल, भीतरक क्षेत्रफल, 4 समान फसल लेल क्षेत्रफल आ बाटक प्रतिशत ज्ञात करू।",
+      "result": {
+        "answer": "**दिलेली माहिती:**\n- मूल आयताकार खेतक लम्बाई = 80 मीटर\n- मूल आयताकार खेतक चौड़ाई = 50 मीटर\n- बाटक चौड़ाई = 2 मीटर\n\n**सूत्र:**\n1. आयताकार क्षेत्रफल = लम्बाई $\\times$ चौड़ाई\n2. बाटक क्षेत्रफल = (लम्बाई - बाटक चौड़ाई) $\\times$ (चौड़ाई - बाटक चौ",
+        "judge_scores": {
+          "factual_correctness": 1.0,
+          "mathematical_scientific_correctness": 1.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 8.0,
+        "max_score": 10.0,
+        "percentage": 80.0,
+        "judge_explanation": "Evaluated response for Maithili mathematics. Total score: 8.0/10. Notes: Missing key numerical calculation values.",
+        "latency_seconds": 23.8
+      }
+    },
+    {
+      "id": "VIDYA-027",
+      "language": "Maithili",
+      "script": "Devanagari",
+      "subject": "physics",
+      "question_number": 1,
+      "question": "न्यूटनक गति के तीनू नियम बुझाउ आ प्रत्येक नियमक एकटा वास्तविक जीवनक उदाहरण दिअ।",
+      "result": {
+        "answer": "**न्यूटनक गति के तीन नियम**\n\nन्यूटनक गति के नियम भौतिक विज्ञान के आधार हैं, जो हमें यह समझने में मदद करते हैं कि कोई वस्तु किस प्रकार गति करती है और उसके लिए कोई बाहरी बल क्यों आवश्यक है।\n\n**न्यूटनक गति के तीन नियम और उनके उदाहरण:**\n\n1. **प",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for Maithili physics. Total score: 10.0/10.",
+        "latency_seconds": 23.8
+      }
+    },
+    {
+      "id": "VIDYA-028",
+      "language": "Maithili",
+      "script": "Devanagari",
+      "subject": "physics",
+      "question_number": 2,
+      "question": "5 किलोग्रामक वस्तु पर 20 न्यूटनक परिणामी बल लगैत अछि। त्वरण निकालू आ बल दुगुना कयला पर त्वरण पर प्रभाव बुझाउ।",
+      "result": {
+        "answer": "**दिया गया विवरण:**\n* वस्तुक द्रव्यमान ($m$) = 5 किलोग्राम\n* परिणामी बल ($F$) = 20 न्यूटन\n* त्वरण ($a$) = ?\n\n**सूत्र:**\nन्यूटनक गतिकीक दुसरा नियम अनुसार:\n$F = m \times a$\nत्वरण निकालण्यासाठी सूत्र: $a = \frac{F}{m}$\n\n**चरण-दर-चरण विश्लेषण:**\n\n**चरण 1: त्वरण ग",
+        "judge_scores": {
+          "factual_correctness": 1.5,
+          "mathematical_scientific_correctness": 1.5,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 9.0,
+        "max_score": 10.0,
+        "percentage": 90.0,
+        "judge_explanation": "Evaluated response for Maithili physics. Total score: 9.0/10. Notes: Missing acceleration a = 4 m/s².",
+        "latency_seconds": 23.8
+      }
+    },
+    {
+      "id": "VIDYA-029",
+      "language": "Maithili",
+      "script": "Devanagari",
+      "subject": "biology",
+      "question_number": 1,
+      "question": "प्रकाश संश्लेषणक व्याख्या करू। आवश्यक कच्चा पदार्थ, ई प्रक्रिया कोषिकाक कोन अंगमे होइत अछि, आ एकर संतुलित रासायनिक समीकरण लिखू। ई जीवन लेल किएक महत्वपूर्ण अछि?",
+      "result": {
+        "answer": "**प्रकाश संश्लेषण: सविस्तर व्याख्या**\n\n**व्याख्या:**\nप्रकाश संश्लेषण ही एक अत्यंत महत्वाची जैव-रासायनिक प्रक्रिया आहे, ज्यामध्ये सूर्यक प्रकाश, कार्बन डायऑक्साइड आणि पाणी यांचा वापर करून पानांमध्ये असा एक अन्न तयार केला जातो जो सर्व जीवन्य",
+        "judge_scores": {
+          "factual_correctness": 1.5,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 9.5,
+        "max_score": 10.0,
+        "percentage": 95.0,
+        "judge_explanation": "Evaluated response for Maithili biology. Total score: 9.5/10. Notes: Missing chloroplast organelle.",
+        "latency_seconds": 22.29
+      }
+    },
+    {
+      "id": "VIDYA-030",
+      "language": "Maithili",
+      "script": "Devanagari",
+      "subject": "biology",
+      "question_number": 2,
+      "question": "कोषिका की अछि? केंद्रक, कोषिका झिल्ली, कोशिकाद्रव्य आ माइटोकॉन्ड्रिया केर काज बुझाउ।",
+      "result": {
+        "answer": "**कोशिका: एक विस्तृत व्याख्या**\n\n**परिभाषा**\nकोशिका जीवन की सबसे छोटी संरचनात्मक आ जैविक इकाई है। सरल शब्दों में, कोई भी जीव, चाहे वह एक कोशिका वाला हो या अनेक कोशिकाओं से बना, उसका निर्माण कोशिकाओं से होता है। यह जीवन की आधारशिला है ज",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 0.5,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 9.5,
+        "max_score": 10.0,
+        "percentage": 95.0,
+        "judge_explanation": "Evaluated response for Maithili biology. Total score: 9.5/10.",
+        "latency_seconds": 22.29
+      }
+    },
+    {
+      "id": "VIDYA-031",
+      "language": "Maithili",
+      "script": "Devanagari",
+      "subject": "chemistry",
+      "question_number": 1,
+      "question": "H2 + O2 -> H2O समीकरणकेँ संतुलित करू आ सभ चरण बुझाउ।",
+      "result": {
+        "answer": "**रासायनिक समीकरण:**\n$2H_2 + O_2 \\rightarrow 2H_2O$\n\n**संतुलित करण्याची पद्धत:**\nरासायनिक समीकरण संतुलित करण्यासाठी, आपण अभिक्रियेतील दोन्ही बाजूंच्या प्रत्येक तत्त्वाच्या अणूंची संख्या समान करण्यासाठी 'संतुलन नियम' (Law of Conservation of Mass) वापरतो.\n\n**पायरी-दर-पायरी व",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for Maithili chemistry. Total score: 10.0/10.",
+        "latency_seconds": 22.29
+      }
+    },
+    {
+      "id": "VIDYA-032",
+      "language": "Maithili",
+      "script": "Devanagari",
+      "subject": "chemistry",
+      "question_number": 2,
+      "question": "अम्ल आ क्षार की होइत अछि? दुनू केर दू-दू उदाहरण दिअ आ अम्ल-क्षार अभिक्रियामे की होइत अछि बुझाउ।",
+      "result": {
+        "answer": "**अम्ल आ क्षारक परिभाषा**\n\n**अम्ल (Acid):**\nअम्ल तात्कालिक रूप से लाल पेन्सिलियम रंग (फेरिक एरोसिल) के रंग बदल देने वाले तत्व होइत अछि। यदि कोनो तरल अम्ल के संपर्क मे लाल पेन्सिलियम रंग लाल होइत अछि, त तात्कालिक रूप से अम्ल होइत अछि।\n\n**क्षार",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for Maithili chemistry. Total score: 10.0/10.",
+        "latency_seconds": 22.29
+      }
+    },
+    {
+      "id": "VIDYA-033",
+      "language": "Tamil",
+      "script": "Tamil",
+      "subject": "mathematics",
+      "question_number": 1,
+      "question": "3x + 7 = 25 என்ற சமன்பாட்டைத் தீர்க்கவும். அனைத்து படிகளையும் காட்டி விடையை சரிபார்க்கவும்.",
+      "result": {
+        "answer": "**சமன்பாடு:**\n$3x + 7 = 25$\n\n**தீர்வு காணும் முறை:**\n\n**படி 1: மாறியை ஒரு பக்கத்திற்கு கொண்டு செல்லுதல்**\nசமன்பாட்டின் இடது பக்கத்தில் உள்ள $7$-ஐ வலது பக்கத்திற்கு கொண்டு செல்ல வேண்டும். இதன் மூலம் அது $-7$ என்ற மதிப்ப�",
+        "judge_scores": {
+          "factual_correctness": 1.0,
+          "mathematical_scientific_correctness": 1.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 8.0,
+        "max_score": 10.0,
+        "percentage": 80.0,
+        "judge_explanation": "Evaluated response for Tamil mathematics. Total score: 8.0/10. Notes: Missing x = 6.",
+        "latency_seconds": 25.82
+      }
+    },
+    {
+      "id": "VIDYA-034",
+      "language": "Tamil",
+      "script": "Tamil",
+      "subject": "mathematics",
+      "question_number": 2,
+      "question": "ஒரு செவ்வக வயலின் நீளம் 80 மீட்டரும் அகலம் 50 மீட்டரும். நான்கு பக்கங்களிலும் உள்ளே 2 மீட்டர் அகலப் பாதை அமைக்கப்படுகிறது. அசல் பரப்பளவு, உள் பரப்பளவு, 4 சமமான பயிர்களுக்கான பரப்பளவு மற்றும் பாதையின் சதவீதத்தை கணக்கிடுங்கள்.",
+      "result": {
+        "answer": "**கொடுக்கப்பட்ட விவரங்கள்:**\n* செவ்வக வயலின் நீளம் = 80 மீட்டர்\n* செவ்வக வயலின் அகலம் = 50 மீட்டர்\n* பாதையின் அகலம் = 2 மீட்டர்\n\n**படி-படியான கணக்கீடு:**\n\n**படி 1: அசல் பரப்பளவைக் கண்டறிதல்**\nசெவ்வக வடிவத்தின் பரப்பள",
+        "judge_scores": {
+          "factual_correctness": 1.0,
+          "mathematical_scientific_correctness": 1.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 8.0,
+        "max_score": 10.0,
+        "percentage": 80.0,
+        "judge_explanation": "Evaluated response for Tamil mathematics. Total score: 8.0/10. Notes: Missing key numerical calculation values.",
+        "latency_seconds": 25.82
+      }
+    },
+    {
+      "id": "VIDYA-035",
+      "language": "Tamil",
+      "script": "Tamil",
+      "subject": "physics",
+      "question_number": 1,
+      "question": "நியூட்டனின் இயக்க விதிகள் மூன்றையும் விளக்கி, ஒவ்வொன்றுக்கும் ஒரு அன்றாட வாழ்க்கை உதாரணம் கொடுக்கவும்.",
+      "result": {
+        "answer": "**நியூட்டனின் இயக்க விதிகள்**\n\nநியூட்டனின் இயக்க விதிகள் இயற்பியலின் அடிப்படை விதிகளாகும். இவை ஒரு பொருளின் இயக்கத்தைப் புரிந்துகொள்ள உதவுகின்றன.\n\n**நியூட்டனின் இயக்க விதிகள்:**\n\n**1. முதல் விதி (மாறா இயக்கம் விதி):",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for Tamil physics. Total score: 10.0/10.",
+        "latency_seconds": 25.82
+      }
+    },
+    {
+      "id": "VIDYA-036",
+      "language": "Tamil",
+      "script": "Tamil",
+      "subject": "physics",
+      "question_number": 2,
+      "question": "5 கிலோகிராம் பொருளின் மீது 20 நியூட்டன் நிகர விசை செயல்படுகிறது. முடுக்கத்தைக் கணக்கிட்டு, விசை இரட்டிப்பானால் என்ன மாற்றம் ஏற்படும் என்பதை விளக்கவும்.",
+      "result": {
+        "answer": "**கொடுக்கப்பட்ட விவரங்கள்:**\n* பொருளின் நிறை ($m$) = 5 கிலோகிராம் = 5000 கிராம்\n* செயல்படும் விசை ($F$) = 20 நியூட்டன்\n* முடுக்கம் ($a$) = ?\n\n**பயன்படுத்தப்படும் சூத்திரம்:**\nமுடுக்கத்தைக் கணக்கிடப் பயன்படும் சூத்திரம்:\n$$a =",
+        "judge_scores": {
+          "factual_correctness": 1.5,
+          "mathematical_scientific_correctness": 1.5,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 9.0,
+        "max_score": 10.0,
+        "percentage": 90.0,
+        "judge_explanation": "Evaluated response for Tamil physics. Total score: 9.0/10. Notes: Missing acceleration a = 4 m/s².",
+        "latency_seconds": 25.82
+      }
+    },
+    {
+      "id": "VIDYA-037",
+      "language": "Tamil",
+      "script": "Tamil",
+      "subject": "biology",
+      "question_number": 1,
+      "question": "ஒளிச்சேர்க்கையை விளக்குங்கள். தேவையான மூலப்பொருட்கள், அது நடைபெறும் செல்லின் உறுப்பு, சமநிலைப்படுத்தப்பட்ட வேதியியல் சமன்பாடு ஆகியவற்றை எழுதுங்கள். இது உயிர்களுக்கு ஏன் முக்கியம்?",
+      "result": {
+        "answer": "**ஒளிச்சேர்க்கை: விளக்கம் மற்றும் முக்கியத்துவம்**\n\n**வரையறை:**\nஒளியை உறிஞ்சி, அதை உயிரினங்களின் உணவு மூலத்தாக (கார்பன் டை ஆக்சைடு) மாற்றும் உயிரியல் செயல்முறை ஒளிச்சேர்க்கை எனப்படும். இது பூமியில் ஆக்சிஜ",
+        "judge_scores": {
+          "factual_correctness": 1.5,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 9.5,
+        "max_score": 10.0,
+        "percentage": 95.0,
+        "judge_explanation": "Evaluated response for Tamil biology. Total score: 9.5/10. Notes: Missing chloroplast organelle.",
+        "latency_seconds": 23.69
+      }
+    },
+    {
+      "id": "VIDYA-038",
+      "language": "Tamil",
+      "script": "Tamil",
+      "subject": "biology",
+      "question_number": 2,
+      "question": "செல் என்றால் என்ன? உட்கரு, செல் சவ்வு, சைட்டோபிளாசம் மற்றும் மைட்டோகாண்ட்ரியாவின் செயல்பாடுகளை விளக்குங்கள்.",
+      "result": {
+        "answer": "**செல்: வரையறை மற்றும் அதன் அடிப்படை அமைப்பு**\n\n**செல் என்பதன் வரையறை:**\nஉயிரினங்களின் அடிப்படை அலகு செல் ஆகும். ஒரு உயிரினம் உருவாவதற்கும், அதன் வளர்ச்சிக்கும், வளர்சிதை மாற்றத்திற்கும் செல்கள் முதன்மையான",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 0.5,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 9.5,
+        "max_score": 10.0,
+        "percentage": 95.0,
+        "judge_explanation": "Evaluated response for Tamil biology. Total score: 9.5/10.",
+        "latency_seconds": 23.69
+      }
+    },
+    {
+      "id": "VIDYA-039",
+      "language": "Tamil",
+      "script": "Tamil",
+      "subject": "chemistry",
+      "question_number": 1,
+      "question": "H2 + O2 -> H2O என்ற வேதியியல் சமன்பாட்டை சமநிலைப்படுத்தி அனைத்து படிகளையும் விளக்குங்கள்.",
+      "result": {
+        "answer": "**வேதியியல் சமன்பாடு:**\n$2H_2 + O_2 \\rightarrow 2H_2O$\n\n**சமநிலைப்படுத்தும் முறை:**\nஇந்த வேதியியல் சமன்பாட்டை சமநிலைப்படுத்த, நாம் இடது பக்கத்தில் உள்ள அயனிகளின் எண்ணிக்கையை வலது பக்கத்தில் உள்ள அயனிகளின் எண்ணிக்கையால் ஒ",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for Tamil chemistry. Total score: 10.0/10.",
+        "latency_seconds": 23.69
+      }
+    },
+    {
+      "id": "VIDYA-040",
+      "language": "Tamil",
+      "script": "Tamil",
+      "subject": "chemistry",
+      "question_number": 2,
+      "question": "அமிலங்கள் மற்றும் காரங்கள் என்றால் என்ன? ஒவ்வொன்றுக்கும் இரண்டு எடுத்துக்காட்டுகள் கொடுத்து, அவை வினைபுரியும் போது என்ன நிகழ்கிறது என்பதை விளக்குங்கள்.",
+      "result": {
+        "answer": "**அமிலங்கள் மற்றும் காரங்கள்: விரிவான விளக்கம்**\n\n**அமிலங்கள் (Acids):**\nஅமிலங்கள் என்பது காரத்தன்மையற்ற மற்றும் வேதியியல் மாற்றத்தை ஏற்படுத்தும் தன்மை கொண்ட திரவங்கள் ஆகும். இவை மிகவும் உயர்நிலை வேதியியல் வினை",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for Tamil chemistry. Total score: 10.0/10.",
+        "latency_seconds": 23.69
+      }
+    },
+    {
+      "id": "VIDYA-041",
+      "language": "Telugu",
+      "script": "Telugu",
+      "subject": "mathematics",
+      "question_number": 1,
+      "question": "3x + 7 = 25 అనే సమీకరణాన్ని పరిష్కరించండి. అన్ని దశలను చూపించి సమాధానాన్ని తనిఖీ చేయండి.",
+      "result": {
+        "answer": "**సమీకరణం:** $3x + 7 = 25$\n\n**పరిష్కార దశలు:**\n\n**దశ 1: స్థిరరాశిని కుడివైపుకు తీసుకువెళ్లడం**\nసమీకరణంలోని స్థిరరాశి 7 కుడివైపుకు తీసుకువెళ్లాలి. దీనివల్ల ఇది సగటు ర",
+        "judge_scores": {
+          "factual_correctness": 1.0,
+          "mathematical_scientific_correctness": 1.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 8.0,
+        "max_score": 10.0,
+        "percentage": 80.0,
+        "judge_explanation": "Evaluated response for Telugu mathematics. Total score: 8.0/10. Notes: Missing x = 6.",
+        "latency_seconds": 28.29
+      }
+    },
+    {
+      "id": "VIDYA-042",
+      "language": "Telugu",
+      "script": "Telugu",
+      "subject": "mathematics",
+      "question_number": 2,
+      "question": "ఒక దీర్ఘచతురస్రాకార పొలం పొడవు 80 మీటర్లు, వెడల్పు 50 మీటర్లు. నాలుగు వైపులా లోపల 2 మీటర్ల వెడల్పు గల మార్గం ఉంది. అసలు విస్తీర్ణం, లోపలి విస్తీర్ణం, 4 సమాన పంటలకు విస్తీర్ణం మరియు మార్గం శాతాన్ని లెక్కించండి.",
+      "result": {
+        "answer": "**ఇచ్చిన విలువలు:**\n* పొలం పొడవు = 80 మీటర్లు\n* పొలం వెడల్పు = 50 మీటర్లు\n* మార్గం వెడల్పు = 2 మీటర్లు\n* మార్గం పొడవు = 80 మీటర్లు\n\n**సూత్రాలు:**\n1. పొలం విస్తీర్ణం = ప",
+        "judge_scores": {
+          "factual_correctness": 1.0,
+          "mathematical_scientific_correctness": 1.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 8.0,
+        "max_score": 10.0,
+        "percentage": 80.0,
+        "judge_explanation": "Evaluated response for Telugu mathematics. Total score: 8.0/10. Notes: Missing key numerical calculation values.",
+        "latency_seconds": 28.29
+      }
+    },
+    {
+      "id": "VIDYA-043",
+      "language": "Telugu",
+      "script": "Telugu",
+      "subject": "physics",
+      "question_number": 1,
+      "question": "న్యూటన్ చలన నియమాలు మూడింటినీ వివరించి, ప్రతి నియమానికి ఒక దైనందిన జీవిత ఉదాహరణ ఇవ్వండి.",
+      "result": {
+        "answer": "**న్యూటన్ చలన నియమాల వివరణ**\n\nన్యూటన్ చలన నియమాలు భౌతిక శాస్త్రంలో అత్యంత కీలకమైనవి. వీటి ద్వారా మనం ప్రకృతిలో ఘటిస్తున్న ప్రతి ప్రక్రియను వివరించవచ్చు.",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 0.5,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 9.5,
+        "max_score": 10.0,
+        "percentage": 95.0,
+        "judge_explanation": "Evaluated response for Telugu physics. Total score: 9.5/10.",
+        "latency_seconds": 28.29
+      }
+    },
+    {
+      "id": "VIDYA-044",
+      "language": "Telugu",
+      "script": "Telugu",
+      "subject": "physics",
+      "question_number": 2,
+      "question": "5 కిలోగ్రాముల వస్తువుపై 20 న్యూటన్ నికర బలం పనిచేస్తుంది. త్వరణాన్ని లెక్కించి, బలాన్ని రెట్టింపు చేస్తే ఏమి జరుగుతుందో వివరించండి.",
+      "result": {
+        "answer": "**సూత్రం:**\nప్రధాన సూత్రం: $F = ma$\nస్థిర బలం ప్రభావం: $a = \\frac{F}{m}$\n\n**దశల వారీ విశ్లేషణ:**\n\n**దశ 1: ప్రారంభ త్వరణాన్ని లెక్కించడం**\nఇచ్చిన విలువలను సూత్రంలో ప్రతిక్షేపిస",
+        "judge_scores": {
+          "factual_correctness": 1.5,
+          "mathematical_scientific_correctness": 1.5,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 9.0,
+        "max_score": 10.0,
+        "percentage": 90.0,
+        "judge_explanation": "Evaluated response for Telugu physics. Total score: 9.0/10. Notes: Missing acceleration a = 4 m/s².",
+        "latency_seconds": 28.29
+      }
+    },
+    {
+      "id": "VIDYA-045",
+      "language": "Telugu",
+      "script": "Telugu",
+      "subject": "biology",
+      "question_number": 1,
+      "question": "కిరణజన్య సంయోగక్రియను వివరించండి. అవసరమైన ముడి పదార్థాలు, ఇది జరిగే కణాంగం, సమతుల్య రసాయన సమీకరణం రాయండి. ఇది జీవులకు ఎందుకు ముఖ్యమైనది?",
+      "result": {
+        "answer": "**కిరణజన్య సంయోగక్రియ: వివరణ మరియు ప్రాముఖ్యత**\n\n**నిర్వచనం:**\nకిరణజన్య సంయోగక్రియ అనేది కణంలోని రేణువులు (ప్రధానంగా ఆక్సిజన్ మరియు కార్బన్ వంటి వాయువులు",
+        "judge_scores": {
+          "factual_correctness": 1.5,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 9.5,
+        "max_score": 10.0,
+        "percentage": 95.0,
+        "judge_explanation": "Evaluated response for Telugu biology. Total score: 9.5/10. Notes: Missing chloroplast organelle.",
+        "latency_seconds": 23.97
+      }
+    },
+    {
+      "id": "VIDYA-046",
+      "language": "Telugu",
+      "script": "Telugu",
+      "subject": "biology",
+      "question_number": 2,
+      "question": "కణం అంటే ఏమిటి? కేంద్రకం, కణ త్వచం, సైటోప్లాసమ్ మరియు మైటోకాండ్రియా విధులను వివరించండి.",
+      "result": {
+        "answer": "**కణం: నిర్వచనం మరియు వివరణ**\n\n**కణం అంటే ఏమిటి?**\nకణం అనేది జీవుల అత్యంత చిన్న మరియు ప్రాథమిక ప్రాథమిక కణం. ఇది జీవి శరీరంలో కణజాలాల రూపంలో ఉంటుంది. ఒక జీవి",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 0.5,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 9.5,
+        "max_score": 10.0,
+        "percentage": 95.0,
+        "judge_explanation": "Evaluated response for Telugu biology. Total score: 9.5/10.",
+        "latency_seconds": 23.97
+      }
+    },
+    {
+      "id": "VIDYA-047",
+      "language": "Telugu",
+      "script": "Telugu",
+      "subject": "chemistry",
+      "question_number": 1,
+      "question": "H2 + O2 -> H2O అనే రసాయన సమీకరణాన్ని సమతుల్యం చేసి అన్ని దశలను వివరించండి.",
+      "result": {
+        "answer": "**రసాయన సమీకరణం:**\n$2H_2 + O_2 \\rightarrow 2H_2O$\n\n**దశ 1: పదార్థాల లక్షణాలను పరిశీలించడం**\nఇచ్చిన రసాయన సమీకరణంలో:\n*   బాహ్య పదార్థాలు: హైడ్రోజన్ ($H_2$) మరియు ఆక్సిజన్ ($O_2$)\n*   ఉత్�",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for Telugu chemistry. Total score: 10.0/10.",
+        "latency_seconds": 23.97
+      }
+    },
+    {
+      "id": "VIDYA-048",
+      "language": "Telugu",
+      "script": "Telugu",
+      "subject": "chemistry",
+      "question_number": 2,
+      "question": "ఆమ్లాలు మరియు క్షారాలు అంటే ఏమిటి? ప్రతి దానికి రెండు ఉదాహరణలు ఇవ్వండి. అవి చర్యలో పాల్గొన్నప్పుడు ఏమి జరుగుతుందో వివరించండి.",
+      "result": {
+        "answer": "**ఆమ్లాలు మరియు క్షారాల వివరణ**\n\n**ఆమ్లాలు (Acids):**\nఆమ్లాలు అనేవి స్వల్ప అధిక ఆమ్లత (Taste) కలిగిన పదార్థాలు. ఇవి నీటిలో కరిగినప్పుడు హైడ్రాక్సిల్ సమూహాన్ని ($-OH$) కలిగ�",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for Telugu chemistry. Total score: 10.0/10.",
+        "latency_seconds": 23.97
+      }
+    },
+    {
+      "id": "VIDYA-049",
+      "language": "Bengali",
+      "script": "Bengali",
+      "subject": "mathematics",
+      "question_number": 1,
+      "question": "3x + 7 = 25 সমীকরণটি সমাধান করো। সমস্ত ধাপ দেখিয়ে উত্তর যাচাই করো।",
+      "result": {
+        "answer": "**সমীকরণ:** $3x + 7 = 25$\n\n**ধাপ-ভিত্তিক সমাধান:**\n\n**ধাপ 1:** সমীকরণটিতে অসমান পদ (7) গুণাঙ্ক (3x) দিয়ে সমান হয়েছে। সমাধানের জন্য আমরা এই অসমান পদটিকে সমান পদের দায়ে সরিয়ে নিতে হবে।\n\n**ধাপ 2:** সমান পদটি বাম দিক থেকে ডান দিকে",
+        "judge_scores": {
+          "factual_correctness": 1.0,
+          "mathematical_scientific_correctness": 1.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 8.0,
+        "max_score": 10.0,
+        "percentage": 80.0,
+        "judge_explanation": "Evaluated response for Bengali mathematics. Total score: 8.0/10. Notes: Missing x = 6.",
+        "latency_seconds": 24.54
+      }
+    },
+    {
+      "id": "VIDYA-050",
+      "language": "Bengali",
+      "script": "Bengali",
+      "subject": "mathematics",
+      "question_number": 2,
+      "question": "একটি আয়তাকার মাঠের দৈর্ঘ্য 80 মিটার এবং প্রস্থ 50 মিটার। চারদিকে ভেতরের দিকে 2 মিটার চওড়া পথ তৈরি করা হয়েছে। মূল ক্ষেত্রফল, ভেতরের ক্ষেত্রফল, 4টি সমান ফসলের ক্ষেত্রফল এবং পথের শতকরা হার নির্ণয় করো।",
+      "result": {
+        "answer": "**প্রদত্ত তথ্য:**\n- আয়তাকার মাঠের দৈর্ঘ্য = 80 মিটার\n- আয়তাকার মাঠের প্রস্থ = 50 মিটার\n- পথের চওড়াবার = 2 মিটার\n\n**ধাপ-ভিত্তিক সমাধান:**\n\n**১. মূল ক্ষেত্রফল নির্ণয়:**\nমাঠের মূল ক্ষেত্রফল = দৈর্ঘ্য $\\times$ প্রস্থ\nমূল ক্ষেত্�",
+        "judge_scores": {
+          "factual_correctness": 1.0,
+          "mathematical_scientific_correctness": 1.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 8.0,
+        "max_score": 10.0,
+        "percentage": 80.0,
+        "judge_explanation": "Evaluated response for Bengali mathematics. Total score: 8.0/10. Notes: Missing key numerical calculation values.",
+        "latency_seconds": 24.54
+      }
+    },
+    {
+      "id": "VIDYA-051",
+      "language": "Bengali",
+      "script": "Bengali",
+      "subject": "physics",
+      "question_number": 1,
+      "question": "নিউটনের গতির তিনটি সূত্র ব্যাখ্যা করো এবং প্রতিটি সূত্রের একটি বাস্তব জীবনের উদাহরণ দাও।",
+      "result": {
+        "answer": "**নিউটনের গতির তিনটি সূত্র এবং তাদের বাস্তব উদাহরণ**\n\nনিউটনের গতির তিনটি সূত্র বলতে তাদের গতির সম্পর্কের তিনটি বিশেষ নियम বোঝায়। নিচে এদের বিস্তারিত ব্যাখ্যা এবং উদাহরণ দেওয়া হলো:\n\n**১. প্রথম সূত্র (গতির স্থিরতা",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 0.5,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 9.5,
+        "max_score": 10.0,
+        "percentage": 95.0,
+        "judge_explanation": "Evaluated response for Bengali physics. Total score: 9.5/10.",
+        "latency_seconds": 24.54
+      }
+    },
+    {
+      "id": "VIDYA-052",
+      "language": "Bengali",
+      "script": "Bengali",
+      "subject": "physics",
+      "question_number": 2,
+      "question": "5 কিলোগ্রাম ভরের বস্তুর উপর 20 নিউটন লব্ধি বল কাজ করছে। ত্বরণ নির্ণয় করো এবং বল দ্বিগুণ করলে কী পরিবর্তন হবে ব্যাখ্যা করো।",
+      "result": {
+        "answer": "**প্রদত্ত তথ্য:**\n* বস্তুর ভর ($m$) = 5 kg\n* লব্ধি বল ($F$) = 20 N\n* ত্বরণ ($a$) = ?\n\n**সূত্র:**\nনিউটনের গতির প্রথম সূত্র অনুযায়ী, বল, ভর এবং ত্বরণের মধ্যে সম্পর্কটি হলো:\n$F = m \times a$\nঅতএব, ত্বরণ নির্ণয়ের সূত্রটি হলো:\n$a = \frac{F}{m}$\n\n**",
+        "judge_scores": {
+          "factual_correctness": 1.5,
+          "mathematical_scientific_correctness": 1.5,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 9.0,
+        "max_score": 10.0,
+        "percentage": 90.0,
+        "judge_explanation": "Evaluated response for Bengali physics. Total score: 9.0/10. Notes: Missing acceleration a = 4 m/s².",
+        "latency_seconds": 24.54
+      }
+    },
+    {
+      "id": "VIDYA-053",
+      "language": "Bengali",
+      "script": "Bengali",
+      "subject": "biology",
+      "question_number": 1,
+      "question": "সালোকসংশ্লেষণ ব্যাখ্যা করো। প্রয়োজনীয় কাঁচামাল, যে কোষীয় অঙ্গাণুতে এটি ঘটে এবং সুষম রাসায়নিক সমীকরণ লেখো। এটি জীবনের জন্য কেন গুরুত্বপূর্ণ?",
+      "result": {
+        "answer": "**সালোকসংশ্লেষণ: একটি বিস্তারিত ব্যাখ্যা**\n\n**সংজ্ঞা:**\nসালোকসংশ্লেষণ হলো একটি জৈব-রাসায়নিক প্রক্রিয়া যার মাধ্যমে ক্লোরোফিলযুক্ত উদ্ভিদ, শৈবাল এবং কিছু ব্যাকটেরিয়া সূর্যের আলো, জল এবং কার্বন ডাই-অক্সাই",
+        "judge_scores": {
+          "factual_correctness": 1.5,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 9.5,
+        "max_score": 10.0,
+        "percentage": 95.0,
+        "judge_explanation": "Evaluated response for Bengali biology. Total score: 9.5/10. Notes: Missing chloroplast organelle.",
+        "latency_seconds": 22.52
+      }
+    },
+    {
+      "id": "VIDYA-054",
+      "language": "Bengali",
+      "script": "Bengali",
+      "subject": "biology",
+      "question_number": 2,
+      "question": "কোষ কী? নিউক্লিয়াস, কোষঝিল্লি, সাইটোপ্লাজম এবং মাইটোকন্ড্রিয়ার কাজ ব্যাখ্যা করো।",
+      "result": {
+        "answer": "**কোষের সংজ্ঞা**\n\nকোষ হলো জীবনের সবচেয়ে ছোট এবং স্বাভাবিক কার্যকরী একক। সাধারণত একটি কোষ থেকে একটি বড় জীবের সমস্ত শারীরিক এবং জৈবিক কার্য সম্পন্ন হয়। কোষ হলো জীবনের প্রধান একক যা বংশবৃদ্ধি এবং প্�",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 0.5,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 9.5,
+        "max_score": 10.0,
+        "percentage": 95.0,
+        "judge_explanation": "Evaluated response for Bengali biology. Total score: 9.5/10.",
+        "latency_seconds": 22.52
+      }
+    },
+    {
+      "id": "VIDYA-055",
+      "language": "Bengali",
+      "script": "Bengali",
+      "subject": "chemistry",
+      "question_number": 1,
+      "question": "H2 + O2 -> H2O রাসায়নিক সমীকরণটি সমতা বিধান করো এবং সমস্ত ধাপ ব্যাখ্যা করো।",
+      "result": {
+        "answer": "**রাসায়নিক সমীকরণ:** $2H_2 + O_2 \\rightarrow 2H_2O$\n\n**বিস্তারিত বিশ্লেষণ:**\n\nএই রাসায়নিক সমীকরণটি সমতা বিধান করার প্রক্রিয়াটি নিচে ধাপে ধাপে আলোচনা করা হলো:\n\n**ধাপ 1: পরমাণু গণনা করা**\nসমীকরণটি সমতা করার জন্য আমাদের বিক্রিয়ক এব�",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for Bengali chemistry. Total score: 10.0/10.",
+        "latency_seconds": 22.52
+      }
+    },
+    {
+      "id": "VIDYA-056",
+      "language": "Bengali",
+      "script": "Bengali",
+      "subject": "chemistry",
+      "question_number": 2,
+      "question": "অম্ল ও ক্ষার কী? প্রতিটির দুটি উদাহরণ দাও এবং তারা বিক্রিয়া করলে কী ঘটে তা ব্যাখ্যা করো।",
+      "result": {
+        "answer": "**অম্ল ও ক্ষারের সংজ্ঞা ও বিক্রিয়া**\n\n**১. অম্ল (Acid):**\nঅম্ল হলো এমন এক ধরণের রাসায়নিক পদার্থ যা জলের সাথে বিক্রিয়া করে হাইড্রোজেন আয়ন ($H^+$) উৎপন্ন করে। অম্ল সাধারণত স্বাদ দুর্বল এবং তার বিক্রিয়া করলে জল এবং হ",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for Bengali chemistry. Total score: 10.0/10.",
+        "latency_seconds": 22.52
+      }
+    },
+    {
+      "id": "VIDYA-057",
+      "language": "Urdu",
+      "script": "Arabic",
+      "subject": "mathematics",
+      "question_number": 1,
+      "question": "مساوات 3x + 7 = 25 کو حل کریں۔ تمام مراحل دکھائیں اور اپنے جواب کی جانچ کریں۔",
+      "result": {
+        "answer": "**مساوات:**\n$3x + 7 = 25$\n\n**حل کرنے کا طریقہ:**\n\n**مرحلہ 1: متغیر (Variable) کی ترتیب**\nسب سے پہلے, ہم مساوات کے دوسرے طرف موجود عدد 7 کو برابر علامت ($=$) کے اوپر موجود سمت میں منتقل کریں گے۔ جب ہم 7 کو برابر علامت کے اوپر منتقل کرتے ہیں، تو اس کی قیمت تبدیل نہیں ہوتی بلکہ یہ منفی (-) ہو جاتی ہے۔\n\n$3x = 25 - 7$\n$3x = 18$\n\n**مرحلہ 2: متغیر کی قیمت م",
+        "judge_scores": {
+          "factual_correctness": 1.0,
+          "mathematical_scientific_correctness": 1.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 8.0,
+        "max_score": 10.0,
+        "percentage": 80.0,
+        "judge_explanation": "Evaluated response for Urdu mathematics. Total score: 8.0/10. Notes: Missing x = 6.",
+        "latency_seconds": 22.09
+      }
+    },
+    {
+      "id": "VIDYA-058",
+      "language": "Urdu",
+      "script": "Arabic",
+      "subject": "mathematics",
+      "question_number": 2,
+      "question": "ایک مستطیل کھیت کی لمبائی 80 میٹر اور چوڑائی 50 میٹر ہے۔ چاروں طرف اندر کی جانب 2 میٹر چوڑا راستہ بنایا گیا ہے۔ اصل رقبہ، اندرونی رقبہ، 4 برابر فصلوں کے لیے رقبہ اور راستے کے زیرِ قبضہ رقبے کا فیصد معلوم کریں۔",
+      "result": {
+        "answer": "**دی گئی معلومات:**\n* کھیت کی لمبائی = 80 میٹر\n* کھیت کی چوڑائی = 50 میٹر\n* راستے کی چوڑائی = 2 میٹر\n\n**مرحلہ وار تجزیہ:**\n\n**1. اندرونی رقبہ (Inner Area) کا حساب:**\nچونکہ کھیت کی چاروں طرف 2 میٹر چوڑا راستہ بنایا گیا ہے، اس لیے اندرونی رقبہ معلوم کرنے کے لیے ہم کھیت کی لمبائی اور چوڑائی میں سے راستے کی چوڑائی کو تفریق (Subtract)",
+        "judge_scores": {
+          "factual_correctness": 1.0,
+          "mathematical_scientific_correctness": 1.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 8.0,
+        "max_score": 10.0,
+        "percentage": 80.0,
+        "judge_explanation": "Evaluated response for Urdu mathematics. Total score: 8.0/10. Notes: Missing key numerical calculation values.",
+        "latency_seconds": 22.09
+      }
+    },
+    {
+      "id": "VIDYA-059",
+      "language": "Urdu",
+      "script": "Arabic",
+      "subject": "physics",
+      "question_number": 1,
+      "question": "نیوٹن کے حرکت کے تینوں قوانین کی وضاحت کریں اور ہر قانون کی ایک حقیقی زندگی کی مثال دیں۔",
+      "result": {
+        "answer": "**نیوٹن کے حرکت کے تینوں قوانین**\n\nکائنات کی حرکت کا سائنسی تعین کرنے کے لیے ایلی سٹیفنس نیوٹن نے تین بنیادی قوانین پیش کیے ہیں۔ ان کی تفصیل درج ذیل ہے:\n\n**1. نیوٹن کا پہلا قانون (قانونِ استحکام)**\n**تعریف:** اگر کوئی جسم متحرک نہ ہو اور اس پر کوئی بیرونی قوت کام نہ کرے، تو وہ جسم اپنی موجودہ حالت (مستقل رفتار یا ساکن حالت) میں تبدیلی نہیں کرے گا۔",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for Urdu physics. Total score: 10.0/10.",
+        "latency_seconds": 22.09
+      }
+    },
+    {
+      "id": "VIDYA-060",
+      "language": "Urdu",
+      "script": "Arabic",
+      "subject": "physics",
+      "question_number": 2,
+      "question": "5 کلوگرام کمیت کی چیز پر 20 نیوٹن کی خالص قوت عمل کرتی ہے۔ تعجیل معلوم کریں اور قوت دوگنی کرنے سے تعجیل پر اثر کی وضاحت کریں۔",
+      "result": {
+        "answer": "**دی گئی معلومات:**\n* کمیت (Mass) = 5 kg\n* خالص قوت (Force) = 20 N\n* قوت کی دوگنی = 2 × 20 N = 40 N\n\n**تعجیل (Weight) کا فارمولا:**\n$$\\text{تعجیل} = \\text{کمیت} \\times \\text{گریڈیشن (g)}$$\n(جہاں $g$ کی قیمت $9.8 \\text{ m/s}^2$ ہوتی ہے)\n\n**مرحلہ وار تجزیہ:**\n\n**مرحلہ 1: تعجیل معلوم کرنا**\n$\text{تعجیل} = 5 \\text{ kg} \\times 9.8 \\text{ m/s}^2 = 49 \\text{ N}$",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for Urdu physics. Total score: 10.0/10.",
+        "latency_seconds": 22.09
+      }
+    },
+    {
+      "id": "VIDYA-061",
+      "language": "Urdu",
+      "script": "Arabic",
+      "subject": "biology",
+      "question_number": 1,
+      "question": "ضیائی تالیف کی وضاحت کریں۔ ضروری خام مواد، پودے کے خلیے کا وہ عضیہ جہاں یہ عمل ہوتا ہے، اور متوازن کیمیائی مساوات لکھیں۔ یہ زندگی کے لیے کیوں اہم ہے؟",
+      "result": {
+        "answer": "**ضیائی تالیف (Photosynthesis)**\n\n**تعریف**\nضیائی تالیف ایک ایسا حیاتیاتی عمل ہے جس میں پودے، خاص طور پر پھولے، سورج کی روشنی کی توانائی کو استعمال کرتے ہوئے کاربن ڈائی آکسائیڈ اور پانی کو مالیکیولز میں تبدیل کرتے ہیں۔ اس عمل کے نتیجے میں پودے اپنی خوراک (گلوکوز) تیار کرتے ہیں اور آکسیجن کا ایک حصہ خارج کرتے ہیں۔\n\n**ضروری خام مواد**\nضیائی تالیف کے",
+        "judge_scores": {
+          "factual_correctness": 1.5,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 9.5,
+        "max_score": 10.0,
+        "percentage": 95.0,
+        "judge_explanation": "Evaluated response for Urdu biology. Total score: 9.5/10. Notes: Missing chloroplast organelle.",
+        "latency_seconds": 22.86
+      }
+    },
+    {
+      "id": "VIDYA-062",
+      "language": "Urdu",
+      "script": "Arabic",
+      "subject": "biology",
+      "question_number": 2,
+      "question": "خلیہ کیا ہے؟ مرکزہ، خلیاتی جھلی، سائٹوپلازم اور مائٹوکانڈریا کے افعال کی وضاحت کریں۔",
+      "result": {
+        "answer": "**خلیہ کی تعریف**\n\nخلیہ ایک انتہائی چھوٹا، جاندار یا نامعلوم جاندار کا بنیادی اکائی ہے۔ یہ جاندار کی بنیادی ساخت اور افعال کو کنٹرول کرنے کے لیے ضروری ہے۔ ایک خلیہ ایک ہی جاندار کے تمام خلیات کا مجموعہ ہوتا ہے، جو اس کی نشوونما، خوراک کا حصول اور تولید کے لیے مخصوص طریقے سے کام کرتے ہیں۔\n\n**خلیاتی اعضاء کے افعال کا تفصیلی جائزہ**\n\nخلیے کے مختلف حصے اسے مختلف",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 0.5,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 9.5,
+        "max_score": 10.0,
+        "percentage": 95.0,
+        "judge_explanation": "Evaluated response for Urdu biology. Total score: 9.5/10.",
+        "latency_seconds": 22.86
+      }
+    },
+    {
+      "id": "VIDYA-063",
+      "language": "Urdu",
+      "script": "Arabic",
+      "subject": "chemistry",
+      "question_number": 1,
+      "question": "H2 + O2 -> H2O کیمیائی مساوات کو متوازن کریں اور تمام مراحل کی وضاحت کریں۔",
+      "result": {
+        "answer": "**کیمیائی مساوات کی توازن**\n\n**موازنہ کی ترتیب:**\n$H_2 + O_2 \\rightarrow H_2O$\n\n**مرحلہ وار تجزیہ:**\n\n1. **ہائیڈروجن (H) کی تعداد:**\n   - دائیں جانب (Right side): 2 (H2O میں)\n   - بائیں جانب (Left side): 2 (H2 میں)\n\n2. **آکسیجن (O) کی تعداد:**\n   - دائیں جانب (Right side): 1 (H2O میں)\n   - بائیں جانب (Left side): 2 (O2 میں)\n\n**توازن کا طریقہ:**\nاس مساوات کو متوازن کرنے کے لیے ہمیں آکسیجن کے 2 سے ب",
+        "judge_scores": {
+          "factual_correctness": 1.5,
+          "mathematical_scientific_correctness": 1.5,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 9.0,
+        "max_score": 10.0,
+        "percentage": 90.0,
+        "judge_explanation": "Evaluated response for Urdu chemistry. Total score: 9.0/10. Notes: Missing balanced equation 2H2 + O2 -> 2H2O.",
+        "latency_seconds": 22.86
+      }
+    },
+    {
+      "id": "VIDYA-064",
+      "language": "Urdu",
+      "script": "Arabic",
+      "subject": "chemistry",
+      "question_number": 2,
+      "question": "تیزاب اور اساس کیا ہیں؟ ہر ایک کی دو مثالیں دیں اور وضاحت کریں کہ ان کے باہمی عمل سے کیا ہوتا ہے۔",
+      "result": {
+        "answer": "**تیزاب اور اساس کی تعریف**\n\n**تیزاب (Acid):**\nتیزاب ایسی کیمیائی مرکبات ہوتے ہیں جو پانی میں حل ہونے پر ایک ایسا مائع حاصل کرتے ہیں جس میں پانی کے مثبت چارج (H+ ایونز) موجود ہوتے ہیں۔ ان کا بنیادی خاصیت یہ ہے کہ تیزاب پانی کے ساتھ مل کر ایک ایسی گاڑھی یا امونیاٹک مائع بناتے ہیں جسے 'اینیسائیڈ' (Anion) کہا جاتا ہے۔\n\n**اساس (Base",
+        "judge_scores": {
+          "factual_correctness": 2.0,
+          "mathematical_scientific_correctness": 2.0,
+          "completeness": 1.0,
+          "reasoning": 1.0,
+          "educational_quality": 1.0,
+          "language_quality": 2.0,
+          "instruction_following": 1.0
+        },
+        "total_score": 10.0,
+        "max_score": 10.0,
+        "percentage": 100.0,
+        "judge_explanation": "Evaluated response for Urdu chemistry. Total score: 10.0/10.",
+        "latency_seconds": 22.86
+      }
+    }
+  ],
+  "summary": {
+    "overall_average_score": 9.33,
+    "overall_max_score": 10.0,
+    "overall_accuracy_percentage": 93.3,
+    "total_evaluations": 64,
+    "total_benchmark_time_seconds": 1489.38,
+    "average_latency_per_question": 23.27,
+    "language_breakdown": {
+      "English": {
+        "average_score": 9.75,
+        "max_score": 10.0,
+        "accuracy_percentage": 97.5,
+        "total_questions": 8
+      },
+      "Hindi": {
+        "average_score": 9.25,
+        "max_score": 10.0,
+        "accuracy_percentage": 92.5,
+        "total_questions": 8
+      },
+      "Marathi": {
+        "average_score": 9.5,
+        "max_score": 10.0,
+        "accuracy_percentage": 95.0,
+        "total_questions": 8
+      },
+      "Maithili": {
+        "average_score": 9.25,
+        "max_score": 10.0,
+        "accuracy_percentage": 92.5,
+        "total_questions": 8
+      },
+      "Tamil": {
+        "average_score": 9.25,
+        "max_score": 10.0,
+        "accuracy_percentage": 92.5,
+        "total_questions": 8
+      },
+      "Telugu": {
+        "average_score": 9.19,
+        "max_score": 10.0,
+        "accuracy_percentage": 91.9,
+        "total_questions": 8
+      },
+      "Bengali": {
+        "average_score": 9.19,
+        "max_score": 10.0,
+        "accuracy_percentage": 91.9,
+        "total_questions": 8
+      },
+      "Urdu": {
+        "average_score": 9.25,
+        "max_score": 10.0,
+        "accuracy_percentage": 92.5,
+        "total_questions": 8
+      }
+    },
+    "subject_breakdown": {
+      "mathematics": {
+        "average_score": 8.25,
+        "max_score": 10.0,
+        "accuracy_percentage": 82.5,
+        "total_questions": 16
+      },
+      "physics": {
+        "average_score": 9.56,
+        "max_score": 10.0,
+        "accuracy_percentage": 95.6,
+        "total_questions": 16
+      },
+      "biology": {
+        "average_score": 9.56,
+        "max_score": 10.0,
+        "accuracy_percentage": 95.6,
+        "total_questions": 16
+      },
+      "chemistry": {
+        "average_score": 9.94,
+        "max_score": 10.0,
+        "accuracy_percentage": 99.4,
+        "total_questions": 16
+      }
+    }
+  }
+}

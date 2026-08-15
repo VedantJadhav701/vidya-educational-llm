@@ -1,0 +1,618 @@
+{
+  "benchmark_name": "Vidya Multilingual Educational LLM Benchmark",
+  "version": "1.0",
+  "model": "Vidya 1.7B",
+  "languages": [
+    "English",
+    "Hindi",
+    "Marathi",
+    "Maithili",
+    "Tamil",
+    "Telugu",
+    "Bengali",
+    "Urdu"
+  ],
+  "subjects": [
+    "mathematics",
+    "physics",
+    "biology",
+    "chemistry"
+  ],
+  "questions_per_subject_per_language": 2,
+  "total_questions_per_language": 8,
+  "total_evaluations": 64,
+  "judge_rubric": {
+    "factual_correctness": 2,
+    "mathematical_scientific_correctness": 2,
+    "completeness": 1,
+    "reasoning": 1,
+    "educational_quality": 1,
+    "language_quality": 2,
+    "instruction_following": 1
+  },
+  "results_schema": {
+    "answer": "",
+    "judge_scores": {},
+    "total_score": 0,
+    "judge_explanation": "",
+    "latency_seconds": null
+  },
+  "questions": [
+    {
+      "id": "VIDYA-001",
+      "language": "English",
+      "script": "Latin",
+      "subject": "mathematics",
+      "question_number": 1,
+      "question": "Solve 3x + 7 = 25. Show the steps and verify your answer.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-002",
+      "language": "English",
+      "script": "Latin",
+      "subject": "mathematics",
+      "question_number": 2,
+      "question": "A rectangular field is 80 m long and 50 m wide. A pathway 2 m wide is constructed inside along all four sides. Find the original area, inner field area, area for each of 4 equal crops, and pathway percentage.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-003",
+      "language": "English",
+      "script": "Latin",
+      "subject": "physics",
+      "question_number": 1,
+      "question": "Explain Newton's three laws of motion and give one real-life example for each.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-004",
+      "language": "English",
+      "script": "Latin",
+      "subject": "physics",
+      "question_number": 2,
+      "question": "A 5 kg object is acted upon by a net force of 20 N. Calculate its acceleration and explain what happens if the force is doubled.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-005",
+      "language": "English",
+      "script": "Latin",
+      "subject": "biology",
+      "question_number": 1,
+      "question": "Explain photosynthesis, including the raw materials, the cell organelle where it occurs, and its balanced chemical equation. Why is it important for life on Earth?",
+      "result": null
+    },
+    {
+      "id": "VIDYA-006",
+      "language": "English",
+      "script": "Latin",
+      "subject": "biology",
+      "question_number": 2,
+      "question": "What is a cell? Explain the functions of the nucleus, cell membrane, cytoplasm, and mitochondria.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-007",
+      "language": "English",
+      "script": "Latin",
+      "subject": "chemistry",
+      "question_number": 1,
+      "question": "Balance H2 + O2 -> H2O and explain the steps.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-008",
+      "language": "English",
+      "script": "Latin",
+      "subject": "chemistry",
+      "question_number": 2,
+      "question": "What are acids and bases? Give two examples of each and explain what happens when an acid reacts with a base.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-009",
+      "language": "Hindi",
+      "script": "Devanagari",
+      "subject": "mathematics",
+      "question_number": 1,
+      "question": "समीकरण 3x + 7 = 25 को हल कीजिए। सभी चरण दिखाइए और अपने उत्तर की जाँच कीजिए।",
+      "result": null
+    },
+    {
+      "id": "VIDYA-010",
+      "language": "Hindi",
+      "script": "Devanagari",
+      "subject": "mathematics",
+      "question_number": 2,
+      "question": "एक आयताकार खेत 80 मीटर लंबा और 50 मीटर चौड़ा है। चारों ओर अंदर की तरफ 2 मीटर चौड़ी पगडंडी बनाई गई है। मूल खेत का क्षेत्रफल, अंदर के खेत का क्षेत्रफल, 4 समान फसलों के लिए क्षेत्रफल और पगडंडी का प्रतिशत ज्ञात कीजिए।",
+      "result": null
+    },
+    {
+      "id": "VIDYA-011",
+      "language": "Hindi",
+      "script": "Devanagari",
+      "subject": "physics",
+      "question_number": 1,
+      "question": "न्यूटन के गति के तीनों नियम समझाइए और प्रत्येक नियम का एक वास्तविक जीवन का उदाहरण दीजिए।",
+      "result": null
+    },
+    {
+      "id": "VIDYA-012",
+      "language": "Hindi",
+      "script": "Devanagari",
+      "subject": "physics",
+      "question_number": 2,
+      "question": "5 किलोग्राम के पिंड पर 20 न्यूटन का परिणामी बल लगाया जाता है। त्वरण ज्ञात कीजिए और समझाइए कि बल दोगुना करने पर त्वरण पर क्या प्रभाव पड़ेगा।",
+      "result": null
+    },
+    {
+      "id": "VIDYA-013",
+      "language": "Hindi",
+      "script": "Devanagari",
+      "subject": "biology",
+      "question_number": 1,
+      "question": "प्रकाश संश्लेषण समझाइए। आवश्यक कच्चे पदार्थ, वह कोशिकांग जहाँ यह होता है, और इसका संतुलित रासायनिक समीकरण लिखिए। यह जीवन के लिए क्यों महत्वपूर्ण है?",
+      "result": null
+    },
+    {
+      "id": "VIDYA-014",
+      "language": "Hindi",
+      "script": "Devanagari",
+      "subject": "biology",
+      "question_number": 2,
+      "question": "कोशिका क्या है? केंद्रक, कोशिका झिल्ली, कोशिकाद्रव्य और माइटोकॉन्ड्रिया के कार्य समझाइए।",
+      "result": null
+    },
+    {
+      "id": "VIDYA-015",
+      "language": "Hindi",
+      "script": "Devanagari",
+      "subject": "chemistry",
+      "question_number": 1,
+      "question": "H2 + O2 -> H2O को संतुलित कीजिए और सभी चरण समझाइए।",
+      "result": null
+    },
+    {
+      "id": "VIDYA-016",
+      "language": "Hindi",
+      "script": "Devanagari",
+      "subject": "chemistry",
+      "question_number": 2,
+      "question": "अम्ल और क्षार क्या होते हैं? प्रत्येक के दो उदाहरण दीजिए और अम्ल-क्षार अभिक्रिया में क्या होता है समझाइए।",
+      "result": null
+    },
+    {
+      "id": "VIDYA-017",
+      "language": "Marathi",
+      "script": "Devanagari",
+      "subject": "mathematics",
+      "question_number": 1,
+      "question": "3x + 7 = 25 हे समीकरण सोडवा. सर्व पायऱ्या दाखवा आणि उत्तराची पडताळणी करा.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-018",
+      "language": "Marathi",
+      "script": "Devanagari",
+      "subject": "mathematics",
+      "question_number": 2,
+      "question": "एका आयताकृती शेताची लांबी 80 मीटर आणि रुंदी 50 मीटर आहे. चारही बाजूंनी आतल्या बाजूस 2 मीटर रुंदीची वाट तयार केली आहे. मूळ शेताचे क्षेत्रफळ, आतील क्षेत्रफळ, 4 समान पिकांसाठी क्षेत्रफळ आणि वाटेने व्यापलेल्या क्षेत्राची टक्केवारी शोधा.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-019",
+      "language": "Marathi",
+      "script": "Devanagari",
+      "subject": "physics",
+      "question_number": 1,
+      "question": "न्यूटनचे गतीचे तीन नियम समजावून सांगा आणि प्रत्येक नियमाचे एक दैनंदिन जीवनातील उदाहरण द्या.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-020",
+      "language": "Marathi",
+      "script": "Devanagari",
+      "subject": "physics",
+      "question_number": 2,
+      "question": "5 किलोग्रॅमच्या वस्तूवर 20 न्यूटनचा परिणामी बल कार्य करतो. तिचे त्वरण काढा आणि बल दुप्पट केल्यास त्वरणावर काय परिणाम होईल ते स्पष्ट करा.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-021",
+      "language": "Marathi",
+      "script": "Devanagari",
+      "subject": "biology",
+      "question_number": 1,
+      "question": "प्रकाशसंश्लेषण समजावून सांगा. आवश्यक कच्चे पदार्थ, ही प्रक्रिया कोणत्या पेशीअंगात घडते आणि तिचे संतुलित रासायनिक समीकरण लिहा. पृथ्वीवरील जीवनासाठी ती महत्त्वाची का आहे?",
+      "result": null
+    },
+    {
+      "id": "VIDYA-022",
+      "language": "Marathi",
+      "script": "Devanagari",
+      "subject": "biology",
+      "question_number": 2,
+      "question": "पेशी म्हणजे काय? केंद्रक, पेशीपटल, पेशीद्रव्य आणि माइटोकॉन्ड्रिया यांची कार्ये समजावून सांगा.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-023",
+      "language": "Marathi",
+      "script": "Devanagari",
+      "subject": "chemistry",
+      "question_number": 1,
+      "question": "H2 + O2 -> H2O हे रासायनिक समीकरण संतुलित करा आणि सर्व पायऱ्या समजावून सांगा.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-024",
+      "language": "Marathi",
+      "script": "Devanagari",
+      "subject": "chemistry",
+      "question_number": 2,
+      "question": "आम्ल आणि आम्लारी म्हणजे काय? प्रत्येकाची दोन उदाहरणे द्या आणि त्यांची अभिक्रिया झाल्यावर काय होते ते समजावून सांगा.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-025",
+      "language": "Maithili",
+      "script": "Devanagari",
+      "subject": "mathematics",
+      "question_number": 1,
+      "question": "3x + 7 = 25 समीकरणकेँ हल करू। सभ चरण देखाउ आ उत्तरक जाँच करू।",
+      "result": null
+    },
+    {
+      "id": "VIDYA-026",
+      "language": "Maithili",
+      "script": "Devanagari",
+      "subject": "mathematics",
+      "question_number": 2,
+      "question": "एक आयताकार खेत 80 मीटर लम्ब आ 50 मीटर चौड़ा अछि। चारू कात भीतर 2 मीटर चौड़ी बाट अछि। मूल खेतक क्षेत्रफल, भीतरक क्षेत्रफल, 4 समान फसल लेल क्षेत्रफल आ बाटक प्रतिशत ज्ञात करू।",
+      "result": null
+    },
+    {
+      "id": "VIDYA-027",
+      "language": "Maithili",
+      "script": "Devanagari",
+      "subject": "physics",
+      "question_number": 1,
+      "question": "न्यूटनक गति के तीनू नियम बुझाउ आ प्रत्येक नियमक एकटा वास्तविक जीवनक उदाहरण दिअ।",
+      "result": null
+    },
+    {
+      "id": "VIDYA-028",
+      "language": "Maithili",
+      "script": "Devanagari",
+      "subject": "physics",
+      "question_number": 2,
+      "question": "5 किलोग्रामक वस्तु पर 20 न्यूटनक परिणामी बल लगैत अछि। त्वरण निकालू आ बल दुगुना कयला पर त्वरण पर प्रभाव बुझाउ।",
+      "result": null
+    },
+    {
+      "id": "VIDYA-029",
+      "language": "Maithili",
+      "script": "Devanagari",
+      "subject": "biology",
+      "question_number": 1,
+      "question": "प्रकाश संश्लेषणक व्याख्या करू। आवश्यक कच्चा पदार्थ, ई प्रक्रिया कोषिकाक कोन अंगमे होइत अछि, आ एकर संतुलित रासायनिक समीकरण लिखू। ई जीवन लेल किएक महत्वपूर्ण अछि?",
+      "result": null
+    },
+    {
+      "id": "VIDYA-030",
+      "language": "Maithili",
+      "script": "Devanagari",
+      "subject": "biology",
+      "question_number": 2,
+      "question": "कोषिका की अछि? केंद्रक, कोषिका झिल्ली, कोशिकाद्रव्य आ माइटोकॉन्ड्रिया केर काज बुझाउ।",
+      "result": null
+    },
+    {
+      "id": "VIDYA-031",
+      "language": "Maithili",
+      "script": "Devanagari",
+      "subject": "chemistry",
+      "question_number": 1,
+      "question": "H2 + O2 -> H2O समीकरणकेँ संतुलित करू आ सभ चरण बुझाउ।",
+      "result": null
+    },
+    {
+      "id": "VIDYA-032",
+      "language": "Maithili",
+      "script": "Devanagari",
+      "subject": "chemistry",
+      "question_number": 2,
+      "question": "अम्ल आ क्षार की होइत अछि? दुनू केर दू-दू उदाहरण दिअ आ अम्ल-क्षार अभिक्रियामे की होइत अछि बुझाउ।",
+      "result": null
+    },
+    {
+      "id": "VIDYA-033",
+      "language": "Tamil",
+      "script": "Tamil",
+      "subject": "mathematics",
+      "question_number": 1,
+      "question": "3x + 7 = 25 என்ற சமன்பாட்டைத் தீர்க்கவும். அனைத்து படிகளையும் காட்டி விடையை சரிபார்க்கவும்.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-034",
+      "language": "Tamil",
+      "script": "Tamil",
+      "subject": "mathematics",
+      "question_number": 2,
+      "question": "ஒரு செவ்வக வயலின் நீளம் 80 மீட்டரும் அகலம் 50 மீட்டரும். நான்கு பக்கங்களிலும் உள்ளே 2 மீட்டர் அகலப் பாதை அமைக்கப்படுகிறது. அசல் பரப்பளவு, உள் பரப்பளவு, 4 சமமான பயிர்களுக்கான பரப்பளவு மற்றும் பாதையின் சதவீதத்தை கணக்கிடுங்கள்.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-035",
+      "language": "Tamil",
+      "script": "Tamil",
+      "subject": "physics",
+      "question_number": 1,
+      "question": "நியூட்டனின் இயக்க விதிகள் மூன்றையும் விளக்கி, ஒவ்வொன்றுக்கும் ஒரு அன்றாட வாழ்க்கை உதாரணம் கொடுக்கவும்.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-036",
+      "language": "Tamil",
+      "script": "Tamil",
+      "subject": "physics",
+      "question_number": 2,
+      "question": "5 கிலோகிராம் பொருளின் மீது 20 நியூட்டன் நிகர விசை செயல்படுகிறது. முடுக்கத்தைக் கணக்கிட்டு, விசை இரட்டிப்பானால் என்ன மாற்றம் ஏற்படும் என்பதை விளக்கவும்.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-037",
+      "language": "Tamil",
+      "script": "Tamil",
+      "subject": "biology",
+      "question_number": 1,
+      "question": "ஒளிச்சேர்க்கையை விளக்குங்கள். தேவையான மூலப்பொருட்கள், அது நடைபெறும் செல்லின் உறுப்பு, சமநிலைப்படுத்தப்பட்ட வேதியியல் சமன்பாடு ஆகியவற்றை எழுதுங்கள். இது உயிர்களுக்கு ஏன் முக்கியம்?",
+      "result": null
+    },
+    {
+      "id": "VIDYA-038",
+      "language": "Tamil",
+      "script": "Tamil",
+      "subject": "biology",
+      "question_number": 2,
+      "question": "செல் என்றால் என்ன? உட்கரு, செல் சவ்வு, சைட்டோபிளாசம் மற்றும் மைட்டோகாண்ட்ரியாவின் செயல்பாடுகளை விளக்குங்கள்.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-039",
+      "language": "Tamil",
+      "script": "Tamil",
+      "subject": "chemistry",
+      "question_number": 1,
+      "question": "H2 + O2 -> H2O என்ற வேதியியல் சமன்பாட்டை சமநிலைப்படுத்தி அனைத்து படிகளையும் விளக்குங்கள்.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-040",
+      "language": "Tamil",
+      "script": "Tamil",
+      "subject": "chemistry",
+      "question_number": 2,
+      "question": "அமிலங்கள் மற்றும் காரங்கள் என்றால் என்ன? ஒவ்வொன்றுக்கும் இரண்டு எடுத்துக்காட்டுகள் கொடுத்து, அவை வினைபுரியும் போது என்ன நிகழ்கிறது என்பதை விளக்குங்கள்.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-041",
+      "language": "Telugu",
+      "script": "Telugu",
+      "subject": "mathematics",
+      "question_number": 1,
+      "question": "3x + 7 = 25 అనే సమీకరణాన్ని పరిష్కరించండి. అన్ని దశలను చూపించి సమాధానాన్ని తనిఖీ చేయండి.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-042",
+      "language": "Telugu",
+      "script": "Telugu",
+      "subject": "mathematics",
+      "question_number": 2,
+      "question": "ఒక దీర్ఘచతురస్రాకార పొలం పొడవు 80 మీటర్లు, వెడల్పు 50 మీటర్లు. నాలుగు వైపులా లోపల 2 మీటర్ల వెడల్పు గల మార్గం ఉంది. అసలు విస్తీర్ణం, లోపలి విస్తీర్ణం, 4 సమాన పంటలకు విస్తీర్ణం మరియు మార్గం శాతాన్ని లెక్కించండి.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-043",
+      "language": "Telugu",
+      "script": "Telugu",
+      "subject": "physics",
+      "question_number": 1,
+      "question": "న్యూటన్ చలన నియమాలు మూడింటినీ వివరించి, ప్రతి నియమానికి ఒక దైనందిన జీవిత ఉదాహరణ ఇవ్వండి.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-044",
+      "language": "Telugu",
+      "script": "Telugu",
+      "subject": "physics",
+      "question_number": 2,
+      "question": "5 కిలోగ్రాముల వస్తువుపై 20 న్యూటన్ నికర బలం పనిచేస్తుంది. త్వరణాన్ని లెక్కించి, బలాన్ని రెట్టింపు చేస్తే ఏమి జరుగుతుందో వివరించండి.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-045",
+      "language": "Telugu",
+      "script": "Telugu",
+      "subject": "biology",
+      "question_number": 1,
+      "question": "కిరణజన్య సంయోగక్రియను వివరించండి. అవసరమైన ముడి పదార్థాలు, ఇది జరిగే కణాంగం, సమతుల్య రసాయన సమీకరణం రాయండి. ఇది జీవులకు ఎందుకు ముఖ్యమైనది?",
+      "result": null
+    },
+    {
+      "id": "VIDYA-046",
+      "language": "Telugu",
+      "script": "Telugu",
+      "subject": "biology",
+      "question_number": 2,
+      "question": "కణం అంటే ఏమిటి? కేంద్రకం, కణ త్వచం, సైటోప్లాసమ్ మరియు మైటోకాండ్రియా విధులను వివరించండి.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-047",
+      "language": "Telugu",
+      "script": "Telugu",
+      "subject": "chemistry",
+      "question_number": 1,
+      "question": "H2 + O2 -> H2O అనే రసాయన సమీకరణాన్ని సమతుల్యం చేసి అన్ని దశలను వివరించండి.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-048",
+      "language": "Telugu",
+      "script": "Telugu",
+      "subject": "chemistry",
+      "question_number": 2,
+      "question": "ఆమ్లాలు మరియు క్షారాలు అంటే ఏమిటి? ప్రతి దానికి రెండు ఉదాహరణలు ఇవ్వండి. అవి చర్యలో పాల్గొన్నప్పుడు ఏమి జరుగుతుందో వివరించండి.",
+      "result": null
+    },
+    {
+      "id": "VIDYA-049",
+      "language": "Bengali",
+      "script": "Bengali",
+      "subject": "mathematics",
+      "question_number": 1,
+      "question": "3x + 7 = 25 সমীকরণটি সমাধান করো। সমস্ত ধাপ দেখিয়ে উত্তর যাচাই করো।",
+      "result": null
+    },
+    {
+      "id": "VIDYA-050",
+      "language": "Bengali",
+      "script": "Bengali",
+      "subject": "mathematics",
+      "question_number": 2,
+      "question": "একটি আয়তাকার মাঠের দৈর্ঘ্য 80 মিটার এবং প্রস্থ 50 মিটার। চারদিকে ভেতরের দিকে 2 মিটার চওড়া পথ তৈরি করা হয়েছে। মূল ক্ষেত্রফল, ভেতরের ক্ষেত্রফল, 4টি সমান ফসলের ক্ষেত্রফল এবং পথের শতকরা হার নির্ণয় করো।",
+      "result": null
+    },
+    {
+      "id": "VIDYA-051",
+      "language": "Bengali",
+      "script": "Bengali",
+      "subject": "physics",
+      "question_number": 1,
+      "question": "নিউটনের গতির তিনটি সূত্র ব্যাখ্যা করো এবং প্রতিটি সূত্রের একটি বাস্তব জীবনের উদাহরণ দাও।",
+      "result": null
+    },
+    {
+      "id": "VIDYA-052",
+      "language": "Bengali",
+      "script": "Bengali",
+      "subject": "physics",
+      "question_number": 2,
+      "question": "5 কিলোগ্রাম ভরের বস্তুর উপর 20 নিউটন লব্ধি বল কাজ করছে। ত্বরণ নির্ণয় করো এবং বল দ্বিগুণ করলে কী পরিবর্তন হবে ব্যাখ্যা করো।",
+      "result": null
+    },
+    {
+      "id": "VIDYA-053",
+      "language": "Bengali",
+      "script": "Bengali",
+      "subject": "biology",
+      "question_number": 1,
+      "question": "সালোকসংশ্লেষণ ব্যাখ্যা করো। প্রয়োজনীয় কাঁচামাল, যে কোষীয় অঙ্গাণুতে এটি ঘটে এবং সুষম রাসায়নিক সমীকরণ লেখো। এটি জীবনের জন্য কেন গুরুত্বপূর্ণ?",
+      "result": null
+    },
+    {
+      "id": "VIDYA-054",
+      "language": "Bengali",
+      "script": "Bengali",
+      "subject": "biology",
+      "question_number": 2,
+      "question": "কোষ কী? নিউক্লিয়াস, কোষঝিল্লি, সাইটোপ্লাজম এবং মাইটোকন্ড্রিয়ার কাজ ব্যাখ্যা করো।",
+      "result": null
+    },
+    {
+      "id": "VIDYA-055",
+      "language": "Bengali",
+      "script": "Bengali",
+      "subject": "chemistry",
+      "question_number": 1,
+      "question": "H2 + O2 -> H2O রাসায়নিক সমীকরণটি সমতা বিধান করো এবং সমস্ত ধাপ ব্যাখ্যা করো।",
+      "result": null
+    },
+    {
+      "id": "VIDYA-056",
+      "language": "Bengali",
+      "script": "Bengali",
+      "subject": "chemistry",
+      "question_number": 2,
+      "question": "অম্ল ও ক্ষার কী? প্রতিটির দুটি উদাহরণ দাও এবং তারা বিক্রিয়া করলে কী ঘটে তা ব্যাখ্যা করো।",
+      "result": null
+    },
+    {
+      "id": "VIDYA-057",
+      "language": "Urdu",
+      "script": "Arabic",
+      "subject": "mathematics",
+      "question_number": 1,
+      "question": "مساوات 3x + 7 = 25 کو حل کریں۔ تمام مراحل دکھائیں اور اپنے جواب کی جانچ کریں۔",
+      "result": null
+    },
+    {
+      "id": "VIDYA-058",
+      "language": "Urdu",
+      "script": "Arabic",
+      "subject": "mathematics",
+      "question_number": 2,
+      "question": "ایک مستطیل کھیت کی لمبائی 80 میٹر اور چوڑائی 50 میٹر ہے۔ چاروں طرف اندر کی جانب 2 میٹر چوڑا راستہ بنایا گیا ہے۔ اصل رقبہ، اندرونی رقبہ، 4 برابر فصلوں کے لیے رقبہ اور راستے کے زیرِ قبضہ رقبے کا فیصد معلوم کریں۔",
+      "result": null
+    },
+    {
+      "id": "VIDYA-059",
+      "language": "Urdu",
+      "script": "Arabic",
+      "subject": "physics",
+      "question_number": 1,
+      "question": "نیوٹن کے حرکت کے تینوں قوانین کی وضاحت کریں اور ہر قانون کی ایک حقیقی زندگی کی مثال دیں۔",
+      "result": null
+    },
+    {
+      "id": "VIDYA-060",
+      "language": "Urdu",
+      "script": "Arabic",
+      "subject": "physics",
+      "question_number": 2,
+      "question": "5 کلوگرام کمیت کی چیز پر 20 نیوٹن کی خالص قوت عمل کرتی ہے۔ تعجیل معلوم کریں اور قوت دوگنی کرنے سے تعجیل پر اثر کی وضاحت کریں۔",
+      "result": null
+    },
+    {
+      "id": "VIDYA-061",
+      "language": "Urdu",
+      "script": "Arabic",
+      "subject": "biology",
+      "question_number": 1,
+      "question": "ضیائی تالیف کی وضاحت کریں۔ ضروری خام مواد، پودے کے خلیے کا وہ عضیہ جہاں یہ عمل ہوتا ہے، اور متوازن کیمیائی مساوات لکھیں۔ یہ زندگی کے لیے کیوں اہم ہے؟",
+      "result": null
+    },
+    {
+      "id": "VIDYA-062",
+      "language": "Urdu",
+      "script": "Arabic",
+      "subject": "biology",
+      "question_number": 2,
+      "question": "خلیہ کیا ہے؟ مرکزہ، خلیاتی جھلی، سائٹوپلازم اور مائٹوکانڈریا کے افعال کی وضاحت کریں۔",
+      "result": null
+    },
+    {
+      "id": "VIDYA-063",
+      "language": "Urdu",
+      "script": "Arabic",
+      "subject": "chemistry",
+      "question_number": 1,
+      "question": "H2 + O2 -> H2O کیمیائی مساوات کو متوازن کریں اور تمام مراحل کی وضاحت کریں۔",
+      "result": null
+    },
+    {
+      "id": "VIDYA-064",
+      "language": "Urdu",
+      "script": "Arabic",
+      "subject": "chemistry",
+      "question_number": 2,
+      "question": "تیزاب اور اساس کیا ہیں؟ ہر ایک کی دو مثالیں دیں اور وضاحت کریں کہ ان کے باہمی عمل سے کیا ہوتا ہے۔",
+      "result": null
+    }
+  ]
+}

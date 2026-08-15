@@ -7,6 +7,7 @@
 <p align="center">
   <a href="https://huggingface.co/spaces/vedantjadhav701/vidya-1.7b"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Space-yellow.svg" alt="Hugging Face Space"></a>
   <a href="https://huggingface.co/vedantjadhav701/edu-qwen-1.7b-merged"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Model-blue.svg" alt="Hugging Face Model"></a>
+  <a href="local/VIDYA_BENCHMARK.md"><img src="https://img.shields.io/badge/Benchmark-93.3%25%20Accuracy-brightgreen.svg?logo=academic" alt="Benchmark 93.3%"></a>
   <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Frontend-Next.js%2016-black?logo=next.js" alt="Next.js"></a>
   <a href="https://tailwindcss.com"><img src="https://img.shields.io/badge/Styling-Tailwind%20CSS%20v4-38bdf8?logo=tailwind-css" alt="Tailwind CSS"></a>
   <a href="https://pytorch.org"><img src="https://img.shields.io/badge/Framework-PyTorch-ee4c2c?logo=pytorch" alt="PyTorch"></a>
@@ -33,6 +34,34 @@ Powered by a fine-tuned 1.7B parameter model (`vedantjadhav701/edu-qwen-1.7b-mer
 - 🖼️ **Visual Reference Panel**: Auto-fetches educational diagrams and images directly from Wikipedia API based on lesson context.
 - ⚡ **ZeroGPU Cloud Backend**: Deployed on Hugging Face Spaces with dynamic GPU allocation.
 - 🚫 **Clean Output (No CoT Leakage)**: Reasoning tokens (`<think>`) are filtered out for clear, concise student-facing answers.
+
+---
+
+## 🏆 Multilingual Educational Benchmark (v1.0)
+
+Vidya 1.7B was benchmarked using the **Vidya Multilingual Educational Evaluation Suite (v1.0)** across **64 evaluation questions**, **8 Indian writing systems**, and **4 STEM domains** (Mathematics, Physics, Biology, Chemistry).
+
+<p align="center">
+  <a href="local/VIDYA_BENCHMARK.md">
+    <img src="https://img.shields.io/badge/Overall_Accuracy-93.3%25-brightgreen?style=for-the-badge&logo=academic" alt="Overall Accuracy 93.3%">
+  </a>
+</p>
+
+### 📊 Performance Summary
+
+| Category | Dimension | Accuracy % | Score / 10 | Status |
+| :--- | :--- | :---: | :---: | :---: |
+| **Overall** | Aggregate (64 Items) | **93.3%** | `9.33 / 10` | 🟢 Outstanding |
+| **Languages** | English | **97.5%** | `9.75 / 10` | 🟢 Exceptional |
+| | Marathi | **95.0%** | `9.50 / 10` | 🟢 Exceptional |
+| | Hindi, Maithili, Tamil, Urdu | **92.5%** | `9.25 / 10` | 🟢 High Accuracy |
+| | Telugu, Bengali | **91.9%** | `9.19 / 10` | 🟢 High Accuracy |
+| **STEM Domains** | Chemistry 🧪 | **99.4%** | `9.94 / 10` | 🟢 Near Perfect |
+| | Physics ⚛️ | **95.6%** | `9.56 / 10` | 🟢 Exceptional |
+| | Biology 🧬 | **95.6%** | `9.56 / 10` | 🟢 Exceptional |
+| | Mathematics 📐 | **82.5%** | `8.25 / 10` | 🟡 Good Reasoning |
+
+📖 **For full evaluation methodology, failure analysis, and sample outputs, read the full report:** [**`local/VIDYA_BENCHMARK.md`**](file:///C:/Users/HP/projects/Vidya-1.7B/local/VIDYA_BENCHMARK.md)
 
 ---
 
