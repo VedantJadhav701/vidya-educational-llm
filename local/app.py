@@ -31,20 +31,20 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 MODEL_ID = "vedantjadhav701/edu-qwen-1.7b-merged"
 MODEL_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "models", "edu-qwen-1.7b-merged")
 
-MAX_NEW_TOKENS = 512
+MAX_NEW_TOKENS = 1024
 TEMPERATURE = 0.3
 TOP_P = 0.9
-REPETITION_PENALTY = 1.05
+REPETITION_PENALTY = 1.0
 
 SYSTEM_PROMPT = """You are Vidya (विद्या), a multilingual educational AI assistant designed for Indian students (Classes 6-12, JEE, NEET, competitive exams). You follow NCERT and standard Indian curricula.
 
 CORE RULES:
-1. LANGUAGE: Always reply in the SAME language the student uses. Support Hindi, English, Marathi, Tamil, Telugu, Kannada, Bengali, Gujarati, Malayalam, Punjabi, Odia.
+1. STRICT LANGUAGE MATCHING: Always reply in the EXACT SAME LANGUAGE as the user's prompt. If the user asks in English, reply ONLY in English. If the user asks in Hindi/Devanagari, reply ONLY in Hindi. If the user asks in Marathi/Tamil/Telugu/Gujarati/Bengali, reply in that language. Never switch to Hindi if the user prompt is in English.
 2. STRUCTURE: Use clear headings, bullet points, numbered steps, and formulas.
 3. FORMULAS: Write math formulas in LaTeX notation wrapped in $ or $$ delimiters.
 4. ACCURACY: Only provide factually correct, curriculum-aligned information.
 5. TONE: Be encouraging, patient, and supportive like a favorite teacher.
-6. DEPTH: Give thorough explanations with examples and real-world connections.
+6. DEPTH: Give complete, detailed explanations with examples and real-world connections. Do not stop midway.
 7. If a student asks something harmful, off-topic, or inappropriate, politely redirect them to educational topics."""
 
 # ──────────────────────────────────────────────
@@ -111,11 +111,14 @@ def download_and_load_model():
 
 
 # ──────────────────────────────────────────────
-# Generation
+# Generation (Streaming)
 # ──────────────────────────────────────────────
 
-def generate_response(message: str, history: list) -> str:
-    """Generate an educational response using the local model synchronously."""
+def generate_response(message: str, history: list):
+    """Generate an educational response using live streaming for real-time UI updates."""
+    from transformers import TextIteratorStreamer
+    from threading import Thread
+
     tokenizer, model = download_and_load_model()
 
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
@@ -164,33 +167,38 @@ def generate_response(message: str, history: list) -> str:
         if attention_mask is not None:
             attention_mask = attention_mask.to(model.device)
 
-    prompt_len = input_ids.shape[-1]
+    streamer = TextIteratorStreamer(tokenizer, skip_prompt=True, skip_special_tokens=True)
 
-    # Synchronous generation on main CUDA stream
-    with torch.inference_mode():
-        gen_kwargs = {
-            "input_ids": input_ids,
-            "max_new_tokens": MAX_NEW_TOKENS,
-            "temperature": TEMPERATURE,
-            "top_p": TOP_P,
-            "repetition_penalty": REPETITION_PENALTY,
-            "do_sample": True,
-        }
-        if attention_mask is not None:
-            gen_kwargs["attention_mask"] = attention_mask
+    gen_kwargs = {
+        "input_ids": input_ids,
+        "max_new_tokens": MAX_NEW_TOKENS,
+        "temperature": TEMPERATURE,
+        "top_p": TOP_P,
+        "repetition_penalty": REPETITION_PENALTY,
+        "do_sample": True,
+        "streamer": streamer,
+    }
+    if attention_mask is not None:
+        gen_kwargs["attention_mask"] = attention_mask
 
-        outputs = model.generate(**gen_kwargs)
+    def generate_worker():
+        with torch.inference_mode():
+            model.generate(**gen_kwargs)
 
-    generated_tokens = outputs[0][prompt_len:]
-    response = tokenizer.decode(generated_tokens, skip_special_tokens=True).strip()
+    thread = Thread(target=generate_worker)
+    thread.start()
 
-    # Clean thinking tags properly
-    if "</think>" in response:
-        response = response.split("</think>", 1)[-1].strip()
-    elif "<think>" in response:
-        response = response.replace("<think>", "").strip()
+    partial_text = ""
+    for new_text in streamer:
+        partial_text += new_text
 
-    return response
+        clean_text = partial_text
+        if "</think>" in clean_text:
+            clean_text = clean_text.split("</think>", 1)[-1].strip()
+        elif "<think>" in clean_text:
+            clean_text = clean_text.replace("<think>", "").strip()
+
+        yield clean_text
 
 
 # ──────────────────────────────────────────────
@@ -243,11 +251,12 @@ CUSTOM_CSS = """
 footer { display: none !important; }
 """
 
-def respond(message: str, history: list) -> str:
-    """ChatInterface handler function."""
+def respond(message: str, history: list):
+    """ChatInterface streaming handler function."""
     if not message or not message.strip():
-        return ""
-    return generate_response(message.strip(), history)
+        return
+    for chunk in generate_response(message.strip(), history):
+        yield chunk
 
 
 def create_app():
