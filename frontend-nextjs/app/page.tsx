@@ -200,21 +200,21 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="p-8 bg-neutral-900/40 border border-neutral-850 rounded-3xl backdrop-blur-md">
+          <div className="p-8 bg-neutral-900/40 border border-neutral-800 rounded-3xl backdrop-blur-md">
             <h3 className="text-lg font-black uppercase tracking-wider mb-4 text-white">SYSTEM OBJECTIVE</h3>
             <blockquote className="border-l-2 border-blue-500 pl-4 py-2 italic text-neutral-300 text-sm mb-6">
               "We build models that do not just state answers, but rather teach the foundational steps behind equations, scientific cycles, and language concepts."
             </blockquote>
             <div className="grid grid-cols-3 gap-3">
-              <div className="p-3 bg-neutral-950 border border-neutral-850 rounded-xl text-center">
+              <div className="p-3 bg-neutral-950 border border-neutral-800 rounded-xl text-center">
                 <span className="block text-xl sm:text-2xl font-black text-white">{totalLessons}</span>
                 <span className="text-[8px] sm:text-[9px] text-neutral-500 font-bold uppercase tracking-wider block mt-1">Lessons Served</span>
               </div>
-              <div className="p-3 bg-neutral-950 border border-neutral-850 rounded-xl text-center">
+              <div className="p-3 bg-neutral-950 border border-neutral-800 rounded-xl text-center">
                 <span className="block text-xl sm:text-2xl font-black text-white">1.7B</span>
                 <span className="text-[8px] sm:text-[9px] text-neutral-500 font-bold uppercase tracking-wider block mt-1">Parameters</span>
               </div>
-              <div className="p-3 bg-neutral-950 border border-neutral-850 rounded-xl text-center">
+              <div className="p-3 bg-neutral-950 border border-neutral-800 rounded-xl text-center">
                 <span className="block text-xl sm:text-2xl font-black text-white">11+</span>
                 <span className="text-[8px] sm:text-[9px] text-neutral-500 font-bold uppercase tracking-wider block mt-1">Dialects</span>
               </div>
@@ -242,7 +242,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Card 1 */}
-            <div className="p-8 bg-neutral-900/30 border border-neutral-850 hover:border-neutral-700 rounded-3xl backdrop-blur-md transition-all group">
+            <div className="p-8 bg-neutral-900/30 border border-neutral-800 hover:border-neutral-700 rounded-3xl backdrop-blur-md transition-all group">
               <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/25 flex items-center justify-center text-blue-400 mb-6 group-hover:scale-110 transition-transform">
                 <Cpu className="w-5 h-5" />
               </div>
@@ -252,7 +252,7 @@ export default function Home() {
               </p>
             </div>
             {/* Card 2 */}
-            <div className="p-8 bg-neutral-900/30 border border-neutral-850 hover:border-neutral-700 rounded-3xl backdrop-blur-md transition-all group">
+            <div className="p-8 bg-neutral-900/30 border border-neutral-800 hover:border-neutral-700 rounded-3xl backdrop-blur-md transition-all group">
               <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/25 flex items-center justify-center text-blue-400 mb-6 group-hover:scale-110 transition-transform">
                 <BookOpen className="w-5 h-5" />
               </div>
@@ -262,7 +262,7 @@ export default function Home() {
               </p>
             </div>
             {/* Card 3 */}
-            <div className="p-8 bg-neutral-900/30 border border-neutral-850 hover:border-neutral-700 rounded-3xl backdrop-blur-md transition-all group">
+            <div className="p-8 bg-neutral-900/30 border border-neutral-800 hover:border-neutral-700 rounded-3xl backdrop-blur-md transition-all group">
               <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/25 flex items-center justify-center text-blue-400 mb-6 group-hover:scale-110 transition-transform">
                 <Layers className="w-5 h-5" />
               </div>

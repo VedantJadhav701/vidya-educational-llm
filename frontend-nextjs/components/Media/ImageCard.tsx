@@ -18,7 +18,7 @@ export default function ImageCard({ url, title, isWikiImage }: ImageCardProps) {
     <>
       <div
         onClick={() => setIsLightboxOpen(true)}
-        className="media-card bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-850 rounded-2xl overflow-hidden shadow-md cursor-pointer group hover:border-neutral-400 dark:hover:border-neutral-700 transition-all duration-300 w-full max-w-[400px]"
+        className="media-card bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden shadow-md cursor-pointer group hover:border-neutral-400 dark:hover:border-neutral-700 transition-all duration-300 w-full max-w-[400px]"
       >
         <div className="relative overflow-hidden bg-neutral-250 dark:bg-neutral-950">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -35,7 +35,7 @@ export default function ImageCard({ url, title, isWikiImage }: ImageCardProps) {
           </div>
         </div>
 
-        <div className="media-card-title p-3 text-xs text-neutral-800 dark:text-neutral-200 text-center bg-neutral-100 dark:bg-neutral-900 font-medium border-t border-neutral-200 dark:border-neutral-850 flex items-center justify-between">
+        <div className="media-card-title p-3 text-xs text-neutral-800 dark:text-neutral-200 text-center bg-neutral-100 dark:bg-neutral-900 font-medium border-t border-neutral-200 dark:border-neutral-800 flex items-center justify-between">
           <span className="truncate max-w-[220px]">{title}</span>
           <span className="text-[10px] text-neutral-500 dark:text-neutral-400 bg-neutral-200 dark:bg-neutral-800 px-2 py-0.5 rounded-full border border-neutral-300 dark:border-neutral-700">
             Image
@@ -56,7 +56,7 @@ export default function ImageCard({ url, title, isWikiImage }: ImageCardProps) {
               alt={title}
               className="max-h-[70vh] w-auto object-contain rounded-lg bg-white p-2 shadow-lg"
             />
-            <div className="mt-4 flex items-center justify-between w-full border-t border-neutral-850 pt-4">
+            <div className="mt-4 flex items-center justify-between w-full border-t border-neutral-800 pt-4">
               <div className="text-left">
                 <h3 className="text-sm font-semibold text-white">{title}</h3>
                 <p className="text-[10px] text-neutral-500 mt-0.5">Click outside to close</p>

@@ -159,7 +159,7 @@ export default function Message({ message, onQuickPrompt, theme = 'dark' }: Mess
         className={`message-content p-4 px-5 rounded-2xl leading-relaxed text-sm break-words shadow-sm border ${
           isUser
             ? 'bg-neutral-200 dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700 text-neutral-800 dark:text-white rounded-br-xs'
-            : 'bg-neutral-100 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-850 text-neutral-700 dark:text-neutral-250 rounded-bl-xs'
+            : 'bg-neutral-100 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-neutral-700 dark:text-neutral-250 rounded-bl-xs'
         }`}
       >
         <div className="whitespace-pre-wrap">{message.content}</div>

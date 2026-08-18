@@ -45,7 +45,7 @@ export default function ChatInput({ onSend, disabled }: ChatInputProps) {
   };
 
   return (
-    <footer className="chat-input-area p-4 px-6 bg-[#121212]/90 border-t border-neutral-850 flex flex-col gap-3">
+    <footer className="chat-input-area p-4 px-6 bg-[#121212]/90 border-t border-neutral-800 flex flex-col gap-3">
       {/* Quick Topic Chips */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1 custom-scrollbar text-xs">
         <span className="text-[11px] text-neutral-500 font-medium flex-shrink-0">Quick Topics:</span>
@@ -54,7 +54,7 @@ export default function ChatInput({ onSend, disabled }: ChatInputProps) {
             key={i}
             onClick={() => onSend(chip.text)}
             disabled={disabled}
-            className="flex-shrink-0 bg-neutral-900 hover:bg-neutral-850 hover:border-neutral-700 text-neutral-200 px-3 py-1 rounded-full border border-neutral-800 transition-all cursor-pointer disabled:opacity-50 text-[11px] font-medium active:scale-95"
+            className="flex-shrink-0 bg-neutral-900 hover:bg-neutral-800 hover:border-neutral-700 text-neutral-200 px-3 py-1 rounded-full border border-neutral-800 transition-all cursor-pointer disabled:opacity-50 text-[11px] font-medium active:scale-95"
           >
             {chip.label}
           </button>

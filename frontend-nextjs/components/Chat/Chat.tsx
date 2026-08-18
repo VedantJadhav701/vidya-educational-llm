@@ -362,7 +362,7 @@ export default function Chat() {
       }} />
 
       {/* TOP NAVIGATION HEADER */}
-      <nav className="w-full border-b border-neutral-200 dark:border-neutral-850 px-4 sm:px-[70px] h-[65px] flex items-center justify-between z-30 select-none">
+      <nav className="w-full border-b border-neutral-200 dark:border-neutral-800 px-4 sm:px-[70px] h-[65px] flex items-center justify-between z-30 select-none">
         {/* Left: Branding */}
         <div className="flex items-center gap-3">
           <div className="w-5 h-5 rounded bg-neutral-200 dark:bg-neutral-800 border border-neutral-350 dark:border-neutral-700 flex items-center justify-center">
@@ -443,7 +443,7 @@ export default function Chat() {
       {showMobileMenu && (
         <div className="fixed inset-0 bg-black/60 z-50 md:hidden flex justify-end" onClick={() => setShowMobileMenu(false)}>
           <div className="w-[240px] h-full bg-white dark:bg-neutral-950 p-6 flex flex-col gap-6" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-center justify-between border-b border-neutral-200 dark:border-neutral-850 pb-4">
+            <div className="flex items-center justify-between border-b border-neutral-200 dark:border-neutral-800 pb-4">
               <span className="text-[12px] font-black uppercase tracking-widest text-neutral-800 dark:text-white">Menu</span>
               <button className="text-xs hover:underline cursor-pointer" onClick={() => setShowMobileMenu(false)}>Close</button>
             </div>
@@ -464,14 +464,14 @@ export default function Chat() {
           
           {/* Chat Mode header */}
           {hasStarted && (
-            <div className="px-6 py-2 bg-neutral-50/50 dark:bg-neutral-900/10 border-b border-neutral-200 dark:border-neutral-850 flex items-center justify-between text-xs">
+            <div className="px-6 py-2 bg-neutral-50/50 dark:bg-neutral-900/10 border-b border-neutral-200 dark:border-neutral-800 flex items-center justify-between text-xs">
               <div className="flex items-center gap-2">
                 <span className="text-neutral-400">Mode:</span>
-                <span className="font-bold uppercase tracking-wider text-neutral-800 dark:text-white bg-neutral-100 dark:bg-neutral-850 px-2 py-0.5 rounded border border-neutral-250 dark:border-neutral-800">
+                <span className="font-bold uppercase tracking-wider text-neutral-800 dark:text-white bg-neutral-100 dark:bg-neutral-800 px-2 py-0.5 rounded border border-neutral-250 dark:border-neutral-800">
                   {learningMode}
                 </span>
                 {activeSubject && (
-                  <span className="font-bold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-850 px-2 py-0.5 rounded border border-neutral-250 dark:border-neutral-800">
+                  <span className="font-bold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-800 px-2 py-0.5 rounded border border-neutral-250 dark:border-neutral-800">
                     {activeSubject}
                   </span>
                 )}
@@ -530,10 +530,10 @@ export default function Chat() {
                   <button
                     key={idx}
                     onClick={() => handleSendMessage(q)}
-                    className="p-3.5 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-850 hover:bg-neutral-50 dark:hover:bg-neutral-850 rounded-2xl hover:border-neutral-300 dark:hover:border-neutral-700 text-left transition-all cursor-pointer shadow-sm active:scale-98"
+                    className="p-3.5 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-2xl hover:border-neutral-400 dark:hover:border-neutral-600 text-left transition-all cursor-pointer shadow-sm active:scale-98 group"
                   >
-                    <div className="font-bold text-xs text-neutral-800 dark:text-neutral-200">{q}</div>
-                    <div className="text-[10px] text-neutral-400 dark:text-neutral-500 mt-0.5">Explore educational fact</div>
+                    <div className="font-bold text-xs text-neutral-700 dark:text-neutral-200 group-hover:text-neutral-900 dark:group-hover:text-white">{q}</div>
+                    <div className="text-[10px] text-neutral-400 dark:text-neutral-500 group-hover:text-neutral-500 dark:group-hover:text-neutral-300 mt-0.5">Explore educational fact</div>
                   </button>
                 ))}
               </div>
@@ -564,7 +564,7 @@ export default function Chat() {
                       className={`flex-shrink-0 px-2.5 py-1 rounded-lg border transition-all cursor-pointer ${
                         activeSubject === sub.id
                           ? 'bg-neutral-800 dark:bg-white text-white dark:text-black border-neutral-800 dark:border-white shadow-sm'
-                          : 'bg-white dark:bg-neutral-900 text-neutral-400 dark:text-neutral-500 border-neutral-200 dark:border-neutral-850 hover:text-neutral-800 dark:hover:text-neutral-300'
+                          : 'bg-white dark:bg-neutral-900 text-neutral-500 dark:text-neutral-400 border-neutral-200 dark:border-neutral-800 hover:text-neutral-900 dark:hover:text-white hover:border-neutral-400 dark:hover:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-800'
                       }`}
                     >
                       {sub.label}
@@ -574,7 +574,7 @@ export default function Chat() {
               )}
 
               {/* Large Premium Input Composer Container */}
-              <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-850 rounded-2xl p-3 flex flex-col gap-3 shadow-md focus-within:border-neutral-400 dark:focus-within:border-neutral-700 focus-within:ring-2 focus-within:ring-neutral-250 dark:focus-within:ring-neutral-800/20 transition-all">
+              <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-3 flex flex-col gap-3 shadow-md focus-within:border-neutral-400 dark:focus-within:border-neutral-700 focus-within:ring-2 focus-within:ring-neutral-250 dark:focus-within:ring-neutral-800/20 transition-all">
                 {/* Textarea Input */}
                 <textarea
                   ref={textareaRef}
@@ -594,12 +594,12 @@ export default function Chat() {
                 />
 
                 {/* Composer Actions and controls bar */}
-                <div className="flex items-center justify-between pt-1 border-t border-neutral-100 dark:border-neutral-850/50">
+                <div className="flex items-center justify-between pt-1 border-t border-neutral-100 dark:border-neutral-800/50">
                   {/* Left: Tools button (+) */}
                   <div className="relative">
                     <button
                       onClick={() => setShowTools(!showTools)}
-                      className="p-1.5 rounded-lg bg-neutral-50 dark:bg-neutral-850 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-500 dark:text-neutral-400 cursor-pointer border border-neutral-200 dark:border-neutral-800 transition-colors flex items-center justify-center"
+                      className="p-1.5 rounded-lg bg-neutral-50 dark:bg-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-500 dark:text-neutral-400 cursor-pointer border border-neutral-200 dark:border-neutral-800 transition-colors flex items-center justify-center"
                       title="Tools"
                     >
                       <Plus className="w-4 h-4" />
@@ -633,7 +633,7 @@ export default function Chat() {
                     {/* Student Parameters toggle */}
                     <button
                       onClick={() => setShowParams(!showParams)}
-                      className="text-[11px] font-bold px-2.5 py-1.5 rounded-lg bg-neutral-50 dark:bg-neutral-850 hover:bg-neutral-100 dark:hover:bg-neutral-850 border border-neutral-200 dark:border-neutral-800 text-neutral-500 dark:text-neutral-400 cursor-pointer"
+                      className="text-[11px] font-bold px-2.5 py-1.5 rounded-lg bg-neutral-50 dark:bg-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-800 border border-neutral-200 dark:border-neutral-800 text-neutral-500 dark:text-neutral-400 cursor-pointer"
                     >
                       Params
                     </button>
@@ -645,7 +645,7 @@ export default function Chat() {
                         setInput('');
                       }}
                       disabled={isProcessing || !input.trim()}
-                      className="bg-neutral-850 dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-100 px-4 py-1.5 rounded-xl font-bold text-xs uppercase transition-all duration-300 disabled:opacity-50 disabled:bg-neutral-200 dark:disabled:bg-neutral-800 disabled:text-neutral-400 dark:disabled:text-neutral-600 disabled:cursor-not-allowed flex items-center gap-1.5 cursor-pointer shadow-sm active:scale-95"
+                      className="bg-neutral-800 dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-100 px-4 py-1.5 rounded-xl font-bold text-xs uppercase transition-all duration-300 disabled:opacity-50 disabled:bg-neutral-200 dark:disabled:bg-neutral-800 disabled:text-neutral-400 dark:disabled:text-neutral-600 disabled:cursor-not-allowed flex items-center gap-1.5 cursor-pointer shadow-sm active:scale-95"
                     >
                       <span>Send</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -655,7 +655,7 @@ export default function Chat() {
 
                 {/* Expose parameters picker panel if active */}
                 {showParams && (
-                  <div className="mt-2 pt-3 border-t border-neutral-100 dark:border-neutral-850/50 flex flex-wrap gap-4 text-xs select-none">
+                  <div className="mt-2 pt-3 border-t border-neutral-100 dark:border-neutral-800/50 flex flex-wrap gap-4 text-xs select-none">
                     <div className="flex flex-col gap-1">
                       <span className="text-[10px] text-neutral-400 font-bold uppercase">Explanation Style</span>
                       <div className="flex gap-1">
@@ -666,7 +666,7 @@ export default function Chat() {
                             className={`px-2 py-1 rounded border text-[10px] uppercase font-bold cursor-pointer transition-colors ${
                               expStyle === style 
                                 ? 'bg-neutral-800 dark:bg-white text-white dark:text-black border-neutral-800 dark:border-white' 
-                                : 'bg-neutral-100 dark:bg-neutral-850 text-neutral-400 border-neutral-200 dark:border-neutral-800 hover:text-neutral-700 dark:hover:text-neutral-300'
+                                : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-400 border-neutral-200 dark:border-neutral-800 hover:text-neutral-700 dark:hover:text-neutral-300'
                             }`}
                           >
                             {style}
@@ -684,7 +684,7 @@ export default function Chat() {
                             className={`px-2 py-1 rounded border text-[10px] uppercase font-bold cursor-pointer transition-colors ${
                               ansLevel === lvl 
                                 ? 'bg-neutral-800 dark:bg-white text-white dark:text-black border-neutral-800 dark:border-white' 
-                                : 'bg-neutral-100 dark:bg-neutral-850 text-neutral-400 border-neutral-200 dark:border-neutral-800 hover:text-neutral-700 dark:hover:text-neutral-300'
+                                : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-400 border-neutral-200 dark:border-neutral-800 hover:text-neutral-700 dark:hover:text-neutral-300'
                             }`}
                           >
                             {lvl}
@@ -706,7 +706,7 @@ export default function Chat() {
       {/* CONFIRMATION DIALOG MODAL FOR RESETTING CHAT */}
       {showConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs select-none">
-          <div className="w-full max-w-[360px] bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-850 rounded-2xl p-5 shadow-2xl animate-scaleIn">
+          <div className="w-full max-w-[360px] bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-5 shadow-2xl animate-scaleIn">
             <h3 className="text-base font-bold text-neutral-800 dark:text-neutral-100 mb-2">
               Start a new conversation?
             </h3>
@@ -722,7 +722,7 @@ export default function Chat() {
               </button>
               <button
                 onClick={handleClearChat}
-                className="px-4 py-2 bg-neutral-900 dark:bg-white text-white dark:text-black hover:bg-neutral-850 dark:hover:bg-neutral-100 rounded-xl transition-all cursor-pointer"
+                className="px-4 py-2 bg-neutral-900 dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-100 rounded-xl transition-all cursor-pointer"
               >
                 New Chat
               </button>

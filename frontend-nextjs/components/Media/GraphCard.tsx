@@ -202,9 +202,9 @@ export default function GraphCard({ expr, title, theme = 'dark' }: GraphCardProp
   const isDark = theme === 'dark';
 
   return (
-    <div className="media-card bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-850 rounded-2xl overflow-hidden shadow-md animate-fadeIn w-full max-w-[400px]">
+    <div className="media-card bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden shadow-md animate-fadeIn w-full max-w-[400px]">
       {/* Card Header & Controls */}
-      <div className="p-3 px-4 bg-neutral-200/50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-850 flex items-center justify-between">
+      <div className="p-3 px-4 bg-neutral-200/50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 flex items-center justify-between">
         <span className="text-xs font-bold text-neutral-800 dark:text-neutral-200 flex items-center gap-1.5">
           <span>📊</span> {title || `Graph: ${expr}`}
         </span>
@@ -250,7 +250,7 @@ export default function GraphCard({ expr, title, theme = 'dark' }: GraphCardProp
           height={260}
           onMouseMove={handleMouseMove}
           onMouseLeave={() => setHoverPos(null)}
-          className="w-full max-w-[400px] h-auto rounded-lg border border-neutral-300 dark:border-neutral-850 cursor-crosshair"
+          className="w-full max-w-[400px] h-auto rounded-lg border border-neutral-300 dark:border-neutral-800 cursor-crosshair"
         />
 
         {/* Live Coordinate Badge */}
@@ -261,7 +261,7 @@ export default function GraphCard({ expr, title, theme = 'dark' }: GraphCardProp
         )}
       </div>
 
-      <div className="p-2.5 text-[11px] text-neutral-500 dark:text-neutral-400 text-center bg-neutral-100 dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-850/50">
+      <div className="p-2.5 text-[11px] text-neutral-500 dark:text-neutral-400 text-center bg-neutral-100 dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800/50">
         Interactive Canvas • Hover to trace coordinates
       </div>
     </div>
