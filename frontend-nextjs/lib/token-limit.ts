@@ -46,10 +46,12 @@ interface UserUsage {
 
 const memoryStore = new Map<string, UserUsage>();
 
-// Environment variables configuration with defaults
+// Rate Limit Configuration tuned for ZeroGPU Free Tier (5 min/day = ~300s GPU)
+// Each 1536-token generation takes ~15-25s GPU time → ~12-20 total queries/day across all users
+// Per-session limits prevent a single user from exhausting the entire daily budget
 const WINDOW_DURATION_MS = 60 * 60 * 1000; // 1 hour window
-const MAX_REQUESTS_PER_WINDOW = Number(process.env.VIDYA_MAX_REQUESTS_PER_WINDOW) || 20;
-const MAX_TOTAL_TOKENS_PER_WINDOW = Number(process.env.VIDYA_MAX_TOTAL_TOKENS_PER_WINDOW) || 10000;
+const MAX_REQUESTS_PER_WINDOW = Number(process.env.VIDYA_MAX_REQUESTS_PER_WINDOW) || 8;
+const MAX_TOTAL_TOKENS_PER_WINDOW = Number(process.env.VIDYA_MAX_TOTAL_TOKENS_PER_WINDOW) || 6000;
 
 export interface RateLimitResult {
   allowed: boolean;

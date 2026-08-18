@@ -329,7 +329,7 @@ export default function Chat() {
   ];
 
   return (
-    <div className={`w-full min-h-screen flex flex-col transition-colors duration-300 ${theme} ${
+    <div className={`w-full h-screen flex flex-col transition-colors duration-300 overflow-hidden ${theme} ${
       theme === 'dark' ? 'bg-[#0a0a0a] text-neutral-100' : 'bg-[#fbfbf9] text-neutral-900'
     }`}>
       {/* Universal stylesheet overrides for floating visual animations */}

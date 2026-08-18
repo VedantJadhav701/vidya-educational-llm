@@ -33,7 +33,7 @@ export default function MessageList({
   return (
     <main
       ref={scrollRef}
-      className="chat-history flex-1 overflow-y-auto p-6 flex flex-col gap-6 scroll-smooth custom-scrollbar h-full w-full"
+      className="chat-history flex-1 overflow-y-auto p-6 flex flex-col gap-6 custom-scrollbar h-full w-full"
     >
       {messages.map((msg) => (
         <Message key={msg.id} message={msg} onQuickPrompt={onQuickPrompt} theme={theme} />
