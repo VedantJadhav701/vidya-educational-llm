@@ -194,7 +194,7 @@ export default function Chat() {
   const hasStarted = messages.length > 0;
 
   return (
-    <div className="w-full min-h-screen flex flex-col bg-[#070a14] text-[#f1f5f9] font-sans antialiased overflow-x-hidden">
+    <div className="w-full min-h-screen flex flex-col bg-[#0a0a0a] text-[#f5f5f5] font-sans antialiased overflow-x-hidden">
       {/* Header Navbar */}
       <Navbar
         currentMode={learningMode}
@@ -209,8 +209,8 @@ export default function Chat() {
           onClick={() => setMobileTab('chat')}
           className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
             mobileTab === 'chat'
-              ? 'bg-gradient-to-r from-[#a855f7] to-[#ec4899] text-white shadow-lg'
-              : 'bg-white/5 text-[#94a3b8] hover:text-white border border-white/10'
+              ? 'bg-neutral-800 text-white border border-neutral-700 shadow-md'
+              : 'bg-neutral-900/40 text-neutral-400 hover:text-white border border-neutral-800/60'
           }`}
         >
           💬 Learning Chat
@@ -220,13 +220,13 @@ export default function Chat() {
           onClick={() => setMobileTab('visuals')}
           className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
             mobileTab === 'visuals'
-              ? 'bg-gradient-to-r from-[#38bdf8] to-[#6366f1] text-white shadow-lg'
-              : 'bg-white/5 text-[#94a3b8] hover:text-white border border-white/10'
+              ? 'bg-neutral-800 text-white border border-neutral-700 shadow-md'
+              : 'bg-neutral-900/40 text-neutral-400 hover:text-white border border-neutral-800/60'
           }`}
         >
           🔬 Visual Lab &amp; Formulas
           {mediaItems.length > 0 && (
-            <span className="text-[10px] bg-white/20 text-white px-1.5 py-0.2 rounded-full font-mono">
+            <span className="text-[10px] bg-neutral-700 text-white px-1.5 py-0.2 rounded-full font-mono">
               {mediaItems.length}
             </span>
           )}
@@ -237,27 +237,27 @@ export default function Chat() {
       <div className="flex-1 w-full max-w-[1536px] mx-auto p-3 sm:p-4 flex flex-col lg:flex-row gap-4 lg:gap-5 h-[calc(100vh-65px)] overflow-hidden">
         {/* Left / Main Chat & Landing Column */}
         <div
-          className={`flex-[2] h-full bg-[#0b0f19]/80 backdrop-blur-md border border-white/10 rounded-3xl flex flex-col overflow-hidden shadow-2xl relative ${
+          className={`flex-[2] h-full bg-[#121212]/90 backdrop-blur-md border border-neutral-850 rounded-3xl flex flex-col overflow-hidden shadow-2xl relative ${
             mobileTab === 'chat' ? 'flex' : 'hidden lg:flex'
           }`}
         >
           {/* Header Action Bar */}
           {hasStarted && (
-            <div className="px-4 py-2.5 border-b border-white/10 bg-[#1e293b]/40 flex items-center justify-between">
+            <div className="px-4 py-2.5 border-b border-neutral-850 bg-neutral-900/60 flex items-center justify-between">
               <div className="flex items-center gap-2 overflow-x-auto custom-scrollbar">
-                <span className="text-xs text-[#94a3b8] font-medium hidden sm:inline">Active Mode:</span>
-                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#a855f7] bg-[#a855f7]/10 px-2 py-0.5 rounded border border-[#a855f7]/20 flex-shrink-0">
+                <span className="text-xs text-neutral-400 font-medium hidden sm:inline">Active Mode:</span>
+                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-white bg-neutral-800 px-2 py-0.5 rounded border border-neutral-700 flex-shrink-0">
                   {learningMode}
                 </span>
                 {activeSubject && (
-                  <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#38bdf8] bg-[#38bdf8]/10 px-2 py-0.5 rounded border border-[#38bdf8]/20 flex-shrink-0">
+                  <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-neutral-300 bg-neutral-800 px-2 py-0.5 rounded border border-neutral-700 flex-shrink-0">
                     {activeSubject}
                   </span>
                 )}
               </div>
               <button
                 onClick={handleClearChat}
-                className="px-2.5 py-1 text-xs text-[#94a3b8] hover:text-white bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all cursor-pointer font-medium flex-shrink-0"
+                className="px-2.5 py-1 text-xs text-neutral-400 hover:text-white bg-neutral-800 hover:bg-neutral-700 rounded-xl border border-neutral-700 transition-all cursor-pointer font-medium flex-shrink-0"
               >
                 Reset Lab 🔄
               </button>
@@ -272,7 +272,7 @@ export default function Chat() {
                 <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-2">
                   VIDYA
                 </h1>
-                <p className="text-xs sm:text-sm font-semibold bg-gradient-to-r from-[#38bdf8] via-[#a855f7] to-[#ec4899] bg-clip-text text-transparent px-2">
+                <p className="text-xs sm:text-sm font-semibold text-neutral-400 px-2">
                   Your Intelligent Interactive Learning Companion
                 </p>
               </div>
