@@ -5,6 +5,11 @@
 </p>
 
 <p align="center">
+  <a href="https://vidya-educational-llm.vercel.app/"><img src="https://img.shields.io/badge/%F0%9F%9A%80%20Live%20Demo-vidya--educational--llm.vercel.app-black.svg?style=for-the-badge" alt="Live Demo"></a>
+</p>
+
+<p align="center">
+  <a href="https://vidya-educational-llm.vercel.app/"><img src="https://img.shields.io/badge/Try%20Vidya-Live%20on%20Vercel-000000?logo=vercel" alt="Vercel"></a>
   <a href="https://huggingface.co/spaces/vedantjadhav701/vidya-1.7b"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Space-yellow.svg" alt="Hugging Face Space"></a>
   <a href="https://huggingface.co/vedantjadhav701/edu-qwen-1.7b-merged"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Model-blue.svg" alt="Hugging Face Model"></a>
   <a href="local/VIDYA_BENCHMARK.md"><img src="https://img.shields.io/badge/Benchmark-93.3%25%20Accuracy-brightgreen.svg?logo=academic" alt="Benchmark 93.3%"></a>
@@ -14,6 +19,8 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License"></a>
   <a href="#-contributing"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"></a>
 </p>
+
+<p align="center"><em>Developed by <strong>Vedant Jadhav</strong></em></p>
 
 ---
 
