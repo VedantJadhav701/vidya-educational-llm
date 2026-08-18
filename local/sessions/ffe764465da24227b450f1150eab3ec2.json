@@ -1,0 +1,93 @@
+{
+  "title": "name all the receptors present in h...",
+  "history": [
+    {
+      "role": "user",
+      "metadata": null,
+      "content": [
+        {
+          "text": "name all the receptors present in human body",
+          "type": "text"
+        }
+      ],
+      "options": null
+    },
+    {
+      "role": "assistant",
+      "metadata": null,
+      "content": [
+        {
+          "text": "**Receptors in the Human Body**\n\n**Definition of Receptors**\nReceptors are specialized protein molecules located on the surface of cells or within the cell membrane. Their primary function is to detect external chemical signals (ligands) or physical stimuli (such as light, sound, or pressure) and trigger a specific biological response.\n\n**Types of Receptors**\n\n*   **Chemical Receptors**\n    *   **G-Protein Coupled Receptors (GPCRs):** These are the most common type of receptors. They bind to a ligand and activate a G-protein, which then triggers a cascade of intracellular signals.\n    *   **Ionotropic Receptors:** These are ligand-gated ion channels that open or close rapidly to allow ions (such as calcium or sodium) to flow across the membrane, triggering a quick cellular response.\n    *   **Nuclear Receptors:** These are receptors located inside the cell nucleus. They bind to specific DNA sequences to regulate gene expression.\n\n*   **Mechanical Receptors**\n    *   **Mechanoreceptors:** These detect physical pressure, stretch, or movement. Examples include the Merkel cells in the skin that detect touch and the proprioceptors in muscles that detect movement.\n    *   **Thermoreceptors:** These detect temperature changes, allowing the body to regulate its internal heat balance.\n\n*   **Neuroreceptors**\n    *   **Ionotropic Receptors:** These are similar to ionotropic receptors but are specifically located on the surface of neurons, allowing for rapid electrical signaling.\n    *   **G-Coupled Receptors:** These are involved in the transmission of neurotransmitters across the synaptic gap.\n\n**Real-World Importance**\nUnderstanding these receptors is critical for medicine. For example, the development of drugs like insulin (which targets GPCRs) or the use of beta-blockers (which target ionotropic receptors) allows doctors to treat diabetes and hypertension by manipulating the body's chemical and mechanical responses.\n\n**Answer:**\nThe human body contains various types of receptors, including **GPCRs**, **Ionotropic receptors**, **Nuclear receptors**, **Mechanical receptors** (such as Merkel cells), and **Thermoreceptors**.",
+          "type": "text"
+        }
+      ],
+      "options": null
+    },
+    {
+      "role": "user",
+      "metadata": null,
+      "content": [
+        {
+          "text": "according to class 10",
+          "type": "text"
+        }
+      ],
+      "options": null
+    },
+    {
+      "role": "assistant",
+      "metadata": null,
+      "content": [
+        {
+          "text": "**Receptors in Class 10 Science**\n\n**Concept Definition**\nReceptors are specialized protein molecules that act as sensors. They are responsible for detecting specific chemical signals (ligands) or physical stimuli (such as light, sound, or pressure) and transmitting this information to the brain or other organs to trigger a biological response.\n\n**Types of Receptors in Class 10**\n\n*   **Chemical Receptors:**\n    *   **G-Coupled Receptors (GCRs):** These receptors are activated by a ligand and then activate a G-protein to trigger a cellular response. They are found in the skin, mucous membranes, and the brain.\n    *   **Ionotropic Receptors:** These are ligand-gated ion channels. When a ligand binds, it opens the channel to allow ions to flow in or out of the cell, triggering a rapid electrical signal.\n\n*   **Mechanical Receptors:**\n    *   **Mechanoreceptors:** These receptors detect physical pressure or stretch. They are essential for sensing touch and movement.\n    *   **Thermoreceptors:** These receptors detect changes in temperature, helping the body to regulate its internal heat.\n\n*   **Neuroreceptors:**\n    *   **Ionotropic Receptors:** These are receptors located on the surface of neurons that allow for rapid electrical signaling.\n    *   **G-Coupled Receptors:** These are receptors located on the surface of neurons that activate a G-protein to trigger a response.\n\n**Real-World Application**\nUnderstanding these receptors is fundamental to medicine. For example, the use of beta-blockers (which act as agonists on G-coupled receptors) helps manage heart conditions by slowing down the heart rate.\n\n**Answer:**\nClass 10 science defines receptors as specialized proteins that detect chemical signals (like G-coupled receptors) and physical stimuli (like ionotropic receptors). They are categorized into chemical (GPCRs, Ionotropic), mechanical (Mechanoreceptors, Thermoreceptors), and neuroreceptors (Ionotropic, G-coupled) types.",
+          "type": "text"
+        }
+      ],
+      "options": null
+    },
+    {
+      "role": "user",
+      "metadata": null,
+      "content": [
+        {
+          "text": "according class 10ncert",
+          "type": "text"
+        }
+      ],
+      "options": null
+    },
+    {
+      "role": "assistant",
+      "metadata": null,
+      "content": [
+        {
+          "text": "**Receptors in Class 10 NCERT**\n\n**Core Concept**\nIn Class 10 NCERT Science, receptors are defined as specialized proteins on the surface of cells that detect external chemical signals (ligands) or physical stimuli (such as light, sound, or pressure) and trigger a biological response.\n\n**Detailed Types of Receptors**\n\n*   **Chemical Receptors:**\n    *   **G-Coupled Receptors (GPCRs):** These are the most common type of receptors. They are activated by a ligand and then activate a G-protein, which then triggers a cascade of intracellular signals. They are found in the skin, mucous membranes, and the brain.\n    *   **Ionotropic Receptors:** These are ligand-gated ion channels. When a ligand binds, it opens the channel to allow ions to flow in or out of the cell, triggering a rapid electrical signal.\n\n*   **Mechanical Receptors:**\n    *   **Mechanoreceptors:** These receptors detect physical pressure or stretch. They are essential for sensing touch and movement.\n    *   **Thermoreceptors:** These receptors detect changes in temperature, helping the body to regulate its internal heat balance.\n\n*   **Neuroreceptors:**\n    *   **Ionotropic Receptors:** These are receptors located on the surface of neurons that allow for rapid electrical signaling.\n    *   **G-Coupled Receptors:** These are receptors located on the surface of neurons that activate a G-protein to trigger a response.\n\n**Summary Table**\n\n| Type of Receptor | Detection Mechanism | Primary Function |\n| :--- | :--- | :--- |\n| **GPCRs** | Ligand Binding $\\rightarrow$ G-Protein Activation | Intracellular Signaling |\n| **Ionotropic** | Ligand Binding $\\rightarrow$ Ion Channel Opening | Rapid Electrical Response |\n| **Mechanical** | Physical Pressure/Stretch | Sensing Touch/Movement |\n| **Thermoreceptors** | Temperature Change | Regulation of Body Heat |\n\n**Answer:**\nClass 10 NCERT defines receptors as specialized proteins that detect external signals. They are categorized into chemical receptors (like GPCRs and Ionotropic), mechanical receptors (like Mechanoreceptors and Thermoreceptors), and neuroreceptors (like Ionotropic and G-coupled receptors), all of which trigger specific biological responses.",
+          "type": "text"
+        }
+      ],
+      "options": null
+    },
+    {
+      "role": "user",
+      "metadata": null,
+      "content": [
+        {
+          "text": "name all the receptors present in human body according to 10th ncert",
+          "type": "text"
+        }
+      ],
+      "options": null
+    },
+    {
+      "role": "assistant",
+      "metadata": null,
+      "content": [
+        {
+          "text": "**Receptors in the Human Body**\n\n**Definition**\nReceptors are specialized protein molecules located on the surface of cells or within the cell membrane. Their primary function is to detect external chemical signals (ligands) or physical stimuli (such as light, sound, or pressure) and trigger a specific biological response.\n\n**Detailed Classification**\n\n*   **Chemical Receptors:**\n    *   **G-Coupled Receptors (GPCRs):** These are the most common type of receptors. They bind to a ligand and activate a G-protein, which then triggers a cascade of intracellular signals. They are found in the skin, mucous membranes, and the brain.\n    *   **Ionotropic Receptors:** These are ligand-gated ion channels. When a ligand binds, it opens the channel to allow ions to flow in or out of the cell, triggering a rapid electrical signal.\n\n*   **Mechanical Receptors:**\n    *   **Mechanoreceptors:** These detect physical pressure or stretch. They are essential for sensing touch and movement.\n    *   **Thermoreceptors:** These detect changes in temperature, helping the body to regulate its internal heat balance.\n\n*   **Neuroreceptors:**\n    *   **Ionotropic Receptors:** These are receptors located on the surface of neurons that allow for rapid electrical signaling.\n    *   **G-Coupled Receptors:** These are receptors located on the surface of neurons that activate a G-protein to trigger a response.\n\n**Summary of Sensory Receptors**\n*   **Phenoreceptors:** Located in the inner ear, they detect sound.\n*   **Photoreceptors:** Located in the eyes, they detect light.\n*   **Olfactory Receptors:** Located in the nose, they detect smell.\n*   **Thermoreceptors:** Located in the skin, they detect temperature.\n*   **Gustatory Receptors:** Located on the tongue, they detect taste.\n\n**Answer:**\nAccording to the NCERT Class 10 curriculum, the human body contains various types of receptors. These are broadly categorized into **Chemical Receptors** (such as GPCRs and Ionotropic receptors), **Mechanical Receptors** (such as Mechanoreceptors and Thermoreceptors), and **Neuroreceptors** (such as Ionotropic and G-coupled receptors). These receptors detect external stimuli and trigger specific biological responses to maintain homeostasis and survival.\n\n---\n**Sources:**\n- [[Class 10] What is the function of receptors in our body? Think of](https://www.teachoo.com/17553/3520/NCERT-Question-4/category/NCERT-Questions/)\n- [Receptors — lesson. Science CBSE, Class 10.](https://www.yaclass.in/p/science-cbse/class-10/control-and-coordination-10298/receptors-and-hormones-9821/re-505c3819-a394-4465-8aad-99d3eadf96a2)\n- [Types Of Receptors NEET Biology Guide](https://www.vedantu.com/neet/types-of-receptors)",
+          "type": "text"
+        }
+      ],
+      "options": null
+    }
+  ]
+}

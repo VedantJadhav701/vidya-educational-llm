@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { ChatMessage, MediaCardItem, BackendStatus, LearningMode, SubjectType, SessionStats } from '@/lib/types';
 import { sendMessage, checkBackendHealth } from '@/lib/vidya';
 import { detectImageQuery, fetchEducationalImage } from '@/lib/image';
@@ -13,6 +14,7 @@ import ChatInput from './ChatInput';
 import MediaPanel from '../Media/MediaPanel';
 
 export default function Chat() {
+  const searchParams = useSearchParams();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [mediaItems, setMediaItems] = useState<MediaCardItem[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -35,10 +37,19 @@ export default function Chat() {
   });
 
   useEffect(() => {
+    // Read subject query parameter if present (Section 33 & 34 of plan)
+    const subjectParam = searchParams.get('subject');
+    if (subjectParam) {
+      const validSubjects: SubjectType[] = ['math', 'physics', 'chemistry', 'biology', 'cs', 'general'];
+      if (validSubjects.includes(subjectParam as SubjectType)) {
+        setActiveSubject(subjectParam as SubjectType);
+      }
+    }
+
     checkBackendHealth().then(setStatus).catch(() => {
       setStatus({ isAvailable: true, isWakingUp: false, message: 'Ready' });
     });
-  }, []);
+  }, [searchParams]);
 
   const handleSendMessage = async (text: string) => {
     if (!text.trim() || isProcessing) return;

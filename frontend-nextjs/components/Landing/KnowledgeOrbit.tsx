@@ -87,8 +87,8 @@ export default function KnowledgeOrbit({ onSelectPrompt }: KnowledgeOrbitProps) 
         {/* Connecting Rays */}
         {nodes.map((node) => {
           const rad = (node.angle * Math.PI) / 180;
-          const x2 = 400 + 160 * Math.cos(rad);
-          const y2 = 210 + 140 * Math.sin(rad);
+          const x2 = Number((400 + 160 * Math.cos(rad)).toFixed(3));
+          const y2 = Number((210 + 140 * Math.sin(rad)).toFixed(3));
           const isHovered = hoveredNode === node.id;
 
           return (
@@ -130,8 +130,8 @@ export default function KnowledgeOrbit({ onSelectPrompt }: KnowledgeOrbitProps) 
         // Position relative to center (400, 210)
         const radiusX = 240;
         const radiusY = 140;
-        const posX = radiusX * Math.cos(rad);
-        const posY = radiusY * Math.sin(rad);
+        const posX = Number((radiusX * Math.cos(rad)).toFixed(3));
+        const posY = Number((radiusY * Math.sin(rad)).toFixed(3));
 
         const isHovered = hoveredNode === node.id;
 

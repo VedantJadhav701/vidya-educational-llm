@@ -1,6 +1,6 @@
 import torch
 
-# No GPU decorator needed — running on CPU for unlimited quota-free access
+# Configuration and loading imports
 from .config import (
     MAX_NEW_TOKENS,
     TEMPERATURE,
@@ -132,10 +132,10 @@ def generate_response(message, history=None):
     # SAFETY CLEANUP
     # --------------------------------------------------------
 
-    if "<think>" in response:
-        response = response.split("<think>", 1)[0].strip()
-
+    # Safely strip <think> ... </think> blocks without discarding the actual answer (Section 23 of plan)
     if "</think>" in response:
         response = response.split("</think>", 1)[-1].strip()
+    elif "<think>" in response:
+        response = response.split("<think>", 1)[0].strip()
 
     return response

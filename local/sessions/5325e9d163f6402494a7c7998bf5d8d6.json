@@ -1,0 +1,49 @@
+{
+  "title": "how are you",
+  "history": [
+    {
+      "role": "user",
+      "metadata": null,
+      "content": [
+        {
+          "text": "how are you",
+          "type": "text"
+        }
+      ],
+      "options": null
+    },
+    {
+      "role": "assistant",
+      "metadata": null,
+      "content": [
+        {
+          "text": "**Vidya:**\n\nHello! I am Vidya, a highly intelligent artificial intelligence assistant designed to assist students in their educational journey. I am created and developed by Vedant Jadhav, an AI engineer specializing in machine learning and artificial intelligence.\n\n**How can I help you?**\nI am here to provide you with accurate, step-by-step explanations of complex topics. Whether you need help with **Mathematics**, **Physics**, **Chemistry**, **Biology**, or **Computer Science**, I am ready to guide you through the process. Please feel free to ask your questions, and I will provide a detailed and comprehensive explanation for you.",
+          "type": "text"
+        }
+      ],
+      "options": null
+    },
+    {
+      "role": "user",
+      "metadata": null,
+      "content": [
+        {
+          "text": "if i want to prove the isoscalane triangle then how i can?",
+          "type": "text"
+        }
+      ],
+      "options": null
+    },
+    {
+      "role": "assistant",
+      "metadata": null,
+      "content": [
+        {
+          "text": "**Definition of an Isosceles Triangle**\nAn isosceles triangle is a triangle that has at least two sides of equal length. The sides that are equal are called the **equal sides**, and the angles opposite to these sides are known as the **base angles**. The side that is not equal to the other two is called the **base**.\n\n**Step-by-Step Proof of the Isosceles Triangle**\n\n**1. The Premise**\nAssume we have a triangle $ABC$ where $AB = AC$. We need to prove that the base angles $\\angle ABC$ and $\\angle ACB$ are equal.\n\n**2. The Construction**\nExtend the side $BC$ to a point $D$ such that $BD = AB$ (which is equal to $AC$).\n\n**3. The Proof**\n- **Step 1:** In triangle $ABD$, we have $AB = BD$ (given).\n- **Step 2:** The angle $\\angle ABD$ is equal to the angle $\\angle ACD$ because they are alternate interior angles formed by the transversal $AD$ intersecting parallel lines $AB$ and $CD$.\n- **Step 3:** In triangle $ACD$, we have $AC = AD$ (given).\n- **Step 4:** The angle $\\angle CAD$ is equal to the angle $\\angle BAC$ because they are alternate interior angles formed by the transversal $AD$ intersecting parallel lines $AC$ and $BD$.\n\n**4. The Conclusion**\nSince $\\angle ABD = \\angle ACD$ and $\\angle CAD = \\angle BAC$, we can conclude that the triangle $ABC$ is isosceles.\n\n**Answer:**\nBy extending the base to a point $D$ and using the properties of alternate interior angles, we have proven that the base angles $\\angle ABC$ and $\\angle ACB$ are equal. This proves that the triangle $ABC$ is an isosceles triangle.",
+          "type": "text"
+        }
+      ],
+      "options": null
+    }
+  ]
+}

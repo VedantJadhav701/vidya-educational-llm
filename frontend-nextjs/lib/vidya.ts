@@ -3,16 +3,28 @@ import { ChatMessage, BackendStatus } from './types';
 
 const HF_SPACE_ID =
   process.env.NEXT_PUBLIC_HF_SPACE_ID || 'vedantjadhav701/vidya-1.7b';
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || '';
+
+// Determine connection endpoint (direct URL or Space ID)
+const connectionTarget = BACKEND_URL || HF_SPACE_ID;
 
 // Convert HF_SPACE_ID (e.g. "vedantjadhav701/vidya-1.7b") to valid HF subdomain
 const hfSubdomain = HF_SPACE_ID.toLowerCase().replace(/[^a-z0-9]/g, '-');
-const HF_DIRECT_URL = `https://${hfSubdomain}.hf.space`;
+const HF_DIRECT_URL = BACKEND_URL || `https://${hfSubdomain}.hf.space`;
+
+const HF_TOKEN = process.env.HF_TOKEN || '';
 
 let gradioClient: unknown = null;
 
 async function getGradioClient() {
   if (!gradioClient) {
-    gradioClient = await Client.connect(HF_SPACE_ID);
+    // Client.connect accepts both Space IDs ("user/space") and direct URLs ("http://localhost:7860")
+    const connectOptions: { hf_token?: `hf_${string}` } = {};
+    if (HF_TOKEN && HF_TOKEN.startsWith('hf_')) {
+      connectOptions.hf_token = HF_TOKEN as `hf_${string}`;
+    }
+    gradioClient = await Client.connect(connectionTarget, connectOptions);
   }
   return gradioClient as Client;
 }
@@ -54,7 +66,25 @@ export async function sendMessage(
   message: string,
   history: ChatMessage[] = []
 ): Promise<string> {
-  // Include recent conversation context in the message prompt
+  // If running in the browser (client-side), route requests through our Next.js API route
+  // to enforce rate-limits and hide API keys (Section 14 & 15 of frontend_plan.md)
+  if (typeof window !== 'undefined') {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message, history }),
+    });
+    
+    if (!res.ok) {
+      const errData = await res.json();
+      throw new Error(errData.error || 'Failed to get answer from Vidya');
+    }
+    
+    const data = await res.json();
+    return data.answer;
+  }
+
+  // Include recent conversation context in the message prompt (Server-side)
   let enrichedPrompt = message;
   if (history && history.length > 0) {
     const recentHistory = history.slice(-4);
@@ -70,6 +100,8 @@ export async function sendMessage(
       enrichedPrompt = `[Conversation Context]\n${contextLines.join('\n')}\n\nStudent: ${message}`;
     }
   }
+
+  const errors: string[] = [];
 
   // ── Strategy 1: Gradio Client (most reliable) ──
   try {
@@ -100,13 +132,12 @@ export async function sendMessage(
       errMsg.includes('quota') ||
       errMsg.includes('429')
     ) {
-      const waitMatch = errMsg.match(/Try again in (\S+)/);
-      const waitTime = waitMatch ? waitMatch[1] : 'some time';
       throw new Error(
-        `Vidya's free GPU quota has been reached. Please try again in ${waitTime}. Tip: Sign in on Hugging Face for more quota.`
+        `Vidya's free GPU quota has been reached. Tip: Sign in on Hugging Face for more quota.`
       );
     }
 
+    errors.push(`Gradio Client: ${errMsg}`);
     console.warn('Gradio Client failed, trying direct HTTP:', error);
     // Reset client so next call reconnects
     gradioClient = null;
@@ -114,11 +145,16 @@ export async function sendMessage(
 
   // ── Strategy 2: Gradio 5 SSE endpoint /gradio_api/call/predict ──
   try {
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+    if (HF_TOKEN) {
+      headers['Authorization'] = `Bearer ${HF_TOKEN}`;
+    }
+
     const callRes = await fetch(
       `${HF_DIRECT_URL}/gradio_api/call/predict`,
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify({ data: [enrichedPrompt] }),
       }
     );
@@ -129,7 +165,9 @@ export async function sendMessage(
       if (callJson?.event_id) {
         // Poll the SSE stream for the result
         const sseUrl = `${HF_DIRECT_URL}/gradio_api/call/predict/${callJson.event_id}`;
-        const sseRes = await fetch(sseUrl);
+        const sseRes = await fetch(sseUrl, HF_TOKEN ? {
+          headers: { 'Authorization': `Bearer ${HF_TOKEN}` }
+        } : {});
         const sseText = await sseRes.text();
 
         // Parse SSE: look for "data:" lines with JSON arrays
@@ -156,16 +194,24 @@ export async function sendMessage(
         const text = extractTextFromGradioData(callJson.data);
         if (text) return cleanResponse(text);
       }
+    } else {
+      errors.push(`Gradio 5 SSE POST failed: ${callRes.statusText} (${callRes.status})`);
     }
   } catch (err) {
+    errors.push(`Gradio 5 SSE failed: ${(err as Error)?.message || String(err)}`);
     console.warn('Direct SSE endpoint failed:', err);
   }
 
   // ── Strategy 3: Legacy /api/predict (older Gradio compat) ──
   try {
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+    if (HF_TOKEN) {
+      headers['Authorization'] = `Bearer ${HF_TOKEN}`;
+    }
+
     const legacyRes = await fetch(`${HF_DIRECT_URL}/api/predict`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers,
       body: JSON.stringify({ data: [enrichedPrompt] }),
     });
 
@@ -175,13 +221,16 @@ export async function sendMessage(
         const text = extractTextFromGradioData(json.data);
         if (text) return cleanResponse(text);
       }
+    } else {
+      errors.push(`Legacy API POST failed: ${legacyRes.statusText} (${legacyRes.status})`);
     }
   } catch (err) {
+    errors.push(`Legacy API failed: ${(err as Error)?.message || String(err)}`);
     console.warn('Legacy /api/predict failed:', err);
   }
 
   throw new Error(
-    'Vidya is starting up. This may take a minute on the first request — please try again shortly!'
+    `Vidya connection failed. Details:\n- ${errors.join('\n- ')}`
   );
 }
 
@@ -246,6 +295,7 @@ function cleanResponse(response: string): string {
 
   let cleaned = response;
 
+  // Strip internal reasoning / think blocks (Section 23 of plan)
   if (cleaned.includes('<think>')) {
     cleaned = cleaned.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
   }
@@ -253,8 +303,7 @@ function cleanResponse(response: string): string {
     cleaned = cleaned.split('</think>').pop()?.trim() || '';
   }
 
-  cleaned = cleaned.replace(/\[IMAGE:\s*.*?\]/gi, '').trim();
-  cleaned = cleaned.replace(/\[GRAPH:\s*.*?\]/gi, '').trim();
-
+  // Do NOT strip [IMAGE: ...] and [GRAPH: ...] here so the client components
+  // can detect them. Instead, we strip them inside normalizeMarkdown right before rendering.
   return cleaned;
 }

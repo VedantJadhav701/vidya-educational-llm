@@ -1,4 +1,7 @@
-transformers>=4.40.0
-accelerate>=0.28.0
-safetensors
+gradio
+spaces
+transformers
+torch
+accelerate
 sentencepiece
+safetensors

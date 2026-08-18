@@ -13,6 +13,9 @@ export function normalizeMarkdown(text: string): string {
   sanitized = sanitized.replace(/\btimes\b/g, '\\times');
   sanitized = sanitized.replace(/\bsqrt\{/g, '\\sqrt{');
 
-  // Normalize single dollar sign delimiters if needed
-  return sanitized;
+  // Strip [IMAGE: ...] and [GRAPH: ...] markers so they do not show in the rendered UI (Section 12 & 13 of plan)
+  sanitized = sanitized.replace(/\[IMAGE:\s*.*?\]/gi, '');
+  sanitized = sanitized.replace(/\[GRAPH:\s*.*?\]/gi, '');
+
+  return sanitized.trim();
 }

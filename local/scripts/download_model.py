@@ -7,8 +7,9 @@ from huggingface_hub import snapshot_download
 MODEL_ID = "vedantjadhav701/edu-qwen-1.7b-merged"
 MODEL_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "models", "edu-qwen-1.7b-merged")
 
-if os.path.exists(os.path.join(MODEL_DIR, "config.json")):
-    print("✓ Model already downloaded!")
+if os.path.exists(os.path.join(MODEL_DIR, "model.safetensors")):
+    size_gb = os.path.getsize(os.path.join(MODEL_DIR, "model.safetensors")) / 1024**3
+    print(f"✓ Model already downloaded! ({size_gb:.1f} GB)")
     print(f"  Location: {MODEL_DIR}")
 else:
     print(f"⬇ Downloading: {MODEL_ID}")

@@ -1,297 +1,532 @@
-I have an existing Vidya educational AI web application located at:
+# VIDYA AI — PRODUCTION NEXT.JS FRONTEND
 
-C:\Users\HP\projects\Vidya-1.7B\webapp
+You are building the production frontend for Vidya, a multilingual
+educational AI assistant for Indian students.
 
-This is the CURRENT working frontend.
-
-IMPORTANT:
-Before writing any code, thoroughly inspect the entire existing webapp directory.
-
-Inspect:
-- all HTML files
-- all CSS files
-- all JavaScript files
-- assets
-- images
-- icons
-- configuration files
-- existing API calls
-- existing UI behavior
-- existing chat implementation
-- graph implementation
-- image/reference implementation
-- Markdown rendering
-- KaTeX/math rendering
-- streaming implementation
-- loading states
-- splash screen
-- responsive behavior
-
-Do NOT assume the implementation from the description below.
-Use the existing webapp as the source of truth for the current UI and behavior.
-
-============================================================
-GOAL
-============================================================
-
-Migrate the existing Vidya frontend from vanilla HTML/CSS/JavaScript
-to a production-ready Next.js application.
-
-Create the NEW application at:
+PROJECT LOCATION:
 
 C:\Users\HP\projects\Vidya-1.7B\frontend-nextjs
 
-DO NOT modify:
+IMPORTANT:
+Build ONLY the frontend in this directory.
 
-C:\Users\HP\projects\Vidya-1.7B\webapp
+Do NOT modify:
+C:\Users\HP\projects\Vidya-1.7B\backend-huggingface
 
-DO NOT delete, move, rename, or overwrite any files in the existing
-webapp directory.
-
-The old webapp must remain completely intact as a reference/fallback.
+Do NOT modify the existing:
+- webapp
+- backend-huggingface
+- local
+- model files
+- GGUF files
 
 ============================================================
-TECHNOLOGY
+1. PRODUCT IDENTITY
+============================================================
+
+Product name:
+
+VIDYA
+
+Tagline:
+
+"Learn deeper. Understand better."
+
+Vidya is an educational AI designed for Indian students.
+
+Core domains:
+
+- Mathematics
+- Physics
+- Chemistry
+- Biology
+- Computer Science
+- General academics
+
+Primary target:
+
+Indian school and competitive-exam students.
+
+Supported languages:
+
+- English
+- Hindi
+- Marathi
+- Tamil
+- Telugu
+- Bengali
+- Gujarati
+- Kannada
+- Malayalam
+- Punjabi
+- Maithili
+- Urdu
+
+Do NOT make Vidya look like a generic ChatGPT clone.
+
+The design should communicate:
+
+EDUCATION
+INTELLIGENCE
+INDIAN STUDENT FOCUS
+SCIENCE
+KNOWLEDGE
+MODERN AI
+
+============================================================
+2. TECHNOLOGY STACK
 ============================================================
 
 Use:
 
-- Next.js latest stable compatible version
+- Next.js latest stable version
 - React
 - TypeScript
-- Tailwind CSS where useful
+- Tailwind CSS
+- Framer Motion
+- Lucide React
 - KaTeX
 - react-markdown
 - remark-math
 - rehype-katex
+- rehype-sanitize
+- Hugging Face Gradio Client
 
-Use the Next.js App Router.
+Use App Router.
 
-Use client components only where browser interactivity is required.
+Use strict TypeScript.
 
-Keep the architecture modular and production-ready.
+Use modular React components.
 
-============================================================
-EXISTING UI/UX
-============================================================
+Use server-side API routes where appropriate.
 
-The new Next.js application must preserve the existing Vidya design
-as closely as practical.
-
-Do NOT redesign the product unnecessarily.
-
-Preserve the existing:
-
-- Vidya branding
-- splash screen
-- splash animation
-- loading/progress behavior
-- chat layout
-- chat header
-- model status indicator
-- user message bubbles
-- AI message bubbles
-- message spacing
-- typography
-- gradients
-- cards
-- shadows
-- rounded corners
-- typing indicator
-- send button
-- input behavior
-- keyboard behavior
-- conversation history
-- auto-scroll
-- Markdown rendering
-- mathematical rendering
-- Visuals & Reference panel
-- image cards
-- graph cards
-- responsive layout
-- desktop layout
-- tablet layout
-- mobile layout
-
-Reuse existing CSS values, animations, colors, spacing, and UI logic
-where appropriate.
-
-Do not blindly copy broken legacy code.
-Preserve the intended behavior while implementing it properly in
-React/Next.js.
+Do not use deprecated Next.js APIs.
 
 ============================================================
-IMPORTANT BACKEND CHANGE
-============================================================
-
-The old frontend may contain local backend connections.
-
-Remove ALL local Ollama dependencies.
-
-NEVER use:
-
-http://127.0.0.1:11434
-http://localhost:11434
-
-Remove ALL local Flask dependencies.
-
-NEVER use:
-
-http://127.0.0.1:5000
-http://localhost:5000
-
-The new frontend must not depend on my local computer for inference.
-
-============================================================
-ONLINE AI BACKEND
-============================================================
-
-The production AI backend is:
-
-Hugging Face Space:
-
-vedantjadhav701/vidya-1.7b
-
-The Space runs:
-
-Vidya 1.7B
-
-Model:
-
-vedantjadhav701/edu-qwen-1.7b-merged
-
-The Hugging Face Space is a Gradio application.
-
-Use the Hugging Face Gradio API/client to communicate with the
-Space.
-
-Do NOT download the model into the Next.js project.
-
-Do NOT put model weights into the frontend repository.
-
-Do NOT use Ollama.
-
-Do NOT use a local Python inference server.
-
-============================================================
-BACKEND ABSTRACTION
+3. APPLICATION STRUCTURE
 ============================================================
 
 Create:
 
-lib/vidya.ts
+frontend-nextjs/
 
-This file must contain the Hugging Face/Gradio communication logic.
+app/
+  layout.tsx
+  page.tsx
 
-The UI components must NOT directly contain Hugging Face API calls.
+  landing/
+    page.tsx
 
-The UI should communicate through a clean abstraction such as:
+  playground/
+    page.tsx
 
-sendMessage(...)
-streamMessage(...)
-checkBackendHealth(...)
+  api/
+    chat/
+      route.ts
 
-Use strong TypeScript types.
+    image/
+      route.ts
 
-The Hugging Face Space ID must come from:
+components/
+  landing/
+    Hero.tsx
+    Features.tsx
+    HowItWorks.tsx
+    Subjects.tsx
+    Languages.tsx
+    CTA.tsx
+    Footer.tsx
 
-NEXT_PUBLIC_HF_SPACE_ID
+  playground/
+    Playground.tsx
+    ChatWindow.tsx
+    ChatMessage.tsx
+    ChatInput.tsx
+    TypingIndicator.tsx
+    WelcomeScreen.tsx
+    SubjectSelector.tsx
+    LanguageSelector.tsx
+    VisualPanel.tsx
+    GraphRenderer.tsx
+    ImageCard.tsx
+    EmptyState.tsx
+    ErrorState.tsx
+
+  ui/
+    Button.tsx
+    Badge.tsx
+    Modal.tsx
+    Loading.tsx
+
+lib/
+  vidya.ts
+  token-limit.ts
+  markdown.ts
+  types.ts
+
+public/
+  ...
+
+.env.example
+package.json
+tsconfig.json
+next.config.ts
+tailwind.config.ts
+
+============================================================
+4. LANDING PAGE
+============================================================
+
+The root page must be a premium landing page.
+
+URL:
+
+/
+
+The landing page should NOT immediately open the chat.
+
+Structure:
+
+------------------------------------------------------------
+NAVBAR
+------------------------------------------------------------
+
+Left:
+
+VIDYA logo / wordmark.
+
+Center/right navigation:
+
+- Features
+- Subjects
+- Languages
+- About
+
+CTA:
+
+"Enter Playground"
+
+Navbar should be responsive.
+
+On mobile use a compact menu.
+
+------------------------------------------------------------
+HERO
+------------------------------------------------------------
+
+Create a visually distinctive educational AI hero.
+
+Headline:
+
+"Learn deeper.
+Understand better."
+
+Subheadline:
+
+"Vidya is a multilingual educational AI built to help Indian
+students understand Mathematics, Physics, Chemistry, Biology and
+more."
+
+Primary CTA:
+
+"Enter Vidya Playground"
+
+Secondary CTA:
+
+"Explore Features"
+
+Hero visual:
+
+Create an interactive educational AI visualization.
+
+Do NOT use a generic robot image.
+
+Possible visual:
+
+- floating mathematical equations
+- physics vectors
+- molecular structures
+- DNA
+- graphs
+- educational cards
+- animated knowledge nodes
+
+Use subtle motion.
+
+Avoid excessive animation.
+
+------------------------------------------------------------
+TRUST / MODEL SECTION
+------------------------------------------------------------
+
+Show:
+
+VIDYA 1.7B
+
+"Multilingual Educational AI"
+
+Mention that Vidya is designed for educational assistance.
+
+Do NOT make unsupported claims such as:
+
+"best educational AI"
+"100% accurate"
+"human-level reasoning"
+
+------------------------------------------------------------
+FEATURES
+------------------------------------------------------------
+
+Create cards for:
+
+1. Multilingual Learning
+2. Mathematics
+3. Physics
+4. Chemistry
+5. Biology
+6. Step-by-Step Explanations
+7. Mathematical Rendering
+8. Visual Learning
+
+Each card should have:
+
+- icon
+- short title
+- short explanation
+- subtle hover animation
+
+------------------------------------------------------------
+SUBJECTS
+------------------------------------------------------------
+
+Interactive subject cards:
+
+Mathematics
+Physics
+Chemistry
+Biology
+Computer Science
+
+Clicking a subject can navigate to:
+
+/playground?subject=mathematics
+
+etc.
+
+------------------------------------------------------------
+LANGUAGES
+------------------------------------------------------------
+
+Display supported Indian languages.
+
+Use proper scripts.
 
 Example:
 
-NEXT_PUBLIC_HF_SPACE_ID=vedantjadhav701/vidya-1.7b
+English
+हिन्दी
+मराठी
+தமிழ்
+తెలుగు
+বাংলা
+ગુજરાતી
+ಕನ್ನಡ
+മലയാളം
+ਪੰਜਾਬੀ
+मैथिली
+اردو
 
-Create:
+Do NOT falsely imply equal model performance across every language.
 
-.env.example
+------------------------------------------------------------
+HOW IT WORKS
+------------------------------------------------------------
 
-Do NOT commit real secrets.
+Show:
 
-Do NOT put Hugging Face access tokens into client-side code.
+Ask
+ ↓
+Vidya understands
+ ↓
+Vidya explains
+ ↓
+Student learns
 
-If the Gradio API requires authentication for any operation, keep
-the token server-side only.
+Use animated transitions.
 
-============================================================
-CHAT
-============================================================
+------------------------------------------------------------
+FINAL CTA
+------------------------------------------------------------
 
-Implement a proper production chat flow.
+Headline:
 
-Requirements:
+"Start learning with Vidya."
 
-- conversation history
-- user messages
-- assistant messages
-- loading state
-- error state
-- retry behavior
-- clear chat
-- auto-scroll
-- Enter to send
-- Shift+Enter for newline
-- disabled send button while appropriate
-- proper request cancellation if practical
-- prevent duplicate submissions
-- preserve the existing typing indicator
+Button:
 
-Use the existing webapp's behavior as the reference.
+"Open Playground"
 
-============================================================
-STREAMING
-============================================================
+------------------------------------------------------------
+FOOTER
+------------------------------------------------------------
 
-Inspect how streaming works in the existing webapp.
+Include:
 
-If the Hugging Face Gradio endpoint supports streaming compatible with
-the required interaction:
+Vidya
+Educational AI
 
-Implement streaming.
+GitHub
+Hugging Face
+About
 
-If streaming is not reliably available through the deployed Gradio
-endpoint:
+Do not fabricate URLs.
 
-Implement a clean non-streaming fallback.
-
-The UI must work in either case.
-
-Do not fake streaming by artificially splitting a completed response
-unless there is no alternative.
-
-============================================================
-THINKING MUST BE OFF
-============================================================
-
-Vidya is configured to answer without visible thinking.
-
-The frontend must NOT display:
-
-<think>
-</think>
-
-or:
-
-Thinking...
-Reasoning...
-Analysis...
-Planning...
-
-If the backend accidentally returns a think block, the frontend must
-safely remove the hidden reasoning block before displaying the answer.
-
-Do not expose internal chain-of-thought to the user.
+Use placeholder environment/config values if URLs are not known.
 
 ============================================================
-MARKDOWN
+5. PLAYGROUND
 ============================================================
 
-Render assistant responses as Markdown.
+URL:
 
-Use:
+/playground
 
-react-markdown
-remark-math
-rehype-katex
+This is the actual AI application.
+
+The playground should feel like a dedicated educational workspace.
+
+Do NOT simply copy ChatGPT's interface.
+
+============================================================
+6. PLAYGROUND LAYOUT
+============================================================
+
+Desktop:
+
+----------------------------------------------------
+| VIDYA | Subject | Language | ...                  |
+----------------------------------------------------
+|                                                    |
+|                CHAT AREA                           |
+|                                                    |
+|                                                    |
+|                                                    |
+|----------------------------------------------------|
+|                    CHAT INPUT                      |
+-----------------------------------------------------
+
+Optional right panel:
+
+VISUALS & REFERENCES
+
+This panel should appear when relevant.
+
+For example:
+
+- generated graphs
+- educational images
+- formulas
+- references
+
+On mobile:
+
+The visual panel becomes a bottom sheet/modal.
+
+============================================================
+7. PLAYGROUND HEADER
+============================================================
+
+Show:
+
+VIDYA
+
+Small status:
+
+"Educational AI"
+
+Subject selector:
+
+All
+Mathematics
+Physics
+Chemistry
+Biology
+Computer Science
+
+Language selector:
+
+Auto
+English
+Hindi
+Marathi
+Tamil
+Telugu
+Bengali
+Gujarati
+Kannada
+Malayalam
+Punjabi
+Maithili
+Urdu
+
+Do not force the user to select a language.
+
+Auto should detect the language.
+
+============================================================
+8. WELCOME SCREEN
+============================================================
+
+Before the first question, show:
+
+"Welcome to Vidya"
+
+"Ask a question. Explore a concept. Solve a problem."
+
+Example prompt cards:
+
+"Explain Newton's laws simply"
+
+"Solve this quadratic equation"
+
+"Explain photosynthesis"
+
+"Why does entropy increase?"
+
+"Explain DNA replication"
+
+"Help me prepare for JEE"
+
+Clicking a prompt inserts it into the input.
+
+============================================================
+9. CHAT EXPERIENCE
+============================================================
+
+User messages:
+
+- right aligned
+- visually distinct
+- clean
+- compact
+
+Vidya messages:
+
+- left aligned
+- educational appearance
+- support Markdown
+- support LaTeX
+- support lists
+- support tables
+- support code blocks
+
+Do NOT use giant chat bubbles.
+
+============================================================
+10. MARKDOWN
+============================================================
+
+Render Markdown safely.
 
 Support:
 
@@ -299,628 +534,847 @@ Support:
 - paragraphs
 - bold
 - italic
-- unordered lists
-- ordered lists
-- code
-- code blocks
+- lists
+- tables
 - blockquotes
-- tables where appropriate
-- inline mathematics
-- display mathematics
+- code
+- inline code
 
-Style Markdown to match the existing Vidya UI.
+Sanitize HTML.
+
+Never dangerously inject raw model output.
 
 ============================================================
-MATHEMATICAL FORMULAS
+11. MATHEMATICAL RENDERING
 ============================================================
-
-Mathematical rendering is important for Vidya.
 
 Use KaTeX.
 
-Correctly support:
+Support:
 
 Inline:
 
-$A = l \\times w$
+$E = mc^2$
+
+Block:
+
+$$
+F = ma
+$$
+
+Handle malformed model output robustly.
+
+The UI must NOT display malformed expressions such as:
+
+ext{Area}
+
+frac{a}{b}
+
+times
+
+egin{aligned}
+
+If the model produces malformed LaTeX, attempt safe normalization before
+rendering.
+
+Do not blindly modify valid LaTeX.
+
+============================================================
+12. IMAGE FUNCTIONALITY
+============================================================
+
+The frontend should support educational image cards.
+
+The backend endpoint:
+
+/api/image
+
+will retrieve educational images.
+
+The UI must support:
+
+[IMAGE: topic]
+
+internally.
+
+The [IMAGE: ...] marker must NEVER appear visibly in the final AI
+answer.
 
 Display:
 
-$$
-A = l \\times w
-$$
+- image
+- title
+- source attribution where available
 
-Also support common educational equations.
+Use lazy loading.
 
-The frontend must NOT render malformed LaTeX.
-
-Examples of malformed model output that should NOT be rendered
-literally:
-
-ext{Area}
-ext{length}
-frac{a}{b}
-times
-
-Implement a small safe normalization layer before Markdown/KaTeX
-rendering if necessary.
-
-Do NOT blindly modify valid mathematical notation.
-
-Preserve mathematically correct expressions.
+Do not hotlink arbitrary unsafe content.
 
 ============================================================
-VISUALS & REFERENCE PANEL
+13. GRAPH FUNCTIONALITY
 ============================================================
 
-Preserve the existing Visuals & Reference side panel.
+Support:
 
-It should support:
+[GRAPH: y = x^2]
 
-- educational images
-- graphs
-- image titles
-- graph titles
-- empty state
-- loading state
-- responsive behavior
-- scrolling
+and similar graph instructions.
 
-The panel should remain synchronized with the current conversation.
+The marker must NOT appear in the visible AI response.
+
+Render graphs in the Visuals & References panel.
+
+Use a browser-side graphing library.
+
+Support at minimum:
+
+- y = x
+- y = x^2
+- y = sin(x)
+- y = cos(x)
+- simple polynomial functions
+- simple exponential functions
+
+Do NOT execute arbitrary JavaScript received from the model.
+
+Parse graph expressions safely.
 
 ============================================================
-IMAGE FUNCTIONALITY
+14. HUGGING FACE BACKEND
 ============================================================
 
-The existing webapp has image/reference functionality.
+The frontend must communicate with the Hugging Face backend.
 
-Inspect the current implementation and preserve its intended behavior.
+Environment variable:
+
+NEXT_PUBLIC_HF_SPACE_ID=vedantjadhav701/vidya-1.7b
+
+Do not hardcode the Space ID throughout the application.
 
 Create:
 
-app/api/image/route.ts
+lib/vidya.ts
 
-This route should query Wikipedia's public API for educational images.
+This must contain the Hugging Face communication abstraction.
 
-Return a safe JSON response such as:
+The React components must NOT directly call the Gradio client.
+
+Architecture:
+
+React component
+      ↓
+lib/vidya.ts
+      ↓
+Next.js API route if needed
+      ↓
+Hugging Face Space
+      ↓
+Vidya 1.7B
+
+Do not expose Hugging Face private tokens to the browser.
+
+If authentication is required, keep it server-side.
+
+============================================================
+15. CHAT API
+============================================================
+
+Create:
+
+app/api/chat/route.ts
+
+Responsibilities:
+
+1. Validate request.
+2. Validate message.
+3. Validate conversation history.
+4. Apply token/rate limits.
+5. Call Hugging Face backend.
+6. Return clean JSON.
+7. Handle errors.
+8. Never expose secrets.
+
+Expected request:
 
 {
-  "url": "...",
-  "title": "..."
+  "message": "...",
+  "history": [...],
+  "language": "...",
+  "subject": "..."
 }
 
-Do not expose API secrets to the browser.
+Expected response:
 
-Use proper URL validation and error handling.
+{
+  "answer": "...",
+  "usage": {
+    "inputTokens": 123,
+    "outputTokens": 256,
+    "totalTokens": 379
+  }
+}
 
-If Wikipedia returns no useful image, return a clean "not found"
-response rather than breaking the UI.
-
-============================================================
-IMAGE TAGS
-============================================================
-
-The existing system uses the concept:
-
-[IMAGE: ...]
-
-Preserve this concept.
-
-If Vidya returns something like:
-
-[IMAGE: Photosynthesis]
-
-the frontend should:
-
-1. detect the image instruction
-2. request the image through the Next.js image route
-3. display the image in the Visuals & Reference panel
-4. remove the [IMAGE: ...] tag from the visible AI answer
-
-The raw tag must NOT appear in the final chat message.
-
-Make parsing robust.
-
-Do not remove legitimate text that happens to contain brackets.
+Do not expose internal model details unnecessarily.
 
 ============================================================
-GRAPH FUNCTIONALITY
+16. TOKEN USAGE / RATE LIMITING
 ============================================================
 
-The old application uses a Python/Flask graph backend.
+IMPORTANT.
 
-The new Next.js frontend must NOT depend on the old Flask backend.
+Implement backend-side token accounting.
 
-Do not use:
+The user should NOT see:
 
-http://127.0.0.1:5000
-http://localhost:5000
+"256 / 4096 tokens"
 
-Implement graph rendering in the browser.
+or:
 
-Use an appropriate client-side graphing library.
+"Token balance: 12345"
 
-Prefer an interactive graphing solution suitable for educational
-mathematics.
+Do not make token usage part of the primary UI.
 
-For example:
+The system should silently calculate:
 
-User:
-graph y = x^2
+- input tokens
+- output tokens
+- total tokens
+- requests
+- rolling usage
 
-The UI should:
+The backend must enforce limits.
 
-1. detect the graph request/instruction
-2. parse the supported equation safely
-3. render the graph in the Visuals & Reference panel
-4. keep the graph separate from the AI answer
-5. remove the internal [GRAPH: ...] instruction from visible text
-
-Preserve the existing [GRAPH: ...] concept if it exists in the
-current webapp.
-
-Do NOT use eval() to execute arbitrary mathematical expressions.
-
-Use a safe parser/evaluator.
+Do NOT rely on client-side JavaScript for security or rate limiting.
 
 ============================================================
-GRAPH SECURITY
+17. CLAUDE-LIKE USAGE MODEL
 ============================================================
 
-Never execute arbitrary JavaScript from a model-generated expression.
+Implement a server-side usage system inspired by modern AI products.
+
+Do NOT copy Claude branding or UI.
+
+For each anonymous/session user:
+
+Track:
+
+sessionId
+requestCount
+inputTokens
+outputTokens
+totalTokens
+windowStart
+windowEnd
+
+Example internal limits:
+
+MAX_INPUT_TOKENS = 4096
+
+MAX_OUTPUT_TOKENS = 512
+
+MAX_REQUESTS_PER_WINDOW = configurable
+
+MAX_TOTAL_TOKENS_PER_WINDOW = configurable
+
+Make these configurable using environment variables.
+
+Example:
+
+VIDYA_MAX_INPUT_TOKENS=4096
+VIDYA_MAX_OUTPUT_TOKENS=512
+VIDYA_MAX_REQUESTS_PER_WINDOW=20
+VIDYA_MAX_TOTAL_TOKENS_PER_WINDOW=10000
+
+Do NOT hardcode these values in multiple files.
+
+============================================================
+18. IMPORTANT: TOKENIZER ACCURACY
+============================================================
+
+Do NOT estimate tokens using:
+
+message.length / 4
+
+Do NOT implement a fake token counter.
+
+If possible, use the same tokenizer as the Vidya model on the backend.
+
+If the frontend/server cannot access the model tokenizer, implement a
+clearly documented fallback estimator, but isolate it behind:
+
+lib/token-limit.ts
+
+The final production architecture should preferably calculate token
+usage using the actual model tokenizer.
+
+============================================================
+19. RATE LIMIT STORAGE
+============================================================
+
+For local development:
+
+Use an in-memory store.
+
+Clearly document:
+
+This is development-only.
+
+For Vercel production:
+
+Do NOT depend on process memory because serverless instances are
+ephemeral.
+
+Create an abstraction:
+
+UsageStore
+
+with methods:
+
+getUsage()
+incrementUsage()
+resetUsageIfNeeded()
+
+Implement the interface so that Redis/Upstash can be added later.
+
+Do not require Redis just to run the project locally.
+
+============================================================
+20. RATE LIMIT RESPONSE
+============================================================
+
+If the user exceeds the limit:
+
+Do not reveal internal token accounting.
+
+Return:
+
+"Vidya is temporarily unavailable for this session. Please try again
+later."
+
+The frontend should show a clean non-technical error state.
+
+Do not expose:
+
+- token counts
+- backend implementation
+- Hugging Face errors
+- stack traces
+- API keys
+- internal model errors
+
+============================================================
+21. CONVERSATION HISTORY
+============================================================
+
+Maintain conversation history in the playground.
+
+Send history to backend in the expected format.
+
+Avoid sending unlimited history.
+
+Implement a configurable history window.
+
+Example:
+
+MAX_HISTORY_MESSAGES=20
+
+Older messages should be trimmed.
+
+Do not silently exceed the model's context window.
+
+============================================================
+22. STREAMING
+============================================================
+
+If the Hugging Face backend supports streaming:
+
+Implement streaming.
+
+The UI should show:
+
+typing indicator
+→ partial response
+→ final response
+
+If streaming is unavailable:
+
+Use a clean non-streaming fallback.
+
+Do not fake streaming by splitting a completed answer into characters.
+
+============================================================
+23. THINKING
+============================================================
+
+Vidya's visible UI must not display internal reasoning.
+
+Never render:
+
+<think>
+...
+</think>
+
+If the backend accidentally returns a think block:
+
+strip it before rendering.
+
+Do not display:
+
+"Thinking..."
+
+as if it were model reasoning.
+
+A simple UI loading state is allowed:
+
+"Vidya is preparing your answer..."
+
+============================================================
+24. ERROR HANDLING
+============================================================
+
+Handle:
+
+- backend unavailable
+- timeout
+- rate limit
+- invalid response
+- empty response
+- network failure
+- malformed Markdown
+- malformed LaTeX
+- invalid graph expression
+
+Use user-friendly messages.
+
+Never display raw exceptions.
+
+============================================================
+25. ANIMATIONS
+============================================================
+
+Use Framer Motion.
+
+Animation philosophy:
+
+Premium
+Educational
+Calm
+Interactive
+
+Use:
+
+- subtle page transitions
+- floating educational elements
+- card hover effects
+- message entrance animation
+- graph reveal animation
+- panel transitions
+- button micro-interactions
 
 Do NOT use:
 
-eval()
-new Function()
+- excessive bouncing
+- distracting particles
+- gaming-style UI
+- excessive neon
+- infinite animations everywhere
 
-for graph expressions.
+Animations must not reduce accessibility.
 
-Only support a defined mathematical subset.
+Respect:
 
-If an expression cannot be parsed safely, show a clear error rather
-than executing it.
-
-============================================================
-RESPONSIVE DESIGN
-============================================================
-
-The new frontend must work correctly on:
-
-- desktop
-- laptop
-- tablet
-- mobile
-
-Preserve the existing desktop two-panel layout where appropriate.
-
-On smaller screens, adapt the Visuals & Reference panel so it does
-not make the chat unusable.
-
-Do not simply shrink the desktop layout.
-
-Use responsive breakpoints.
+prefers-reduced-motion.
 
 ============================================================
-SECURITY
+26. VISUAL DESIGN
 ============================================================
 
-Treat model output as untrusted text.
+Create a unique Vidya visual language.
 
-Do not use:
+Do NOT copy:
 
-dangerouslySetInnerHTML
+ChatGPT
+Claude
+Gemini
+Perplexity
 
-unless absolutely necessary and only with proper sanitization.
+Use an educational visual identity.
 
-Do not execute HTML/JavaScript returned by the model.
+Recommended direction:
 
-Do not execute model-generated graph code.
+Modern academic + futuristic learning laboratory.
 
-Validate API inputs.
+Visual elements:
 
-Validate image URLs.
+- clean typography
+- equation motifs
+- subtle grid
+- knowledge nodes
+- mathematical diagrams
+- scientific symbols
+- cards resembling study notes
+- elegant gradients
+- subtle depth
 
-Handle network errors.
+Use strong hierarchy.
 
-Handle Hugging Face Space failures gracefully.
-
-============================================================
-ERROR HANDLING
-============================================================
-
-Implement proper user-facing states for:
-
-- backend unavailable
-- backend waking up
-- generation timeout
-- generation error
-- image search failure
-- graph parsing failure
-- malformed response
-- empty response
-
-Do not expose raw stack traces to the user.
-
-Use useful messages such as:
-
-"Vidya is waking up. Please try again in a moment."
+Avoid visual clutter.
 
 ============================================================
-PERFORMANCE
+27. RESPONSIVE DESIGN
 ============================================================
 
-Optimize the Next.js application.
+Must work properly on:
 
-Requirements:
+Desktop
+Laptop
+Tablet
+Mobile
 
-- avoid unnecessary re-renders
-- use client components only where needed
-- lazy-load heavy graph components
-- do not load KaTeX unnecessarily on unrelated pages
-- avoid unnecessary API requests
-- debounce or guard expensive UI operations where appropriate
-- use proper React keys
-- keep the initial bundle reasonable
+Mobile requirements:
+
+- bottom chat input
+- collapsible header
+- visual panel becomes drawer
+- touch-friendly controls
+- no horizontal scrolling
 
 ============================================================
-ACCESSIBILITY
+28. ACCESSIBILITY
 ============================================================
 
-Add:
+Implement:
 
-- accessible buttons
-- aria-labels where needed
+- semantic HTML
 - keyboard navigation
-- visible focus states
-- proper textarea labeling
-- accessible loading states
-
-Do not sacrifice accessibility for visual design.
-
-============================================================
-PROJECT STRUCTURE
-============================================================
-
-Create a clean structure similar to:
-
-frontend-nextjs/
-
-├── app/
-│   ├── api/
-│   │   └── image/
-│   │       └── route.ts
-│   ├── globals.css
-│   ├── layout.tsx
-│   └── page.tsx
-│
-├── components/
-│   ├── Chat/
-│   │   ├── Chat.tsx
-│   │   ├── Message.tsx
-│   │   ├── MessageList.tsx
-│   │   └── ChatInput.tsx
-│   │
-│   ├── Media/
-│   │   ├── MediaPanel.tsx
-│   │   ├── ImageCard.tsx
-│   │   └── GraphCard.tsx
-│   │
-│   ├── SplashScreen.tsx
-│   └── ModelStatus.tsx
-│
-├── lib/
-│   ├── vidya.ts
-│   ├── image.ts
-│   ├── graph.ts
-│   ├── markdown.ts
-│   └── types.ts
-│
-├── public/
-│   └── assets/
-│
-├── .env.example
-├── .gitignore
-├── package.json
-├── tsconfig.json
-├── next.config.ts
-├── postcss.config.mjs
-└── README.md
-
-The exact structure may be adjusted if there is a better
-production architecture.
+- focus states
+- accessible buttons
+- aria labels where necessary
+- sufficient contrast
+- reduced-motion support
 
 ============================================================
-ASSETS
+29. SECURITY
 ============================================================
 
-Inspect the existing:
+Never expose:
 
-C:\Users\HP\projects\Vidya-1.7B\webapp
+HF_TOKEN
+HUGGING_FACE_HUB_TOKEN
+private API keys
+internal backend credentials
 
-for:
+Never trust:
 
-- logos
-- icons
-- SVGs
-- images
-- fonts
-- other assets
+- user-provided graph code
+- model-generated HTML
+- model-generated JavaScript
+- arbitrary image URLs
 
-Reuse appropriate assets in:
+Sanitize model output.
 
-frontend-nextjs/public/assets/
+Validate all API inputs server-side.
 
-Do not copy unnecessary files.
-
-Do not copy model files.
-
-============================================================
-NO BACKEND MODIFICATION
-============================================================
-
-There is an existing backend at:
-
-C:\Users\HP\projects\Vidya-1.7B\backend-huggingface
-
-DO NOT modify it.
-
-The frontend must consume the already deployed Hugging Face Space:
-
-vedantjadhav701/vidya-1.7b
-
-Do not change the backend implementation as part of this task.
+Implement basic request-size limits.
 
 ============================================================
-GITHUB
-============================================================
-
-This frontend is intended to become a separate GitHub repository.
-
-Prepare the project so that it can be pushed to GitHub.
-
-Repository name:
-
-vidya-frontend
-
-Do NOT initialize or push to GitHub automatically unless explicitly
-requested.
-
-Do NOT push secrets.
-
-Create a useful README explaining:
-
-- project purpose
-- architecture
-- installation
-- environment variables
-- local development
-- production build
-- deployment to Vercel
-- Hugging Face backend configuration
-
-============================================================
-VERCEL
-============================================================
-
-The intended deployment is:
-
-GitHub
-   ↓
-Vercel
-   ↓
-Next.js frontend
-   ↓
-Hugging Face Space
-   ↓
-Vidya 1.7B
-
-Ensure the application works correctly when deployed to Vercel.
-
-Do not assume localhost URLs.
-
-============================================================
-ENVIRONMENT VARIABLES
+30. ENVIRONMENT VARIABLES
 ============================================================
 
 Create:
 
 .env.example
 
-with:
+Include:
 
 NEXT_PUBLIC_HF_SPACE_ID=vedantjadhav701/vidya-1.7b
 
-If additional server-only variables are required, document them
-without exposing them to client components.
+VIDYA_MAX_INPUT_TOKENS=4096
+VIDYA_MAX_OUTPUT_TOKENS=512
+VIDYA_MAX_REQUESTS_PER_WINDOW=20
+VIDYA_MAX_TOTAL_TOKENS_PER_WINDOW=10000
+MAX_HISTORY_MESSAGES=20
 
-Never hardcode tokens.
+Optional:
+
+HF_TOKEN=
+
+Do not commit actual tokens.
 
 ============================================================
-VALIDATION
+31. LOCAL DEVELOPMENT
 ============================================================
 
-After implementation:
-
-1. Install dependencies:
+The frontend must run with:
 
 npm install
-
-2. Run lint:
-
-npm run lint
-
-3. Run production build:
-
-npm run build
-
-4. Run development server:
 
 npm run dev
 
-5. Test:
+Expected:
 
-- English question
-- Hindi question
-- Marathi question
-- Tamil question
-- mathematics question
-- science question
-- multi-turn conversation
-- image request
-- graph request
-- malformed/empty input
-- backend unavailable state
-- mobile layout
+http://localhost:3000
 
-6. Confirm that there are NO references to:
+Do NOT use:
 
 127.0.0.1:11434
 localhost:11434
+
+Do NOT use:
+
 127.0.0.1:5000
 localhost:5000
-Ollama
 
-Search the entire new project for these strings before finishing.
+Do NOT depend on Ollama.
 
-============================================================
-IMPORTANT MODEL TESTS
-============================================================
-
-Use these test cases:
-
-1.
-
-What is photosynthesis?
-
-2.
-
-A farmer has a rectangular field that is 80 m long and 50 m wide.
-He builds a pathway of width 2 m inside all four sides.
-Calculate the area of the field, inner area, area per crop if divided
-among 4 crops, and percentage occupied by the pathway.
-
-3.
-
-प्रकाश संश्लेषण क्या है?
-
-4.
-
-प्रकाश संश्लेषण म्हणजे काय?
-
-5.
-
-Explain Newton's three laws of motion.
-
-Verify that the UI preserves the language returned by Vidya and does
-not accidentally translate or change it.
+Do NOT depend on Flask.
 
 ============================================================
-SOURCE OF TRUTH
+32. PRODUCTION DEPLOYMENT
 ============================================================
 
-The existing webapp is the source of truth for:
+The frontend is intended for:
 
-- visual design
-- layout
-- UI behavior
-- animations
-- existing user experience
-- existing feature behavior
+GitHub → Vercel
 
-The Hugging Face Space is the source of truth for:
+The backend is:
 
-- AI inference
-- model responses
+Hugging Face Space
 
-Do not invent replacement UI behavior when the existing webapp already
-implements it correctly.
+The frontend must therefore use production-safe environment variables.
+
+NEXT_PUBLIC_HF_SPACE_ID is allowed to be public.
+
+Private HF authentication tokens must NEVER use NEXT_PUBLIC_.
 
 ============================================================
-DO NOT OVERENGINEER
+33. ROUTING
 ============================================================
 
-Do not add:
+/
 
-- authentication
-- database
-- analytics
-- payments
-- user accounts
-- unnecessary backend services
-- unnecessary state-management libraries
+Landing page
 
-unless they already exist in the current webapp and are required to
-preserve functionality.
+/playground
 
-The goal is a clean, reliable first production deployment.
+AI playground
+
+/playground?subject=mathematics
+
+Subject-specific playground
+
+/playground?subject=physics
+
+etc.
 
 ============================================================
-FINAL REPORT
+34. UX FLOW
 ============================================================
 
-After completing the migration, provide a concise report containing:
+User visits:
 
-1. Existing webapp files inspected.
+/
 
-2. Files created in:
+↓
 
-C:\Users\HP\projects\Vidya-1.7B\frontend-nextjs
+Landing page
 
-3. Files/components migrated.
+↓
 
-4. Dependencies installed.
+Clicks:
 
-5. Environment variables required.
+"Enter Playground"
 
-6. Hugging Face backend endpoint/configuration used.
+↓
 
-7. Local development command.
+/playground
 
-8. Production build command.
+↓
 
-9. Vercel deployment instructions.
+Welcome screen
 
-10. Validation results:
+↓
+
+User selects optional subject/language
+
+↓
+
+User asks question
+
+↓
+
+Frontend sends:
+
+message
+history
+subject
+language
+
+↓
+
+Next.js backend
+
+↓
+
+Hugging Face Vidya API
+
+↓
+
+Vidya response
+
+↓
+
+Markdown + KaTeX rendering
+
+↓
+
+If graph/image detected:
+
+Visuals & References panel
+
+↓
+
+User continues conversation.
+
+============================================================
+35. NO FAKE FEATURES
+============================================================
+
+Do not create fake:
+
+- search
+- web browsing
+- citations
+- source verification
+- live knowledge
+- internet access
+- image generation
+
+unless an actual backend implementation exists.
+
+Do not display "Powered by..." claims that are not true.
+
+============================================================
+36. CODE QUALITY
+============================================================
+
+Use:
+
+- reusable components
+- typed interfaces
+- error boundaries where appropriate
+- clean imports
+- no unused variables
+- no any unless absolutely necessary
+- clear function names
+- comments only where useful
+
+Avoid giant files.
+
+Separate:
+
+UI
+API
+state
+model communication
+usage/rate limiting
+rendering utilities
+
+============================================================
+37. PERFORMANCE
+============================================================
+
+Optimize:
+
+- dynamic imports where appropriate
+- image loading
+- graph rendering
+- Markdown rendering
+- bundle size
+
+Do not load large browser libraries unnecessarily on the landing page.
+
+Graph rendering can be dynamically imported.
+
+============================================================
+38. SEO
+============================================================
+
+Implement metadata:
+
+Title:
+
+Vidya — Educational AI for Indian Students
+
+Description:
+
+"Vidya is a multilingual educational AI assistant designed to help
+Indian students learn Mathematics, Physics, Chemistry, Biology and
+more."
+
+Add appropriate Open Graph metadata.
+
+============================================================
+39. FINAL VALIDATION
+============================================================
+
+After implementation run:
 
 npm install
+
 npm run lint
+
 npm run build
 
-11. Test results for:
-- English
-- Hindi
-- Marathi
-- Tamil
-- mathematics
-- image
-- graph
-- multi-turn chat
+Fix all TypeScript errors.
 
-12. Any remaining issues.
+Fix all ESLint errors.
 
-IMPORTANT:
-Do not claim something was tested if it was not actually tested.
+Fix all build errors.
+
+Test:
+
+1. Landing page loads.
+2. Playground loads.
+3. Navigation works.
+4. Chat input works.
+5. Backend request works.
+6. Conversation history works.
+7. Markdown renders.
+8. LaTeX renders.
+9. <think> blocks are hidden.
+10. Graph markers work.
+11. Image markers work.
+12. Rate limits are enforced server-side.
+13. Backend errors are handled.
+14. Mobile layout works.
+15. Desktop layout works.
 
 ============================================================
-FINAL CONSTRAINTS
+40. IMPORTANT FINAL REQUIREMENT
 ============================================================
 
-DO NOT modify:
+Do NOT modify the existing backend.
 
-C:\Users\HP\projects\Vidya-1.7B\webapp
+Do NOT modify the existing webapp.
 
-DO NOT modify:
+Do NOT delete existing files.
 
-C:\Users\HP\projects\Vidya-1.7B\backend-huggingface
-
-ONLY create/modify:
+Only create/update files inside:
 
 C:\Users\HP\projects\Vidya-1.7B\frontend-nextjs
 
-The final result must be a standalone Next.js frontend ready to
-become the GitHub repository:
+At the end provide:
 
-vidya-frontend
+1. Complete file tree.
+2. Dependencies installed.
+3. Environment variables.
+4. Local run commands.
+5. Production build command.
+6. Vercel deployment instructions.
+7. Hugging Face backend integration details.
+8. Rate-limit architecture.
+9. Any unresolved integration issue.
 
-and deploy through Vercel.
+The final result must feel like a real educational AI product called
+VIDYA, not a generic chatbot template.
