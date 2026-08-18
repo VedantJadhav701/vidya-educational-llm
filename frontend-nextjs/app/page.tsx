@@ -1,9 +1,31 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Play, CheckCircle, Cpu, BookOpen, Layers } from 'lucide-react';
 
 export default function Home() {
+  const [onlineCount, setOnlineCount] = useState<number>(8);
+  const [totalLessons, setTotalLessons] = useState<number>(1420);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch('/api/stats');
+        if (res.ok) {
+          const data = await res.json();
+          if (typeof data.onlineUsers === 'number') setOnlineCount(data.onlineUsers);
+          if (typeof data.totalQuestions === 'number') setTotalLessons(data.totalQuestions);
+        }
+      } catch (err) {
+        console.error('Failed to fetch stats:', err);
+      }
+    };
+    fetchStats();
+    const interval = setInterval(fetchStats, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
   // Brand ticker logos
   const brands = [
     { name: 'Google', icon: 'G' },
@@ -54,13 +76,22 @@ export default function Home() {
         {/* TOP NAVIGATION LAYER */}
         <header className="relative z-20 w-full px-4 sm:px-[70px] h-[85px] flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div className="w-5 h-5 rounded bg-blue-600/10 border border-blue-500/50 flex items-center justify-center shadow-[0_0_10px_rgba(59,130,246,0.5)]">
-              <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-5 h-5 rounded bg-blue-600/10 border border-blue-500/50 flex items-center justify-center shadow-[0_0_10px_rgba(59,130,246,0.5)]">
+                <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+              </div>
+              <span className="text-[11px] font-black uppercase tracking-[0.5em] text-white">
+                VIDYA
+              </span>
             </div>
-            <span className="text-[11px] font-black uppercase tracking-[0.5em] text-white">
-              VIDYA
-            </span>
+            {/* Global Live Stats Badge */}
+            <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white/5 border border-white/10 text-[9px] font-bold tracking-wider text-white/50 select-none">
+              <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
+              <span>{onlineCount} ONLINE</span>
+              <span className="text-white/20">•</span>
+              <span>{totalLessons} HELPED</span>
+            </div>
           </div>
 
           {/* Links */}
@@ -173,14 +204,18 @@ export default function Home() {
             <blockquote className="border-l-2 border-blue-500 pl-4 py-2 italic text-neutral-300 text-sm mb-6">
               "We build models that do not just state answers, but rather teach the foundational steps behind equations, scientific cycles, and language concepts."
             </blockquote>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="p-4 bg-neutral-950 border border-neutral-850 rounded-xl">
-                <span className="block text-2xl font-black text-white">1.7B</span>
-                <span className="text-[10px] text-neutral-500 font-bold uppercase tracking-wider">Model Parameters</span>
+            <div className="grid grid-cols-3 gap-3">
+              <div className="p-3 bg-neutral-950 border border-neutral-850 rounded-xl text-center">
+                <span className="block text-xl sm:text-2xl font-black text-white">{totalLessons}</span>
+                <span className="text-[8px] sm:text-[9px] text-neutral-500 font-bold uppercase tracking-wider block mt-1">Lessons Served</span>
               </div>
-              <div className="p-4 bg-neutral-950 border border-neutral-850 rounded-xl">
-                <span className="block text-2xl font-black text-white">11+</span>
-                <span className="text-[10px] text-neutral-500 font-bold uppercase tracking-wider">Linguistic Dialects</span>
+              <div className="p-3 bg-neutral-950 border border-neutral-850 rounded-xl text-center">
+                <span className="block text-xl sm:text-2xl font-black text-white">1.7B</span>
+                <span className="text-[8px] sm:text-[9px] text-neutral-500 font-bold uppercase tracking-wider block mt-1">Parameters</span>
+              </div>
+              <div className="p-3 bg-neutral-950 border border-neutral-850 rounded-xl text-center">
+                <span className="block text-xl sm:text-2xl font-black text-white">11+</span>
+                <span className="text-[8px] sm:text-[9px] text-neutral-500 font-bold uppercase tracking-wider block mt-1">Dialects</span>
               </div>
             </div>
           </div>
