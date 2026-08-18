@@ -266,24 +266,54 @@ export default function Chat() {
 
           {/* Hero Landing State OR Message List */}
           {!hasStarted ? (
-            <div className="flex-1 overflow-y-auto p-4 sm:p-6 flex flex-col items-center justify-center text-center custom-scrollbar animate-fadeIn">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 flex flex-col items-center justify-center text-center custom-scrollbar animate-fadeIn select-none">
               {/* Heading Banner */}
-              <div className="mb-2">
-                <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-2">
+              <div className="mb-6">
+                <h1 className="text-4xl sm:text-5xl font-black tracking-widest text-white mb-2 uppercase">
                   VIDYA
                 </h1>
-                <p className="text-xs sm:text-sm font-semibold text-neutral-400 px-2">
-                  Your Intelligent Interactive Learning Companion
+                <p className="text-base sm:text-lg text-neutral-400 font-semibold mb-1">
+                  Welcome to Vidya
+                </p>
+                <p className="text-xs sm:text-sm text-neutral-500 font-medium">
+                  Learn deeper. Understand better.
                 </p>
               </div>
 
-              {/* Interactive Knowledge Orbit */}
-              <div className="w-full overflow-hidden scale-90 sm:scale-100">
-                <KnowledgeOrbit onSelectPrompt={handleSendMessage} />
-              </div>
+              {/* Minimal 4-Prompt Card Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-[520px] w-full mt-4">
+                <button 
+                  onClick={() => handleSendMessage("Explain Newton's laws of motion with examples")}
+                  className="p-4 bg-neutral-900 border border-neutral-850 hover:border-neutral-700 text-left rounded-xl transition-all cursor-pointer group hover:bg-neutral-850"
+                >
+                  <div className="font-bold text-sm text-neutral-200 group-hover:text-white transition-colors">Explain Newton's laws</div>
+                  <div className="text-xs text-neutral-500 mt-1">Understands physics basics</div>
+                </button>
+                
+                <button 
+                  onClick={() => handleSendMessage("Solve the quadratic equation x^2 - 5x + 6 = 0")}
+                  className="p-4 bg-neutral-900 border border-neutral-850 hover:border-neutral-700 text-left rounded-xl transition-all cursor-pointer group hover:bg-neutral-850"
+                >
+                  <div className="font-bold text-sm text-neutral-200 group-hover:text-white transition-colors">Solve this equation</div>
+                  <div className="text-xs text-neutral-500 mt-1">Calculates step-by-step</div>
+                </button>
 
-              {/* Subject Selector Cards */}
-              <SubjectCards onSelectSubject={handleSelectSubject} />
+                <button 
+                  onClick={() => handleSendMessage("Explain the process of photosynthesis in plants")}
+                  className="p-4 bg-neutral-900 border border-neutral-850 hover:border-neutral-700 text-left rounded-xl transition-all cursor-pointer group hover:bg-neutral-850"
+                >
+                  <div className="font-bold text-sm text-neutral-200 group-hover:text-white transition-colors">Explain photosynthesis</div>
+                  <div className="text-xs text-neutral-500 mt-1">Explains biology cycles</div>
+                </button>
+
+                <button 
+                  onClick={() => handleSendMessage("What is entropy? Explain in simple terms")}
+                  className="p-4 bg-neutral-900 border border-neutral-850 hover:border-neutral-700 text-left rounded-xl transition-all cursor-pointer group hover:bg-neutral-850"
+                >
+                  <div className="font-bold text-sm text-neutral-200 group-hover:text-white transition-colors">What is entropy?</div>
+                  <div className="text-xs text-neutral-500 mt-1">Simplifies thermodynamics</div>
+                </button>
+              </div>
             </div>
           ) : (
             <MessageList
