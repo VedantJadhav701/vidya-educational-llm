@@ -59,7 +59,7 @@ export default function Message({ message, onQuickPrompt }: MessageProps) {
             onClick={handleSpeak}
             className={`px-2.5 py-1 rounded-lg border border-white/5 transition-colors flex items-center gap-1 cursor-pointer ${
               isSpeaking
-                ? 'bg-[#ec4899]/20 text-[#ec4899] border-[#ec4899]/40 font-semibold animate-pulse'
+                ? 'bg-neutral-700 text-white border-neutral-600 font-semibold animate-pulse'
                 : 'hover:text-white bg-white/5 hover:bg-white/10'
             }`}
           >
@@ -68,7 +68,7 @@ export default function Message({ message, onQuickPrompt }: MessageProps) {
 
           <button
             onClick={() => onQuickPrompt?.(`Explain step-by-step with examples: ${message.content.substring(0, 100)}`)}
-            className="hover:text-[#a855f7] bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-lg border border-white/5 transition-colors flex items-center gap-1 cursor-pointer"
+            className="hover:text-white bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-lg border border-white/5 transition-colors flex items-center gap-1 cursor-pointer"
           >
             🎓 Step-by-Step
           </button>
@@ -86,8 +86,8 @@ export default function Message({ message, onQuickPrompt }: MessageProps) {
       <div
         className={`message-content p-4 px-5 rounded-2xl leading-relaxed text-sm break-words shadow-lg border ${
           isUser
-            ? 'bg-gradient-to-r from-[#6366f1] to-[#a855f7] border-[#a855f7]/40 text-white rounded-br-xs'
-            : 'bg-[#334155]/70 border-white/10 text-[#f1f5f9] rounded-bl-xs'
+            ? 'bg-neutral-800 border-neutral-750 text-white rounded-br-xs'
+            : 'bg-neutral-900 border-neutral-850 text-neutral-200 rounded-bl-xs'
         }`}
       >
         <div className="whitespace-pre-wrap">{message.content}</div>
