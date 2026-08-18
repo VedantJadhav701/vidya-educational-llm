@@ -226,15 +226,37 @@ export default function Chat() {
         ]);
       }
 
+      const assistantId = `assistant-${Date.now()}`;
       const assistantMsg: ChatMessage = {
-        id: `assistant-${Date.now()}`,
+        id: assistantId,
         role: 'assistant',
-        content: responseText || 'I am ready to help you.',
+        content: '',
         timestamp: Date.now(),
         mode: learningMode,
       };
 
       setMessages((prev) => [...prev, assistantMsg]);
+
+      let currentLength = 0;
+      const interval = setInterval(() => {
+        currentLength += Math.floor(Math.random() * 4) + 4;
+        if (currentLength >= responseText.length) {
+          clearInterval(interval);
+          setMessages((prev) =>
+            prev.map((msg) =>
+              msg.id === assistantId ? { ...msg, content: responseText } : msg
+            )
+          );
+        } else {
+          setMessages((prev) =>
+            prev.map((msg) =>
+              msg.id === assistantId
+                ? { ...msg, content: responseText.slice(0, currentLength) }
+                : msg
+            )
+          );
+        }
+      }, 12);
     } catch (error: unknown) {
       console.error('Chat error:', error);
       const errorMsg: ChatMessage = {
@@ -407,7 +429,7 @@ export default function Chat() {
       <div className="flex-1 w-full flex flex-col md:flex-row relative overflow-hidden">
         
         {/* Left Column: Chat Conversation */}
-        <div className={`flex-1 flex flex-col h-[calc(100vh-65px)] overflow-hidden relative z-10 transition-all ${
+        <div className={`flex-1 flex flex-col h-full overflow-hidden relative z-10 transition-all ${
           showVisualPanel ? 'md:flex-[1.4] lg:flex-[1.6]' : 'w-full max-w-[850px] mx-auto'
         }`}>
           
