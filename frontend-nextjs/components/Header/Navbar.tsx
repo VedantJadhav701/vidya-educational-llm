@@ -30,27 +30,25 @@ export default function Navbar({
   }
 
   return (
-    <header className="w-full bg-[#0b0f19]/80 backdrop-blur-md border-b border-white/10 px-6 py-3.5 flex flex-wrap items-center justify-between gap-4 z-40">
-      {/* Brand Identity */}
+    <header className="w-full bg-neutral-950/80 backdrop-blur-md border-b border-neutral-850 px-[70px] py-4 flex flex-wrap items-center justify-between gap-4 z-40">
+      {/* Brand Identity matching Landing Page */}
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#a855f7] via-[#6366f1] to-[#ec4899] flex items-center justify-center text-lg text-white font-bold shadow-lg shadow-[#a855f7]/20">
-          🎓
+        <div className="w-5 h-5 rounded bg-blue-600/10 border border-blue-500/50 flex items-center justify-center shadow-[0_0_10px_rgba(59,130,246,0.5)]">
+          <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
         </div>
-        <div className="flex flex-col">
-          <div className="flex items-center gap-2">
-            <h1 className="text-lg font-black tracking-tight text-white">VIDYA</h1>
-            <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-[#38bdf8]/10 text-[#38bdf8] border border-[#38bdf8]/20">
-              Learning Lab
-            </span>
-          </div>
-          <span className="text-[11px] text-[#94a3b8] font-medium hidden sm:inline">
-            Learn. Explore. Understand.
+        <div className="flex items-center gap-2">
+          <span className="text-[11px] font-black uppercase tracking-[0.5em] text-white">
+            auto-automation
+          </span>
+          <span className="text-[10px] text-neutral-500 font-bold">•</span>
+          <span className="text-[11px] font-black uppercase tracking-[0.3em] text-neutral-400">
+            Vidya Lab
           </span>
         </div>
       </div>
 
-      {/* Learning Mode Switcher */}
-      <div className="flex items-center bg-[#1e293b]/70 border border-white/10 p-1 rounded-2xl gap-1">
+      {/* Learning Mode Switcher - Frosted & Minimal */}
+      <div className="flex items-center bg-neutral-900/60 border border-neutral-800 p-1 rounded-2xl gap-1 backdrop-blur-md">
         {modes.map((m) => {
           const isActive = currentMode === m.id;
           return (
@@ -58,10 +56,10 @@ export default function Navbar({
               key={m.id}
               onClick={() => onModeChange(m.id)}
               title={m.desc}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                 isActive
-                  ? 'bg-gradient-to-r from-[#a855f7] to-[#ec4899] text-white shadow-md'
-                  : 'text-[#94a3b8] hover:text-white hover:bg-white/5'
+                  ? 'bg-white text-black shadow-md'
+                  : 'text-neutral-400 hover:text-white hover:bg-white/5'
               }`}
             >
               <span>{m.icon}</span>
@@ -74,20 +72,20 @@ export default function Navbar({
       {/* Session Stats & Backend Status */}
       <div className="flex items-center gap-3">
         {/* Session Stats Counter */}
-        <div className="hidden md:flex items-center gap-3 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-[11px] text-[#94a3b8]">
+        <div className="hidden md:flex items-center gap-3 px-3 py-1.5 rounded-xl bg-neutral-900 border border-neutral-800 text-[11px] text-neutral-400 font-mono">
           <span>
-            Questions: <strong className="text-white">{stats.questionsAsked}</strong>
+            Questions: <strong className="text-white font-bold">{stats.questionsAsked}</strong>
           </span>
-          <span className="text-white/20">•</span>
+          <span className="text-neutral-700">•</span>
           <span>
-            Topics: <strong className="text-white">{stats.topicsExplored}</strong>
+            Topics: <strong className="text-white font-bold">{stats.topicsExplored}</strong>
           </span>
         </div>
 
         {/* Backend Status Dot */}
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#0b0f19] border border-white/10 text-xs">
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-neutral-900 border border-neutral-800 text-xs">
           <div className={`w-2 h-2 rounded-full animate-pulse ${statusBg}`} />
-          <span className="text-[11px] text-[#cbd5e1] font-medium hidden lg:inline">
+          <span className="text-[11px] text-neutral-300 font-medium hidden lg:inline">
             {status.isWakingUp ? 'ZeroGPU Waking Up' : 'ZeroGPU Online'}
           </span>
         </div>
