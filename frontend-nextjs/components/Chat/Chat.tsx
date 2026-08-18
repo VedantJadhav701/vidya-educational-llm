@@ -354,7 +354,7 @@ export default function Chat() {
         <div className="hidden md:flex items-center gap-6 text-[12px] font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
           <a href="#" className="hover:text-neutral-900 dark:hover:text-white transition-colors">Build</a>
           <a href="#" className="hover:text-neutral-900 dark:hover:text-white transition-colors bg-neutral-100 dark:bg-neutral-900 px-3 py-1.5 rounded-xl border border-neutral-200 dark:border-neutral-800">Playground</a>
-          <a href="#" className="hover:text-neutral-900 dark:hover:text-white transition-colors">Model Card</a>
+          <a href="https://huggingface.co/vedantjadhav701/edu-qwen-1.7b-merged" target="_blank" rel="noopener noreferrer" className="hover:text-neutral-900 dark:hover:text-white transition-colors">Model Card</a>
         </div>
 
         {/* Right Controls */}
@@ -419,7 +419,7 @@ export default function Chat() {
             <div className="flex flex-col gap-4 text-sm font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
               <a href="#" className="hover:text-neutral-900 dark:hover:text-white py-1">Build</a>
               <a href="#" className="hover:text-neutral-900 dark:hover:text-white py-1 text-neutral-900 dark:text-white">Playground</a>
-              <a href="#" className="hover:text-neutral-900 dark:hover:text-white py-1">Model Card</a>
+              <a href="https://huggingface.co/vedantjadhav701/edu-qwen-1.7b-merged" target="_blank" rel="noopener noreferrer" className="hover:text-neutral-900 dark:hover:text-white py-1">Model Card</a>
             </div>
           </div>
         </div>
@@ -429,9 +429,7 @@ export default function Chat() {
       <div className="flex-1 w-full flex flex-col md:flex-row relative overflow-hidden">
         
         {/* Left Column: Chat Conversation */}
-        <div className={`flex-1 flex flex-col h-full overflow-hidden relative z-10 transition-all ${
-          showVisualPanel ? 'md:flex-[1.4] lg:flex-[1.6]' : 'w-full max-w-[850px] mx-auto'
-        }`}>
+        <div className="flex-1 flex flex-col h-full overflow-hidden relative z-10 w-full max-w-[820px] mx-auto">
           
           {/* Chat Mode header */}
           {hasStarted && (
@@ -490,6 +488,9 @@ export default function Chat() {
                 <p className="text-xs sm:text-sm text-neutral-400 dark:text-neutral-500 font-medium italic">
                   "Learn deeper. Understand better."
                 </p>
+                <p className="text-[10px] text-neutral-500 dark:text-neutral-500 font-bold uppercase tracking-widest mt-2">
+                  Developed by Vedant Jadhav
+                </p>
               </div>
 
               {/* Suggestions Grid */}
@@ -508,14 +509,13 @@ export default function Chat() {
             </div>
           ) : (
             /* CONVERSATION CHAT MODE */
-            <div className="flex-1 overflow-y-auto w-full custom-scrollbar">
-              <div className="max-w-[760px] mx-auto w-full">
-                <MessageList
-                  messages={messages}
-                  isTyping={isProcessing}
-                  onQuickPrompt={handleSendMessage}
-                />
-              </div>
+            <div className="flex-1 h-full w-full overflow-hidden flex flex-col">
+              <MessageList
+                messages={messages}
+                isTyping={isProcessing}
+                onQuickPrompt={handleSendMessage}
+                theme={theme}
+              />
             </div>
           )}
 
@@ -669,13 +669,6 @@ export default function Chat() {
           </div>
           
         </div>
-
-        {/* Right Column: Visual Learning Panel (only renders if media is present) */}
-        {showVisualPanel && (
-          <div className="w-full md:w-auto md:flex-1 h-[calc(100vh-65px)] border-t md:border-t-0 md:border-l border-neutral-200 dark:border-neutral-850 bg-neutral-50/30 dark:bg-neutral-900/10 flex flex-col z-20 overflow-hidden">
-            <MediaPanel items={mediaItems} onSelectFormula={handleSendMessage} />
-          </div>
-        )}
 
       </div>
 

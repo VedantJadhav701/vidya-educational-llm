@@ -6,9 +6,10 @@ import { generateGraphData } from '@/lib/graph';
 interface GraphCardProps {
   expr: string;
   title?: string;
+  theme?: 'dark' | 'light';
 }
 
-export default function GraphCard({ expr, title }: GraphCardProps) {
+export default function GraphCard({ expr, title, theme = 'dark' }: GraphCardProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [range, setRange] = useState(10);
   const [showGrid, setShowGrid] = useState(true);
@@ -24,12 +25,16 @@ export default function GraphCard({ expr, title }: GraphCardProps) {
     const width = canvas.width;
     const height = canvas.height;
 
-    // Dark Background
-    ctx.fillStyle = '#0b0f19';
+    const isDark = theme === 'dark';
+
+    // Theme-Responsive Background
+    ctx.fillStyle = isDark ? '#121212' : '#ffffff';
     ctx.fillRect(0, 0, width, height);
 
     const seriesList = generateGraphData(expr);
-    const colors = ['#a855f7', '#38bdf8', '#10b981', '#f59e0b', '#ef4444'];
+    const colors = isDark 
+      ? ['#3b82f6', '#10b981', '#f59e0b', '#ec4899', '#ef4444'] 
+      : ['#2563eb', '#059669', '#d97706', '#db2777', '#dc2626'];
 
     const margin = 40;
     const plotWidth = width - 2 * margin;
@@ -45,7 +50,7 @@ export default function GraphCard({ expr, title }: GraphCardProps) {
 
     // Grid lines
     if (showGrid) {
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+      ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)';
       ctx.lineWidth = 1;
       ctx.setLineDash([4, 4]);
 
@@ -70,7 +75,7 @@ export default function GraphCard({ expr, title }: GraphCardProps) {
 
     // Main Axes
     ctx.setLineDash([]);
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+    ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.35)';
     ctx.lineWidth = 1.5;
 
     // X Axis
@@ -88,7 +93,7 @@ export default function GraphCard({ expr, title }: GraphCardProps) {
     ctx.stroke();
 
     // Axis Ticks & Labels
-    ctx.fillStyle = '#94a3b8';
+    ctx.fillStyle = isDark ? '#94a3b8' : '#666666';
     ctx.font = '10px Inter, sans-serif';
     ctx.textAlign = 'center';
 
@@ -141,7 +146,7 @@ export default function GraphCard({ expr, title }: GraphCardProps) {
       const hcy = toCanvasY(hoverPos.y);
 
       if (hcx >= margin && hcx <= width - margin && hcy >= margin && hcy <= height - margin) {
-        ctx.strokeStyle = '#a855f7';
+        ctx.strokeStyle = isDark ? '#3b82f6' : '#2563eb';
         ctx.lineWidth = 1;
         ctx.setLineDash([2, 2]);
 
@@ -152,7 +157,7 @@ export default function GraphCard({ expr, title }: GraphCardProps) {
         ctx.lineTo(width - margin, hcy);
         ctx.stroke();
 
-        ctx.fillStyle = '#a855f7';
+        ctx.fillStyle = isDark ? '#3b82f6' : '#2563eb';
         ctx.beginPath();
         ctx.arc(hcx, hcy, 4, 0, Math.PI * 2);
         ctx.fill();
@@ -161,11 +166,11 @@ export default function GraphCard({ expr, title }: GraphCardProps) {
 
     // Border
     ctx.setLineDash([]);
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+    ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.1)';
     ctx.lineWidth = 1;
     ctx.strokeRect(margin, margin, plotWidth, plotHeight);
 
-  }, [expr, range, showGrid, hoverPos]);
+  }, [expr, range, showGrid, hoverPos, theme]);
 
   const handleMouseMove = (e: MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
@@ -184,61 +189,79 @@ export default function GraphCard({ expr, title }: GraphCardProps) {
     setHoverPos({ x: Number(x.toFixed(2)), y: Number(y.toFixed(2)) });
   };
 
+  const handleDownload = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const dataUrl = canvas.toDataURL('image/png');
+    const link = document.createElement('a');
+    link.download = `${title || 'graph'}.png`;
+    link.href = dataUrl;
+    link.click();
+  };
+
+  const isDark = theme === 'dark';
+
   return (
-    <div className="media-card bg-[#0b0f19]/80 border border-white/10 rounded-2xl overflow-hidden shadow-xl animate-fadeIn">
+    <div className="media-card bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-850 rounded-2xl overflow-hidden shadow-md animate-fadeIn w-full max-w-[400px]">
       {/* Card Header & Controls */}
-      <div className="p-3 px-4 bg-[#1e293b]/60 border-b border-white/10 flex items-center justify-between">
-        <span className="text-xs font-semibold text-[#a855f7] flex items-center gap-1.5">
+      <div className="p-3 px-4 bg-neutral-200/50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-850 flex items-center justify-between">
+        <span className="text-xs font-bold text-neutral-800 dark:text-neutral-200 flex items-center gap-1.5">
           <span>📊</span> {title || `Graph: ${expr}`}
         </span>
-        <div className="flex items-center gap-2 text-[11px] text-[#94a3b8]">
+        <div className="flex items-center gap-2 text-[11px] text-neutral-500 dark:text-neutral-400">
           <button
             onClick={() => setShowGrid((prev) => !prev)}
-            className={`px-2 py-0.5 rounded transition-colors ${
-              showGrid ? 'bg-[#a855f7]/20 text-[#a855f7]' : 'bg-white/5 text-[#94a3b8]'
+            className={`px-2 py-0.5 rounded cursor-pointer transition-colors ${
+              showGrid ? 'bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-white font-bold' : 'bg-neutral-300/30 text-neutral-500'
             }`}
           >
             Grid
           </button>
-          <div className="flex items-center gap-1 bg-white/5 px-2 py-0.5 rounded">
+          <div className="flex items-center gap-1 bg-neutral-200/35 dark:bg-neutral-950/40 px-2 py-0.5 rounded">
             <span>Range:</span>
             <button
               onClick={() => setRange((r) => Math.max(5, r - 5))}
-              className="hover:text-white px-1"
+              className="hover:text-neutral-900 dark:hover:text-white px-1 font-bold cursor-pointer"
             >
               -
             </button>
-            <span className="text-white font-mono">{range}</span>
+            <span className="text-neutral-900 dark:text-white font-mono">{range}</span>
             <button
               onClick={() => setRange((r) => Math.min(25, r + 5))}
-              className="hover:text-white px-1"
+              className="hover:text-neutral-900 dark:hover:text-white px-1 font-bold cursor-pointer"
             >
               +
             </button>
           </div>
+          <button
+            onClick={handleDownload}
+            className="ml-1 bg-white hover:bg-neutral-200 text-black text-[10px] font-bold px-2 py-0.5 rounded cursor-pointer transition-colors"
+          >
+            Save
+          </button>
         </div>
       </div>
 
       {/* Canvas */}
-      <div className="p-3 bg-[#0b0f19] flex flex-col items-center relative">
+      <div className="p-3 bg-neutral-200/20 dark:bg-neutral-950 flex flex-col items-center relative">
         <canvas
           ref={canvasRef}
           width={400}
           height={260}
           onMouseMove={handleMouseMove}
           onMouseLeave={() => setHoverPos(null)}
-          className="w-full max-w-[400px] h-auto rounded-lg border border-white/5 cursor-crosshair"
+          className="w-full max-w-[400px] h-auto rounded-lg border border-neutral-300 dark:border-neutral-850 cursor-crosshair"
         />
 
         {/* Live Coordinate Badge */}
         {hoverPos && (
-          <div className="absolute top-5 right-5 text-[10px] font-mono bg-[#0b0f19]/90 border border-[#a855f7]/40 text-[#38bdf8] px-2 py-1 rounded shadow-lg backdrop-blur">
+          <div className="absolute top-5 right-5 text-[10px] font-mono bg-neutral-950/90 border border-neutral-700 text-neutral-300 px-2 py-1 rounded shadow-lg backdrop-blur">
             x: {hoverPos.x}, y: {hoverPos.y}
           </div>
         )}
       </div>
 
-      <div className="p-2.5 text-[11px] text-[#94a3b8] text-center bg-[#0b0f19]/90 border-t border-white/5">
+      <div className="p-2.5 text-[11px] text-neutral-500 dark:text-neutral-400 text-center bg-neutral-100 dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-850/50">
         Interactive Canvas • Hover to trace coordinates
       </div>
     </div>

@@ -59,7 +59,7 @@ export default function Home() {
               <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
             </div>
             <span className="text-[11px] font-black uppercase tracking-[0.5em] text-white">
-              auto-automation
+              VIDYA
             </span>
           </div>
 
@@ -119,7 +119,7 @@ export default function Home() {
         {/* BOTTOM TICKER LOGOS */}
         <div className="relative z-20 w-full px-4 sm:px-[70px] pb-10 mt-auto flex flex-col items-center">
           <div className="text-[9px] font-black uppercase tracking-[0.6em] text-white/25 mb-6 text-center w-full">
-            AUTO-AUTOMATION ECOSYSTEM
+            VIDYA KNOWLEDGE CORE SYSTEM
           </div>
           <div className="w-full overflow-hidden relative">
             <div className="flex items-center justify-center gap-10 sm:gap-24 opacity-55 saturate-0">
@@ -328,9 +328,13 @@ export default function Home() {
           FOOTER
           ──────────────────────────────────────────────────────── */}
       <footer className="w-full h-[100px] border-t border-neutral-900 px-4 sm:px-[70px] flex items-center justify-between text-xs text-neutral-500 bg-black z-20 relative select-none">
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded bg-neutral-800 flex items-center justify-center text-[8px] font-black text-white">V</div>
-          <span>auto-automation © 2026. All Rights Reserved.</span>
+        <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 rounded bg-neutral-800 flex items-center justify-center text-[8px] font-black text-white">V</div>
+            <span>Vidya © 2026. All Rights Reserved.</span>
+          </div>
+          <span className="hidden sm:inline text-neutral-600">•</span>
+          <span className="text-[10px] text-neutral-450 dark:text-neutral-500 font-bold uppercase tracking-wider">Developed by Vedant Jadhav</span>
         </div>
         <div className="flex items-center gap-6">
           <a href="#" className="hover:text-white transition-colors">Terms</a>
