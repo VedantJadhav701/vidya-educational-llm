@@ -3,6 +3,14 @@ import { sendMessage } from '@/lib/vidya';
 import { estimateTokens, UsageStore } from '@/lib/token-limit';
 import { ChatMessage } from '@/lib/types';
 
+// Initialize global stats store
+if (!(global as any).statsStore) {
+  (global as any).statsStore = {
+    totalQuestions: 1420,
+    activeSessions: new Map<string, number>(),
+  };
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -55,6 +63,15 @@ export async function POST(request: NextRequest) {
         { error: limitCheck.reason || 'Vidya is temporarily unavailable for this session. Please try again later.' },
         { status: 429 }
       );
+    }
+
+    // Increment global stats
+    const statsStore = (global as any).statsStore;
+    if (statsStore) {
+      statsStore.totalQuestions += 1;
+      if (sessionId) {
+        statsStore.activeSessions.set(sessionId, Date.now());
+      }
     }
 
     // 6. Call Hugging Face Space backend (Section 14 of plan)

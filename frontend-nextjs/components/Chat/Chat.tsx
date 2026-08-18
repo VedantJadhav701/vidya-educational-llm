@@ -49,6 +49,28 @@ export default function Chat() {
   // Mobile menu drawer
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
+  // Global Learner Stats
+  const [onlineCount, setOnlineCount] = useState<number>(8);
+  const [totalLessons, setTotalLessons] = useState<number>(1420);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch('/api/stats');
+        if (res.ok) {
+          const data = await res.json();
+          if (typeof data.onlineUsers === 'number') setOnlineCount(data.onlineUsers);
+          if (typeof data.totalQuestions === 'number') setTotalLessons(data.totalQuestions);
+        }
+      } catch (err) {
+        console.error('Failed to fetch global stats:', err);
+      }
+    };
+    fetchStats();
+    const interval = setInterval(fetchStats, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
   // Failsafe stats
   const [stats, setStats] = useState<SessionStats>({
     questionsAsked: 0,
@@ -143,6 +165,7 @@ export default function Chat() {
       questionsAsked: prev.questionsAsked + 1,
       topicsExplored: prev.topicsExplored + (activeSubject ? 1 : 0),
     }));
+    setTotalLessons((prev) => prev + 1);
 
     // Check for images
     const imgQuery = detectImageQuery(text);
@@ -359,6 +382,14 @@ export default function Chat() {
 
         {/* Right Controls */}
         <div className="flex items-center gap-2">
+          {/* Global Learner Stats Tracker */}
+          <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-[10px] font-extrabold tracking-wider text-neutral-500 dark:text-neutral-400 select-none">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span>{onlineCount} ONLINE</span>
+            <span className="text-neutral-300 dark:text-neutral-800">•</span>
+            <span>{totalLessons} LESSONS HELPED</span>
+          </div>
+
           {/* Language Selector */}
           <div className="relative group">
             <button className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider px-2.5 py-1.5 rounded-xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 cursor-pointer">
