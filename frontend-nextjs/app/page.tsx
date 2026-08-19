@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowRight, CheckCircle, Cpu, BookOpen, Layers, Award, ShieldCheck, Sparkles, Globe, BarChart3, Zap } from 'lucide-react';
+import { ArrowRight, CheckCircle, Cpu, BookOpen, Layers, Award, ShieldCheck, Sparkles, Globe, BarChart3, Zap, GraduationCap } from 'lucide-react';
 
 export default function Home() {
   const [onlineCount, setOnlineCount] = useState<number>(8);
@@ -88,6 +88,7 @@ export default function Home() {
             <a href="#" className="font-semibold text-black relative after:content-[''] after:absolute after:-bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-1.5 after:h-1.5 after:bg-black after:rounded-full">Home</a>
             <a href="#benchmark" className="opacity-60 hover:opacity-100 transition-opacity hidden sm:inline">Benchmark</a>
             <a href="#features" className="opacity-60 hover:opacity-100 transition-opacity hidden md:inline">Features</a>
+            <a href="#creator" className="opacity-60 hover:opacity-100 transition-opacity hidden sm:inline">Creator</a>
             <Link href="/focus" className="opacity-80 hover:opacity-100 font-bold transition-opacity text-purple-700">Focus Lab</Link>
             <Link href="/playground" className="opacity-80 hover:opacity-100 transition-opacity font-bold">Playground</Link>
           </nav>
@@ -359,12 +360,153 @@ export default function Home() {
       </section>
 
       {/* ────────────────────────────────────────────────────────
+          SECTION 4: CREATOR / DEVELOPER PROFILE (VEDANT JADHAV)
+          ──────────────────────────────────────────────────────── */}
+      <section id="creator" className="relative w-full py-24 px-4 sm:px-[70px] bg-neutral-950 border-t border-neutral-900 overflow-hidden">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-500 mb-8">
+            04 / CREATOR &amp; ARCHITECTURE
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            {/* LEFT COLUMN: CREATOR PROFILE */}
+            <div className="lg:col-span-7 flex flex-col gap-6">
+              {/* Header with Typographic Identity Badge */}
+              <div className="flex items-center gap-4">
+                {/* Typographic Badge VJ */}
+                <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-neutral-800 to-neutral-900 border border-white/15 flex items-center justify-center shadow-xl group flex-shrink-0">
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-blue-500/20 via-purple-500/20 to-pink-500/20 opacity-50 blur-sm group-hover:opacity-100 transition-opacity" />
+                  <span className="relative z-10 font-display text-2xl font-bold tracking-wider text-white">
+                    VJ
+                  </span>
+                </div>
+
+                <div>
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                    Vedant Jadhav
+                  </h2>
+                  <p className="text-xs font-semibold text-blue-400 uppercase tracking-wider mt-0.5">
+                    Machine Learning Engineer • AI / LLM Researcher • Co-Founder
+                  </p>
+                </div>
+              </div>
+
+              {/* Education Subtext */}
+              <div className="flex items-center gap-2 text-xs text-neutral-300 bg-neutral-900/80 px-3.5 py-2 rounded-xl border border-neutral-800 self-start">
+                <GraduationCap className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                <span>B.Tech in Artificial Intelligence &amp; Machine Learning — Pimpri Chinchwad University, Pune</span>
+              </div>
+
+              {/* Profile Copy */}
+              <p className="text-sm sm:text-base text-neutral-200 leading-relaxed font-normal">
+                "Vedant Jadhav is a Machine Learning Engineer and AI/LLM researcher focused on building practical intelligent systems across language, education, and machine learning."
+              </p>
+              
+              <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed">
+                His work spans language models, multilingual AI, domain-specific LLMs, LLM evaluation, RAG, agentic AI, and machine learning systems.
+              </p>
+
+              {/* Currently Building: VIDYA */}
+              <div className="p-5 rounded-2xl bg-neutral-900/50 border border-neutral-800 flex flex-col gap-2">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-emerald-400">
+                    CURRENTLY BUILDING
+                  </span>
+                </div>
+                <h3 className="text-base font-extrabold text-white tracking-wider">VIDYA</h3>
+                <p className="text-xs text-neutral-300 leading-relaxed">
+                  "An educational AI designed to make AI-assisted learning more accessible to Indian students through multilingual education, mathematical reasoning, science, and NCERT-oriented learning."
+                </p>
+              </div>
+
+              {/* Areas of Work Compact Tags */}
+              <div className="flex flex-wrap gap-2 pt-1">
+                {['LLMs', 'SLMs', 'Multilingual AI', 'RAG', 'Agentic AI', 'Machine Learning', 'Deep Learning', 'LLM Evaluation'].map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] font-mono text-neutral-300 hover:text-white hover:border-white/25 transition-all select-none"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              {/* Social Links (Exact URLs provided) */}
+              <div className="flex flex-wrap items-center gap-4 pt-2">
+                <a
+                  href="https://github.com/VedantJadhav701/vidya-educational-llm"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/15 transition-all cursor-pointer shadow-md"
+                >
+                  <i className="fa-brands fa-github text-sm" />
+                  <span>GitHub Profile</span>
+                </a>
+
+                <a
+                  href="https://in.linkedin.com/in/vedantjadhav-ai"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 text-xs font-bold border border-blue-500/30 transition-all cursor-pointer shadow-md"
+                >
+                  <i className="fa-brands fa-linkedin text-sm text-blue-400" />
+                  <span>LinkedIn Profile</span>
+                </a>
+              </div>
+            </div>
+
+            {/* RIGHT COLUMN: ARCHITECTURE VISUALIZATION */}
+            <div className="lg:col-span-5 flex justify-center">
+              <div className="w-full max-w-[440px] p-6 rounded-3xl bg-neutral-900/40 border border-neutral-800 flex flex-col gap-4 relative overflow-hidden backdrop-blur-md">
+                <div className="text-[10px] font-mono uppercase tracking-widest text-neutral-400 border-b border-neutral-800 pb-3 flex items-center justify-between">
+                  <span>VIDYA ARCHITECTURE FLOW</span>
+                  <span className="w-2 h-2 rounded-full bg-purple-400 animate-ping" />
+                </div>
+
+                {/* Vertical Interactive Node Flow */}
+                <div className="flex flex-col gap-3 relative">
+                  {[
+                    { title: 'Research', desc: 'Pedagogical LLM alignment & benchmarks', color: 'from-blue-500 to-cyan-500' },
+                    { title: 'Language Models', desc: '1.7B Parameter fine-tuning & SLMs', color: 'from-purple-500 to-indigo-500' },
+                    { title: 'Multilingual Intelligence', desc: '11 Indian languages & zero-fallback', color: 'from-pink-500 to-rose-500' },
+                    { title: 'Educational AI', desc: 'LaTeX math, canvas plots & NCERT core', color: 'from-amber-500 to-yellow-500' },
+                    { title: 'VIDYA', desc: 'Production AI Ecosystem for Students', color: 'from-emerald-400 to-teal-500', isHighlight: true },
+                  ].map((node, index) => (
+                    <div
+                      key={index}
+                      className={`p-3.5 rounded-2xl border transition-all hover:scale-[1.02] flex items-center justify-between ${
+                        node.isHighlight
+                          ? 'bg-gradient-to-r from-emerald-500/20 via-neutral-900 to-teal-500/20 border-emerald-500/40 shadow-lg'
+                          : 'bg-neutral-950 border-neutral-800'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className={`w-3.5 h-3.5 rounded-full bg-gradient-to-r ${node.color} animate-pulse flex-shrink-0`} />
+                        <div>
+                          <h4 className={`text-xs font-extrabold uppercase tracking-wider ${node.isHighlight ? 'text-emerald-400' : 'text-white'}`}>
+                            {node.title}
+                          </h4>
+                          <p className="text-[10px] text-neutral-400 leading-snug">{node.desc}</p>
+                        </div>
+                      </div>
+                      <span className="text-[10px] font-mono text-neutral-500">0{index + 1}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ────────────────────────────────────────────────────────
           SECTION 5: CTA (BOTTOM FOLD)
           ──────────────────────────────────────────────────────── */}
-      <section className="relative w-full py-24 px-4 sm:px-[70px] bg-neutral-950 border-t border-neutral-900 text-center">
+      <section className="relative w-full py-24 px-4 sm:px-[70px] bg-black border-t border-neutral-900 text-center">
         <div className="max-w-[700px] mx-auto">
           <div className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-500 mb-3">
-            04 / INITIALIZE INTERACTION
+            05 / INITIALIZE INTERACTION
           </div>
           <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">
             Ready to Learn Deeper?
