@@ -508,20 +508,21 @@ export default function Chat() {
                 ))}
               </div>
 
-              {/* Title Section */}
+              {/* Title Section (playground_frontend.md style) */}
               <div className="relative z-10 mb-8 mt-auto">
-                <h1 className="text-4xl sm:text-5xl font-black tracking-[0.25em] text-neutral-800 dark:text-white uppercase mb-3">
-                  VIDYA
+                <h1 className="text-3xl sm:text-5xl font-medium tracking-tight text-neutral-800 dark:text-white leading-tight mb-3">
+                  <span className="block">Think clearly.</span>
+                  <span className="block text-neutral-400 dark:text-neutral-300">Decide confidently</span>
                 </h1>
-                <p className="text-sm font-semibold uppercase tracking-[0.1em] text-neutral-500 dark:text-neutral-400 mb-1">
-                  Welcome to Vidya
+                <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 font-normal max-w-md mx-auto">
+                  An AI workspace that structures your reasoning, not just your answers.
                 </p>
-                <p className="text-xs sm:text-sm text-neutral-400 dark:text-neutral-500 font-medium italic">
-                  "Learn deeper. Understand better."
-                </p>
-                <p className="text-[10px] text-neutral-500 dark:text-neutral-500 font-bold uppercase tracking-widest mt-2">
-                  Developed by Vedant Jadhav
-                </p>
+                <div className="flex items-center justify-center gap-2 mt-3">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(45,220,55,0.65)] animate-pulse" />
+                  <span className="text-[11px] font-medium text-neutral-400 dark:text-neutral-400">
+                    Vidya 1.7B Educational Intelligence Active
+                  </span>
+                </div>
               </div>
 
               {/* Suggestions Grid */}
@@ -530,10 +531,10 @@ export default function Chat() {
                   <button
                     key={idx}
                     onClick={() => handleSendMessage(q)}
-                    className="p-3.5 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-2xl hover:border-neutral-400 dark:hover:border-neutral-600 text-left transition-all cursor-pointer shadow-sm active:scale-98 group"
+                    className="p-3.5 bg-white dark:bg-[#111111] border border-neutral-200 dark:border-white/10 hover:bg-neutral-100 dark:hover:bg-white/5 rounded-2xl hover:border-neutral-400 dark:hover:border-white/20 text-left transition-all cursor-pointer shadow-sm active:scale-98 group"
                   >
                     <div className="font-bold text-xs text-neutral-700 dark:text-neutral-200 group-hover:text-neutral-900 dark:group-hover:text-white">{q}</div>
-                    <div className="text-[10px] text-neutral-400 dark:text-neutral-500 group-hover:text-neutral-500 dark:group-hover:text-neutral-300 mt-0.5">Explore educational fact</div>
+                    <div className="text-[10px] text-neutral-400 dark:text-neutral-500 group-hover:text-neutral-500 dark:group-hover:text-neutral-300 mt-0.5">Explore educational reasoning</div>
                   </button>
                 ))}
               </div>
@@ -550,9 +551,9 @@ export default function Chat() {
             </div>
           )}
 
-          {/* COMPOSER PANEL */}
-          <div className="w-full px-4 sm:px-6 pb-6 pt-2 bg-gradient-to-t from-[#fbfbf9] via-[#fbfbf9] to-transparent dark:from-[#0a0a0a] dark:via-[#0a0a0a] dark:to-transparent">
-            <div className="max-w-[760px] mx-auto w-full flex flex-col gap-3">
+          {/* COMPOSER PANEL (PLAYGROUND_FRONTEND.MD SPEC) */}
+          <div className="w-full px-4 sm:px-6 pb-6 pt-2 bg-gradient-to-t from-[#fbfbf9] via-[#fbfbf9] to-transparent dark:from-[#0c0c0c] dark:via-[#0c0c0c] dark:to-transparent">
+            <div className="max-w-[780px] mx-auto w-full flex flex-col gap-3">
               
               {/* Subject Context Selector */}
               {!hasStarted && (
@@ -561,10 +562,10 @@ export default function Chat() {
                     <button
                       key={sub.id || 'all'}
                       onClick={() => setActiveSubject(sub.id)}
-                      className={`flex-shrink-0 px-2.5 py-1 rounded-lg border transition-all cursor-pointer ${
+                      className={`flex-shrink-0 px-3 py-1 rounded-full border transition-all cursor-pointer ${
                         activeSubject === sub.id
                           ? 'bg-neutral-800 dark:bg-white text-white dark:text-black border-neutral-800 dark:border-white shadow-sm'
-                          : 'bg-white dark:bg-neutral-900 text-neutral-500 dark:text-neutral-400 border-neutral-200 dark:border-neutral-800 hover:text-neutral-900 dark:hover:text-white hover:border-neutral-400 dark:hover:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-800'
+                          : 'bg-white dark:bg-[#111111] text-neutral-500 dark:text-neutral-400 border-neutral-200 dark:border-white/10 hover:text-neutral-900 dark:hover:text-white hover:border-neutral-400 dark:hover:border-white/20'
                       }`}
                     >
                       {sub.label}
@@ -573,85 +574,98 @@ export default function Chat() {
                 </div>
               )}
 
-              {/* Large Premium Input Composer Container */}
-              <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-3 flex flex-col gap-3 shadow-md focus-within:border-neutral-400 dark:focus-within:border-neutral-700 focus-within:ring-2 focus-within:ring-neutral-250 dark:focus-within:ring-neutral-800/20 transition-all">
-                {/* Textarea Input */}
-                <textarea
-                  ref={textareaRef}
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                      e.preventDefault();
-                      handleSendMessage(input);
-                      setInput('');
-                    }
-                  }}
-                  placeholder="Ask Vidya anything... (Enter to send, Shift+Enter for newline)"
-                  rows={2}
-                  disabled={isProcessing}
-                  className="w-full bg-transparent text-sm resize-none outline-none leading-relaxed text-neutral-800 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-600 disabled:opacity-50 min-h-[50px] max-h-[180px] custom-scrollbar"
-                />
+              {/* Composer Outer Shell with Gradient Underglow & Continuous Ring Sweep */}
+              <div className="relative isolation-isolate">
+                {/* Yellow->Teal Composer Underglow Layer */}
+                <div className="absolute inset-x-0 -bottom-1 h-3 rounded-2xl composer-underglow blur-xs opacity-80 -z-10 pointer-events-none" />
 
-                {/* Composer Actions and controls bar */}
-                <div className="flex items-center justify-between pt-1 border-t border-neutral-100 dark:border-neutral-800/50">
-                  {/* Left: Tools button (+) */}
-                  <div className="relative">
-                    <button
-                      onClick={() => setShowTools(!showTools)}
-                      className="p-1.5 rounded-lg bg-neutral-50 dark:bg-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-500 dark:text-neutral-400 cursor-pointer border border-neutral-200 dark:border-neutral-800 transition-colors flex items-center justify-center"
-                      title="Tools"
-                    >
-                      <Plus className="w-4 h-4" />
-                    </button>
-                    {showTools && (
-                      <div className="absolute left-0 bottom-full mb-2 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl py-1.5 shadow-xl min-w-[150px] z-50">
-                        <button
-                          onClick={() => {
-                            setInput(prev => prev + " Show a graph of ");
-                            setShowTools(false);
-                          }}
-                          className="w-full text-left px-4 py-2 text-xs hover:bg-neutral-100 dark:hover:bg-neutral-800 cursor-pointer text-neutral-800 dark:text-neutral-200"
-                        >
-                          📈 Graph Expression
-                        </button>
-                        <button
-                          onClick={() => {
-                            setInput(prev => prev + " Show an image of ");
-                            setShowTools(false);
-                          }}
-                          className="w-full text-left px-4 py-2 text-xs hover:bg-neutral-100 dark:hover:bg-neutral-800 cursor-pointer text-neutral-800 dark:text-neutral-200"
-                        >
-                          🖼️ Educational Image
-                        </button>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Right Controls: Parameters Toggle & Send Button */}
-                  <div className="flex items-center gap-2">
-                    {/* Student Parameters toggle */}
-                    <button
-                      onClick={() => setShowParams(!showParams)}
-                      className="text-[11px] font-bold px-2.5 py-1.5 rounded-lg bg-neutral-50 dark:bg-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-800 border border-neutral-200 dark:border-neutral-800 text-neutral-500 dark:text-neutral-400 cursor-pointer"
-                    >
-                      Params
-                    </button>
-
-                    {/* Send Button */}
-                    <button
-                      onClick={() => {
+                {/* Composer Inner Card */}
+                <div className="bg-white dark:bg-[#111111] border border-neutral-200 dark:border-white/10 rounded-2xl p-3.5 flex flex-col gap-3 shadow-2xl focus-within:border-neutral-400 dark:focus-within:border-white/30 transition-all">
+                  {/* Textarea Input */}
+                  <textarea
+                    ref={textareaRef}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
                         handleSendMessage(input);
                         setInput('');
-                      }}
-                      disabled={isProcessing || !input.trim()}
-                      className="bg-neutral-800 dark:bg-white text-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-100 px-4 py-1.5 rounded-xl font-bold text-xs uppercase transition-all duration-300 disabled:opacity-50 disabled:bg-neutral-200 dark:disabled:bg-neutral-800 disabled:text-neutral-400 dark:disabled:text-neutral-600 disabled:cursor-not-allowed flex items-center gap-1.5 cursor-pointer shadow-sm active:scale-95"
-                    >
-                      <span>Send</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
+                      }
+                    }}
+                    placeholder="Break down a decision, problem, or idea… (Enter to send)"
+                    rows={2}
+                    disabled={isProcessing}
+                    className="w-full bg-transparent text-sm leading-relaxed text-neutral-800 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-[#aeaeae] disabled:opacity-50 min-h-[55px] max-h-[180px] outline-none resize-none custom-scrollbar"
+                  />
+
+                  {/* Controls Row */}
+                  <div className="flex items-center justify-between pt-1 border-t border-neutral-100 dark:border-white/5">
+                    {/* Left Actions: (+) Attachment Button & DeepThink Chip */}
+                    <div className="flex items-center gap-2">
+                      <div className="relative">
+                        <button
+                          onClick={() => setShowTools(!showTools)}
+                          className="w-8 h-8 rounded-full bg-neutral-100 dark:bg-white/5 hover:bg-neutral-200 dark:hover:bg-white/10 text-neutral-600 dark:text-white border border-neutral-300 dark:border-white/20 transition-all flex items-center justify-center cursor-pointer"
+                          title="Add attachment / tools"
+                        >
+                          <Plus className="w-4 h-4" />
+                        </button>
+                        {showTools && (
+                          <div className="absolute left-0 bottom-full mb-2 bg-white dark:bg-[#181818] border border-neutral-200 dark:border-white/15 rounded-xl py-1.5 shadow-2xl min-w-[170px] z-50">
+                            <button
+                              onClick={() => {
+                                setInput(prev => prev + " Show a graph of ");
+                                setShowTools(false);
+                              }}
+                              className="w-full text-left px-4 py-2 text-xs hover:bg-neutral-100 dark:hover:bg-white/5 cursor-pointer text-neutral-800 dark:text-neutral-200 flex items-center gap-2"
+                            >
+                              <span>📈</span> Graph Expression
+                            </button>
+                            <button
+                              onClick={() => {
+                                setInput(prev => prev + " Show an image of ");
+                                setShowTools(false);
+                              }}
+                              className="w-full text-left px-4 py-2 text-xs hover:bg-neutral-100 dark:hover:bg-white/5 cursor-pointer text-neutral-800 dark:text-neutral-200 flex items-center gap-2"
+                            >
+                              <span>🖼️</span> Educational Image
+                            </button>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* DeepThink Pill Chip */}
+                      <button
+                        onClick={() => setShowParams(!showParams)}
+                        className="h-8 px-3 rounded-full bg-neutral-100 dark:bg-white/5 hover:bg-neutral-200 dark:hover:bg-white/10 border border-neutral-300 dark:border-white/20 text-neutral-700 dark:text-white text-xs font-medium flex items-center gap-1.5 cursor-pointer transition-all"
+                      >
+                        <span className="text-amber-400 text-xs">💡</span>
+                        <span>DeepThink</span>
+                      </button>
+                    </div>
+
+                    {/* Right Controls: Send Button with Continuous Ring Sweep */}
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => {
+                          handleSendMessage(input);
+                          setInput('');
+                        }}
+                        disabled={isProcessing || !input.trim()}
+                        className="relative group p-[2px] rounded-full overflow-hidden cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-95"
+                      >
+                        {/* CONTINUOUS AMBIENT SEND-RING-SWEEP ANIMATED BORDER */}
+                        <div className="absolute inset-[-100%] animate-send-sweep composer-underglow rounded-full opacity-90 group-hover:opacity-100" />
+                        
+                        {/* Inner Button Body */}
+                        <div className="relative px-4 py-1.5 rounded-full bg-neutral-900 dark:bg-[#141414] text-white flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider">
+                          <span>Send</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </div>
+                      </button>
+                    </div>
                   </div>
-                </div>
 
                 {/* Expose parameters picker panel if active */}
                 {showParams && (
@@ -695,6 +709,7 @@ export default function Chat() {
                   </div>
                 )}
 
+                </div>
               </div>
             </div>
           </div>

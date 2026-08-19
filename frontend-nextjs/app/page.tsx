@@ -39,133 +39,148 @@ export default function Home() {
     <main className="w-full min-h-screen bg-black text-white relative font-sans select-none selection:bg-white/10 selection:text-white overflow-x-hidden">
       
       {/* ────────────────────────────────────────────────────────
-          SECTION 1: HERO (FIRST FOLD - FULL VIEWPORT)
+          SECTION 1: ANIMATED HERO (LANDING_HERO.MD SPEC)
           ──────────────────────────────────────────────────────── */}
-      <section className="relative w-full min-h-screen flex flex-col justify-between z-10">
-        {/* BACKGROUND VIDEO LAYER */}
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+      <section className="relative w-full h-screen min-h-[680px] max-h-[1080px] flex flex-col justify-between z-10 overflow-hidden bg-black p-4 sm:p-6 lg:p-8 select-none">
+        {/* EXACT BACKGROUND VIDEO LAYER */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-black">
           <video
             autoPlay
             loop
             muted
             playsInline
-            className="absolute top-0 right-0 h-full w-full object-cover"
-            style={{
-              objectPosition: 'right center',
-              transformOrigin: 'right center',
-              transform: 'scale(1.3)',
-              filter: 'brightness(1.1) contrast(1.1)',
-              opacity: 1.0,
-            }}
+            className="w-full h-full object-cover opacity-80"
           >
             <source
-              src="https://cdn.sceneai.art/Hero%20Section%20Video/9ad5cc99-2fa4-4154-bcc2-5c9ec152778e.mp4"
+              src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260809_012548_ef22562c-c0ae-4816-ad9d-f8922af4e6a7.mp4"
               type="video/mp4"
             />
           </video>
-          {/* Deep text protection overlay */}
-          <div
-            className="absolute inset-0 z-10"
-            style={{
-              background:
-                'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0) 85%)',
-            }}
-          />
+          {/* Subtle vignette gradient */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80" />
         </div>
 
-        {/* TOP NAVIGATION LAYER */}
-        <header className="relative z-20 w-full px-4 sm:px-[70px] h-[85px] flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-5 h-5 rounded bg-blue-600/10 border border-blue-500/50 flex items-center justify-center shadow-[0_0_10px_rgba(59,130,246,0.5)]">
-                <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-              </div>
-              <span className="text-[11px] font-black uppercase tracking-[0.5em] text-white">
-                VIDYA
-              </span>
+        {/* 1) HEADER (DESKTOP / MOBILE) */}
+        <header className="relative z-20 w-full max-w-[720px] mx-auto flex items-center justify-between gap-3 animate-headline" style={{ animationDelay: '0.05s' }}>
+          {/* Logo Circle */}
+          <Link href="/" className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white flex items-center justify-center shadow-[0_4px_14px_rgba(0,0,0,0.16)] hover:scale-105 transition-transform flex-shrink-0">
+            <div className="w-5 h-5 rounded-full bg-black flex items-center justify-center text-white text-[10px] font-black">
+              V
             </div>
-            {/* Global Live Stats Badge */}
-            <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white/5 border border-white/10 text-[9px] font-bold tracking-wider text-white/50 select-none">
-              <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
-              <span>{onlineCount} ONLINE</span>
-              <span className="text-white/20">•</span>
-              <span>{totalLessons} HELPED</span>
-            </div>
-          </div>
+          </Link>
 
-          {/* Links */}
-          <div className="ml-auto mr-12 hidden md:flex items-center gap-8 text-[0.85rem] font-medium text-white/60">
-            <a href="#about" className="hover:text-white transition-colors">About</a>
-            <a href="#features" className="hover:text-white transition-colors">Features</a>
-            <a href="#roadmap" className="hover:text-white transition-colors">Roadmap</a>
-            <a href="https://huggingface.co/vedantjadhav701/edu-qwen-1.7b-merged" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Model Card</a>
-            <Link href="/playground" className="hover:text-white transition-colors">Playground</Link>
-          </div>
+          {/* White Nav Pill */}
+          <nav className="flex-1 max-w-[430px] h-11 sm:h-12 bg-white rounded-full px-3 py-1 flex items-center justify-around shadow-[0_4px_14px_rgba(0,0,0,0.16)] text-[#2e2e2e] text-xs sm:text-sm font-medium">
+            <a href="#" className="font-semibold text-black relative after:content-[''] after:absolute after:-bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-1.5 after:h-1.5 after:bg-black after:rounded-full">Home</a>
+            <a href="#about" className="opacity-60 hover:opacity-100 transition-opacity">About</a>
+            <a href="#features" className="opacity-60 hover:opacity-100 transition-opacity">Features</a>
+            <a href="#roadmap" className="opacity-60 hover:opacity-100 transition-opacity">Roadmap</a>
+            <Link href="/playground" className="opacity-60 hover:opacity-100 transition-opacity font-bold">Playground</Link>
+          </nav>
 
-          {/* Play Button */}
-          <button className="w-[52px] h-[52px] rounded-full bg-white/5 hover:bg-white/10 border border-white/25 backdrop-blur-[12px] flex items-center justify-center transition-all cursor-pointer">
-            <Play className="w-4 h-4 fill-white text-white translate-x-[1px]" />
-          </button>
+          {/* Sign In / Model Card Pill */}
+          <a
+            href="https://huggingface.co/vedantjadhav701/edu-qwen-1.7b-merged"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="h-11 sm:h-12 px-4 rounded-full bg-[#28282a] hover:bg-[#323234] text-[#c8c8c8] hover:text-white text-xs sm:text-sm font-medium flex items-center justify-center shadow-[0_4px_14px_rgba(0,0,0,0.16)] transition-all hover:-translate-y-0.5 flex-shrink-0 hidden sm:flex"
+          >
+            Model Card
+          </a>
         </header>
 
-        {/* MIDDLE HERO TITLE */}
-        <div className="relative z-20 w-full px-4 sm:px-[70px] flex-1 flex flex-col justify-center translate-y-[-6%]">
-          <div className="max-w-[650px] text-left">
-            {/* Tag */}
-            <div className="inline-block text-[9px] font-extrabold uppercase tracking-[0.4em] text-blue-400 mb-3 bg-blue-500/10 px-2.5 py-1 rounded">
-              INITIALIZE VISION
-            </div>
-
-            {/* Heading */}
-            <h1 className="text-[55px] sm:text-[80px] font-bold tracking-tight text-white leading-[1.0] mb-4">
-              Intelligence<br />Unbound
-            </h1>
-
-            {/* Subheading */}
-            <p className="text-[14px] sm:text-[16px] text-white/60 leading-relaxed mb-[30px] max-w-[430px]">
-              Vidya is an intelligent educational AI ecosystem. Launch the playground to explore complex math systems, physical models, and science facts in a clean local environment.
-            </p>
-
-            {/* Conic Gradient rotating CTA button */}
-            <div className="inline-block">
-              <Link href="/playground" className="group block relative p-[2.5px] rounded-full overflow-hidden">
-                <div
-                  className="absolute inset-[-1000%] animate-[spin_6s_linear_infinite]"
-                  style={{
-                    background:
-                      'conic-gradient(#3b82f6, #a855f7, #ec4899, #f8a170, #eab308, #3b82f6)',
-                  }}
-                />
-                <div className="relative px-[26.5px] py-[14px] rounded-full bg-white/15 backdrop-blur-[40px] hover:bg-white/25 transition-all duration-300 flex items-center gap-2">
-                  <span className="text-[12px] font-bold uppercase tracking-wider text-white select-none">
-                    Enter Playground
-                  </span>
-                  <ArrowRight className="w-4 h-4 text-white transition-transform duration-300 group-hover:translate-x-[5px]" />
+        {/* 2) HERO (CENTERED COPY & CTA) */}
+        <div className="relative z-20 w-full max-w-[900px] mx-auto text-center flex flex-col items-center justify-center my-auto py-4">
+          
+          {/* Trust Row ("Trusted by 2000+ Students & Educators") */}
+          <div className="inline-flex items-center mb-5 animate-headline" style={{ animationDelay: '0.1s' }}>
+            <div className="flex items-center -space-x-3 z-10">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#28282a] border border-white/40 p-1 flex items-center justify-center shadow-md hover:-translate-y-0.5 transition-transform">
+                <div className="w-full h-full rounded-full bg-white flex items-center justify-center text-black text-xs">
+                  <i className="fa-brands fa-microsoft text-[11px]" />
                 </div>
-              </Link>
+              </div>
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#28282a] border border-white/40 p-1 flex items-center justify-center shadow-md hover:-translate-y-1 transition-transform z-10">
+                <div className="w-full h-full rounded-full bg-white flex items-center justify-center text-black text-xs">
+                  <i className="fa-brands fa-amazon text-[11px]" />
+                </div>
+              </div>
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#28282a] border border-white/40 p-1 flex items-center justify-center shadow-md hover:-translate-y-0.5 transition-transform z-20">
+                <div className="w-full h-full rounded-full bg-white flex items-center justify-center text-black text-xs">
+                  <i className="fa-brands fa-google text-[11px]" />
+                </div>
+              </div>
             </div>
+
+            {/* Trust Pill */}
+            <div className="h-9 sm:h-10 pl-5 pr-4 rounded-full bg-[#28282a] border border-white/40 text-[#c4c2c3] text-xs font-medium flex items-center justify-center -ml-3 z-0">
+              <span>Trusted by 2000+ Students &amp; Educators</span>
+            </div>
+          </div>
+
+          {/* Headline (BubbledotICG-FinePos Retro Dot-Matrix Display Font) */}
+          <h1 className="font-display font-normal text-white text-3xl sm:text-6xl lg:text-7xl tracking-[-0.04em] leading-[1.1] uppercase mb-4 max-w-[850px] animate-headline" style={{ animationDelay: '0.2s' }}>
+            <span className="block">Intelligence</span>
+            <span className="block">Designed To Evolve</span>
+          </h1>
+
+          {/* Subhead */}
+          <p className="text-xs sm:text-base text-[#d0d0d0]/80 max-w-[520px] leading-relaxed mb-6 font-normal animate-headline" style={{ animationDelay: '0.3s' }}>
+            Build applications and educational tools that reason, adapt and collaborate using a modular AI platform designed for learning.
+          </p>
+
+          {/* CTA Button */}
+          <div className="animate-headline" style={{ animationDelay: '0.4s' }}>
+            <Link
+              href="/playground"
+              className="inline-flex items-center gap-2 px-6 sm:px-8 py-3.5 rounded-full bg-white text-black font-semibold text-xs sm:text-sm hover:scale-[1.03] hover:-translate-y-0.5 transition-all shadow-[0_0_0_1px_rgba(255,255,255,0.15),0_0_22px_rgba(255,255,255,0.32),0_0_44px_rgba(255,255,255,0.12)] active:scale-98"
+            >
+              <span>Get Started</span>
+              <ArrowRight className="w-4 h-4 text-black" />
+            </Link>
           </div>
         </div>
 
-        {/* BOTTOM TICKER LOGOS */}
-        <div className="relative z-20 w-full px-4 sm:px-[70px] pb-10 mt-auto flex flex-col items-center">
-          <div className="text-[9px] font-black uppercase tracking-[0.6em] text-white/25 mb-6 text-center w-full">
-            VIDYA KNOWLEDGE CORE SYSTEM
-          </div>
-          <div className="w-full overflow-hidden relative">
-            <div className="flex items-center justify-center gap-10 sm:gap-24 opacity-55 saturate-0">
-              {brands.map((brand) => (
-                <div key={brand.name} className="flex items-center gap-2">
-                  <div className="w-[15px] h-[15px] rounded bg-white/20 flex items-center justify-center text-[10px] font-black">
-                    {brand.icon}
-                  </div>
-                  <span className="text-[11px] font-extrabold uppercase tracking-widest text-white">
-                    {brand.name}
-                  </span>
-                </div>
-              ))}
+        {/* 3) STATS FOOTER (EXACT 4 METRICS WITH ANIMATED NUMBERS) */}
+        <div className="relative z-20 w-full max-w-[920px] mx-auto grid grid-cols-2 sm:grid-cols-4 gap-4 text-center border-t border-white/10 pt-4 animate-headline" style={{ animationDelay: '0.5s' }}>
+          {/* Stat 1 */}
+          <div className="flex flex-col items-center">
+            <div className="flex items-center gap-1.5">
+              <span className="font-display text-white text-lg sm:text-2xl text-[#38bdf8]">&lt;</span>
+              <span className="text-white text-base sm:text-xl font-bold tracking-tight font-mono">120</span>
+              <span className="text-white text-xs font-mono">ms</span>
             </div>
+            <span className="text-[#8e8e8e] text-[10px] sm:text-xs uppercase font-medium tracking-wider mt-0.5">Inference Time</span>
+          </div>
+
+          {/* Stat 2 */}
+          <div className="flex flex-col items-center">
+            <div className="flex items-center gap-1">
+              <span className="font-display text-white text-lg sm:text-2xl text-emerald-400">%</span>
+              <span className="text-white text-base sm:text-xl font-bold tracking-tight font-mono">99.99</span>
+              <span className="text-white text-xs font-mono">%</span>
+            </div>
+            <span className="text-[#8e8e8e] text-[10px] sm:text-xs uppercase font-medium tracking-wider mt-0.5">Platform Uptime</span>
+          </div>
+
+          {/* Stat 3 */}
+          <div className="flex flex-col items-center">
+            <div className="flex items-center gap-1">
+              <span className="font-display text-white text-lg sm:text-2xl text-purple-400">*</span>
+              <span className="text-white text-base sm:text-xl font-bold tracking-tight font-mono">24</span>
+              <span className="text-white text-xs font-mono">/7</span>
+            </div>
+            <span className="text-[#8e8e8e] text-[10px] sm:text-xs uppercase font-medium tracking-wider mt-0.5">Autonomous Runtime</span>
+          </div>
+
+          {/* Stat 4 */}
+          <div className="flex flex-col items-center">
+            <div className="flex items-center gap-1">
+              <span className="font-display text-white text-lg sm:text-2xl text-pink-400">#</span>
+              <span className="text-white text-base sm:text-xl font-bold tracking-tight font-mono">2.4</span>
+              <span className="text-white text-xs font-mono">M</span>
+            </div>
+            <span className="text-[#8e8e8e] text-[10px] sm:text-xs uppercase font-medium tracking-wider mt-0.5">Context Windows</span>
           </div>
         </div>
       </section>

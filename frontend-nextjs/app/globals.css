@@ -76,3 +76,52 @@
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+/* Custom Display Font for Retro Dot Matrix */
+.font-display {
+  font-family: "BubbledotICG-FinePos", "Geist Pixel Circle", monospace;
+}
+
+/* Continuous Send Button Ring Sweep Animation */
+@keyframes send-ring-sweep {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-send-sweep {
+  animation: send-ring-sweep 10s linear infinite;
+}
+
+/* Composer Underglow Gradient */
+.composer-underglow {
+  background: linear-gradient(
+    90deg,
+    #ffe776 0%,
+    #ffd400 22%,
+    #ffd000 40%,
+    #c9c93c 60%,
+    #86ca8a 76%,
+    #78d0cd 100%
+  );
+}
+
+/* Entrance Animations */
+@keyframes headlineFade {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-headline {
+  animation: headlineFade 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
