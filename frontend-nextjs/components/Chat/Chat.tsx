@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import { 
   ChatMessage, 
   MediaCardItem, 
@@ -375,8 +376,9 @@ export default function Chat() {
 
         {/* Center Links (Desktop only) */}
         <div className="hidden md:flex items-center gap-6 text-[12px] font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
-          <a href="#" className="hover:text-neutral-900 dark:hover:text-white transition-colors">Build</a>
-          <a href="#" className="hover:text-neutral-900 dark:hover:text-white transition-colors bg-neutral-100 dark:bg-neutral-900 px-3 py-1.5 rounded-xl border border-neutral-200 dark:border-neutral-800">Playground</a>
+          <Link href="/" className="hover:text-neutral-900 dark:hover:text-white transition-colors">Build</Link>
+          <Link href="/playground" className="hover:text-neutral-900 dark:hover:text-white transition-colors bg-neutral-100 dark:bg-neutral-900 px-3 py-1.5 rounded-xl border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white">Playground</Link>
+          <Link href="/focus" className="hover:text-neutral-900 dark:hover:text-white transition-colors text-purple-600 dark:text-purple-400">Focus Lab</Link>
           <a href="https://huggingface.co/vedantjadhav701/edu-qwen-1.7b-merged" target="_blank" rel="noopener noreferrer" className="hover:text-neutral-900 dark:hover:text-white transition-colors">Model Card</a>
         </div>
 
@@ -448,8 +450,9 @@ export default function Chat() {
               <button className="text-xs hover:underline cursor-pointer" onClick={() => setShowMobileMenu(false)}>Close</button>
             </div>
             <div className="flex flex-col gap-4 text-sm font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
-              <a href="#" className="hover:text-neutral-900 dark:hover:text-white py-1">Build</a>
-              <a href="#" className="hover:text-neutral-900 dark:hover:text-white py-1 text-neutral-900 dark:text-white">Playground</a>
+              <Link href="/" className="hover:text-neutral-900 dark:hover:text-white py-1">Build</Link>
+              <Link href="/playground" className="hover:text-neutral-900 dark:hover:text-white py-1 text-neutral-900 dark:text-white">Playground</Link>
+              <Link href="/focus" className="hover:text-neutral-900 dark:hover:text-white py-1 text-purple-600 dark:text-purple-400">Focus Lab</Link>
               <a href="https://huggingface.co/vedantjadhav701/edu-qwen-1.7b-merged" target="_blank" rel="noopener noreferrer" className="hover:text-neutral-900 dark:hover:text-white py-1">Model Card</a>
             </div>
           </div>

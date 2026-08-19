@@ -70,12 +70,12 @@ export default function Home() {
           </Link>
 
           {/* White Nav Pill */}
-          <nav className="flex-1 max-w-[430px] h-11 sm:h-12 bg-white rounded-full px-3 py-1 flex items-center justify-around shadow-[0_4px_14px_rgba(0,0,0,0.16)] text-[#2e2e2e] text-xs sm:text-sm font-medium">
+          <nav className="flex-1 max-w-[480px] h-11 sm:h-12 bg-white rounded-full px-3 py-1 flex items-center justify-around shadow-[0_4px_14px_rgba(0,0,0,0.16)] text-[#2e2e2e] text-xs sm:text-sm font-medium">
             <a href="#" className="font-semibold text-black relative after:content-[''] after:absolute after:-bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-1.5 after:h-1.5 after:bg-black after:rounded-full">Home</a>
-            <a href="#about" className="opacity-60 hover:opacity-100 transition-opacity">About</a>
-            <a href="#features" className="opacity-60 hover:opacity-100 transition-opacity">Features</a>
-            <a href="#roadmap" className="opacity-60 hover:opacity-100 transition-opacity">Roadmap</a>
-            <Link href="/playground" className="opacity-60 hover:opacity-100 transition-opacity font-bold">Playground</Link>
+            <a href="#about" className="opacity-60 hover:opacity-100 transition-opacity hidden sm:inline">About</a>
+            <a href="#features" className="opacity-60 hover:opacity-100 transition-opacity hidden md:inline">Features</a>
+            <Link href="/focus" className="opacity-80 hover:opacity-100 font-bold transition-opacity text-purple-700">Focus Lab</Link>
+            <Link href="/playground" className="opacity-80 hover:opacity-100 transition-opacity font-bold">Playground</Link>
           </nav>
 
           {/* Sign In / Model Card Pill */}
