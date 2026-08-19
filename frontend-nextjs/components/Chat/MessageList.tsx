@@ -39,7 +39,7 @@ export default function MessageList({
         <Message key={msg.id} message={msg} onQuickPrompt={onQuickPrompt} theme={theme} />
       ))}
 
-      {isTyping && <PreparingAnswerIndicator />}
+      {isTyping && <PreparingAnswerIndicator theme={theme} />}
     </main>
   );
 }

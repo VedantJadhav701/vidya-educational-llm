@@ -112,7 +112,7 @@ export default function Message({ message, onQuickPrompt, theme = 'dark' }: Mess
   if (!isUser && !isSystem) {
     return (
       <div className="message ai-message flex flex-col animate-fadeIn self-start my-1 w-full max-w-full">
-        <EducationalBlock content={message.content} />
+        <EducationalBlock content={message.content} theme={theme} />
         
         {/* Render inline graphs & images inside the chat block */}
         <InlineGraphs expressions={graphExpressions} theme={theme} />

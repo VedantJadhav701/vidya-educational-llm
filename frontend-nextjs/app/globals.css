@@ -77,6 +77,21 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* KaTeX Theme Color Overrides */
+.light .katex,
+.light .katex-display,
+.theme-light .katex,
+.theme-light .katex-display {
+  color: #171717 !important;
+}
+
+.dark .katex,
+.dark .katex-display,
+.theme-dark .katex,
+.theme-dark .katex-display {
+  color: #f1f5f9 !important;
+}
+
 /* Custom Display Font for Retro Dot Matrix */
 .font-display {
   font-family: "BubbledotICG-FinePos", "Geist Pixel Circle", monospace;
