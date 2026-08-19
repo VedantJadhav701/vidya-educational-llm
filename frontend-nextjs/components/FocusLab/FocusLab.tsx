@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import {
   GameMode,
   Difficulty,
@@ -52,6 +52,9 @@ export default function FocusLab() {
   const [currentQuestion, setCurrentQuestion] = useState<Question | undefined>(undefined);
   const [memoryConfig, setMemoryConfig] = useState<MemoryGridConfig | undefined>(undefined);
   const [lastResultData, setLastResultData] = useState<SessionResultData | null>(null);
+  
+  // Track seen questions during active session to prevent duplicates
+  const seenQuestionsRef = useRef<Set<string>>(new Set());
 
   // Load stored stats on mount
   useEffect(() => {
@@ -64,13 +67,13 @@ export default function FocusLab() {
       setGameState((prev) => ({ ...prev, lastAnswerResult: null }));
 
       if (mode === 'math') {
-        setCurrentQuestion(generateMathQuestion(diff));
+        setCurrentQuestion(generateMathQuestion(diff, seenQuestionsRef.current));
       } else if (mode === 'pattern') {
-        setCurrentQuestion(generatePatternQuestion(diff));
+        setCurrentQuestion(generatePatternQuestion(diff, seenQuestionsRef.current));
       } else if (mode === 'science') {
-        setCurrentQuestion(getScienceQuestion(diff));
+        setCurrentQuestion(getScienceQuestion(diff, seenQuestionsRef.current));
       } else if (mode === 'logic') {
-        setCurrentQuestion(getLogicQuestion(diff));
+        setCurrentQuestion(getLogicQuestion(diff, seenQuestionsRef.current));
       } else if (mode === 'memory') {
         setMemoryConfig(generateMemoryConfig(diff));
       }
@@ -80,6 +83,7 @@ export default function FocusLab() {
 
   // Start Session
   const handleStartSession = () => {
+    seenQuestionsRef.current.clear();
     setGameState((prev) => ({
       ...prev,
       status: 'playing',
