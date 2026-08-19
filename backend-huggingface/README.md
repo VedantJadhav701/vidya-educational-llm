@@ -25,7 +25,7 @@ Vidya 1.7B achieved **93.3% overall accuracy** on the 64-item Multilingual STEM 
 | **Biology** | **95.6%** | English, Hindi, Marathi, Maithili, Tamil, Telugu, Bengali, Urdu |
 | **Mathematics** | **82.5%** | English, Hindi, Marathi, Maithili, Tamil, Telugu, Bengali, Urdu |
 
-- **🚀 Live Demo**: [vidya-educational-llm.vercel.app](https://vidya-educational-llm.vercel.app/)
+- **🚀 Live Demo**: [vidya-educational-llm.vercel.app](https://vidya-edu.vercel.app/)
 - **GitHub Repository**: [VedantJadhav701/vidya-educational-llm](https://github.com/VedantJadhav701/vidya-educational-llm)
 - **Model Card**: [`vedantjadhav701/edu-qwen-1.7b-merged`](https://huggingface.co/vedantjadhav701/edu-qwen-1.7b-merged)
 - **Developed by**: Vedant Jadhav

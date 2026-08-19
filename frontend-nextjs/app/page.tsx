@@ -373,7 +373,7 @@ export default function Home() {
           <span className="text-[10px] text-neutral-450 dark:text-neutral-500 font-bold uppercase tracking-wider">Developed by Vedant Jadhav</span>
         </div>
         <div className="flex items-center gap-4 sm:gap-6 flex-wrap">
-          <a href="https://vidya-educational-llm.vercel.app/" className="hover:text-white transition-colors font-bold">Try Live →</a>
+          <a href="https://vidya-edu.vercel.app/" className="hover:text-white transition-colors font-bold">Try Live →</a>
           <a href="https://huggingface.co/vedantjadhav701/edu-qwen-1.7b-merged" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Model Card</a>
           <a href="https://github.com/VedantJadhav701/vidya-educational-llm" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
         </div>

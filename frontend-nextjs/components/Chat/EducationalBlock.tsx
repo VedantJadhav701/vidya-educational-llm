@@ -2,6 +2,7 @@
 
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
+import remarkGfm from 'remark-gfm';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
 import { normalizeMarkdown } from '@/lib/markdown';
@@ -31,10 +32,24 @@ export default function EducationalBlock({ content }: EducationalBlockProps) {
       {/* Structured Content Markdown Renderer */}
       <div className="prose prose-invert max-w-none text-sm leading-relaxed">
         <ReactMarkdown
-          remarkPlugins={[remarkMath]}
+          remarkPlugins={[remarkMath, remarkGfm]}
           rehypePlugins={[rehypeKatex]}
           components={{
             p: ({ children }) => <p className="mb-4 leading-relaxed text-[#e2e8f0]">{children}</p>,
+            table: ({ children }) => (
+              <div className="overflow-x-auto my-6">
+                <table className="w-full text-left border-collapse border border-white/10 rounded-lg hidden-border-hack">
+                  {children}
+                </table>
+              </div>
+            ),
+            thead: ({ children }) => <thead className="bg-white/5">{children}</thead>,
+            th: ({ children }) => (
+              <th className="p-3 border-b border-white/10 font-bold text-[#38bdf8]">{children}</th>
+            ),
+            td: ({ children }) => (
+              <td className="p-3 border-b border-white/10/50">{children}</td>
+            ),
             h1: ({ children }) => (
               <div className="my-4 border-b border-white/10 pb-2">
                 <h1 className="text-xl font-black text-white tracking-tight flex items-center gap-2">
